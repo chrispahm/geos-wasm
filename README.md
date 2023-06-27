@@ -7,7 +7,9 @@ GEOS is a C++ port of the [Java Topology Suite](
 ), a library for performing operations on planar geometry.
 GEOS provides many of the algorithms used by [PostGIS](http://www.postgis.net/), the [Shapely](http://www.postgis.net/) package for Python, the [sf](https://github.com/r-spatial/sf) package for R, and others.
 
-Currently, only the `GEOSBuffer` function (including parameters), as well as a few helper functions are exposed. **You can find an interactive demo of the buffer function [here](https://chrispahm.github.io/geos-wasm/).**
+Currently, only the `GEOSBuffer` function (including parameters), as well as a few helper functions are exposed. 
+
+[Demo](https://chrispahm.github.io/geos-wasm/)
 
 ## Background
 
@@ -29,7 +31,7 @@ Here are my findings so far, as reactions to Tom's points above:
 
 The first thing I learned when working on the topic was that GEOS is the port, not JTS (which is still very actively maintained). So in general, a potential GEOS-WASM fork is not necessarily closer to the source than JSTS. But still, the main advantage is that GEOS (being a C++ library) is easier to compile to WebAssembly than Java is to JS, so I went on.
 
-What I naïvely expected was that once you'd get GEOS to compile to WASM, you'd automatically be able to use its functions from within JS. But that's not the case. You still need to manually expose each function you'd want to use, define the parameters and return types, allocate memory and clean up after yourself. This is a lot of work and it's far too easy to mess up and produce code that is much slower than necessary when you're not skilled enough in C. Plus, it misses the original idea of having code which is close to the source Since we're writing the wrapper functions, there's now another layer that potentially introduces bugs, and most importantly, that needs to be maintained. I guess shapely and sf are good examples of how this can be done (since they have to do the same at some point), but it's still a lot of work.
+What I naïvely expected was that once you'd get GEOS to compile to WASM, you'd automatically be able to use its functions from within JS. But that's not the case. You still need to manually expose each function you'd want to use, define the parameters and return types, allocate memory and clean up after yourself. This is a lot of work and it's far too easy to mess up and produce code that is much slower than necessary when you're not skilled enough in C. Plus, it misses the original idea of having code which is close to the source. Since we're writing the wrapper functions, there's now another layer that potentially introduces bugs, and most importantly, that needs to be maintained. I guess shapely and sf are good examples of how this can be done (since they have to do the same at some point), but it's still a lot of work.
 
 > - We can just use GEOS for a lot of stuff.
 
