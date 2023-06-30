@@ -21,6 +21,8 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_malloc',\
 	'_initGEOS',\
   '_GEOSFree', \
+  '_GEOSGeomFromWKB_buf',\
+  '_GEOSGeomToWKB_buf',\
 	'_GEOSGeomFromWKT',\
   '_GEOSGeomToWKT',\
   '_GEOSBuffer', \

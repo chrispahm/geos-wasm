@@ -13,7 +13,7 @@
     "compile": "make",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "node test/test.mjs",
+    "test": "rollup -c && node test/test.mjs",
     "performance": "node test/performance.mjs"
   },
   "keywords": [
@@ -24,6 +24,7 @@
   "author": "Christoph Pahmeyer",
   "license": "LGPL-3.0-or-later",
   "dependencies": {
+    "@syncpoint/wkx": "^0.5.2",
     "@turf/center": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "@turf/meta": "^6.5.0",

@@ -10,6 +10,9 @@ export default [
     output: {
       name: 'geos',
       file: pkg.browser,
+      globals: {
+        'util': 'util',
+      },
       format: 'umd'
     },
     plugins: [
@@ -26,10 +29,16 @@ export default [
       {
         name: 'geos',
         file: pkg.module,
+        globals: {
+          'util': 'util',
+        },
         format: 'es'
       },
       {
         name: 'geos',
+        globals: {
+          'util': 'util',
+        },
         file: 'docs/assets/geos.esm.js',
         format: 'es'
       }

@@ -3,8 +3,8 @@ Most of the code in this file is copied from Turf.js,
 with some modifications to make it work with GEOS instead of JSTS.
 */
 import { GEOSFunctions } from "../allCFunctions.mjs";
-import GEOSGeomToWKT from "./GeomToWKT.mjs";
-import GEOSGeomFromWKT from "./GeomFromWKT.mjs";
+import GEOSGeomToWKB from "./GeomToWKB.mjs";
+import GEOSGeomFromWKB from "./GeomFromWKB.mjs";
 import center from "@turf/center";
 import { geomEach, featureEach } from "@turf/meta";
 import { geoAzimuthalEquidistant } from "d3-geo";
@@ -15,7 +15,7 @@ import {
   lengthToRadians,
   earthRadius,
 } from "@turf/helpers";
-import { stringify, parse } from "wkt";
+import { Geometry } from "@syncpoint/wkx"
 
 /**
  * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
@@ -179,7 +179,9 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
   }
   // create a GEOS object from the GeoJSON
   // geojsonToPointers always returns an array of pointers  
-  const geomPtr = GEOSGeomFromWKT(stringify(projected));
+  // const geomPtr = GEOSGeomFromWKT(stringify(projected));
+  const wkb = Geometry.parseGeoJSON(projected).toWkb()
+  const geomPtr = GEOSGeomFromWKB(wkb);
   const distance = radiansToLength(lengthToRadians(radius, units), "meters");
   let bufferPtr;
   if (isBufferWithParams) {
@@ -192,7 +194,8 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr);
   }
   // update the original GeoJSON with the new geometry
-  const buffered = parse(GEOSGeomToWKT(bufferPtr));
+  const bufferedWkb = GEOSGeomToWKB(bufferPtr);  
+  const buffered = Geometry.parse(bufferedWkb).toGeoJSON();
 
   // Detect if empty geometries
   if (coordsIsNaN(buffered.coordinates)) return undefined;
