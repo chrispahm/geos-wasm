@@ -54,3 +54,6 @@ $(GEOS_SRC)/configure:
 	echo "{}" > package.json; \
 	wget -nc $(GEOS_URL); \
 	tar -xf geos-$(GEOS_VERSION).tar.bz2;
+
+clean:
+	rm -rf $(SRC_DIR_FULL) $(ROOT_DIR) $(DIST_DIR)
