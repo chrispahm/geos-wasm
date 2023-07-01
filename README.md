@@ -110,8 +110,8 @@ The compiling process and overall project structure is largely copied from [gdal
 
 - Clone the repository.
 - Run `npm install`.
-- Run `npm compile` or `make`. Run `make type=debug` for a debug version.
-- Run `npm build`. Run `npm build-dev` for a debug version.
+- Run `npm run compile` or `make`. Run `make type=debug` for a debug version.
+- Run `npm run build`.
 
 ### Adding more GEOS functions
 
