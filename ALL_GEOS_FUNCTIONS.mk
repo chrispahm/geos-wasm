@@ -427,5 +427,47 @@ ALL_GEOS_FUNCTIONS = [\
   '_GEOSCoordSeq_setZ_r',\
   '_GEOSCoordSeq_getX_r',\
   '_GEOSCoordSeq_getY_r',\
-  '_GEOSCoordSeq_getZ_',\
+  '_GEOSCoordSeq_getZ_r',\
+  '_GEOSConstrainedDelaunayTriangulation',\
+  '_GEOSConstrainedDelaunayTriangulation_r',\
+  '_GEOSCoordSeq_copyFromArrays',\
+  '_GEOSCoordSeq_copyFromArrays_r',\
+  '_GEOSCoordSeq_copyFromBuffer',\
+  '_GEOSCoordSeq_copyFromBuffer_r',\
+  '_GEOSCoordSeq_copyToArrays',\
+  '_GEOSCoordSeq_copyToArrays_r',\
+  '_GEOSCoordSeq_copyToBuffer',\
+  '_GEOSCoordSeq_copyToBuffer_r',\
+  '_GEOSDensify',\
+  '_GEOSDensify_r',\
+  '_GEOSDistanceWithin',\
+  '_GEOSDistanceWithin_r',\
+  '_GEOSGeoJSONReader_create',\
+  '_GEOSGeoJSONReader_create_r',\
+  '_GEOSGeoJSONReader_destroy',\
+  '_GEOSGeoJSONReader_destroy_r',\
+  '_GEOSGeoJSONReader_readGeometry',\
+  '_GEOSGeoJSONReader_readGeometry_r',\
+  '_GEOSGeoJSONWriter_create',\
+  '_GEOSGeoJSONWriter_create_r',\
+  '_GEOSGeoJSONWriter_destroy',\
+  '_GEOSGeoJSONWriter_destroy_r',\
+  '_GEOSGeoJSONWriter_writeGeometry',\
+  '_GEOSGeoJSONWriter_writeGeometry_r',\
+  '_GEOSMakeValidParams_create',\
+  '_GEOSMakeValidParams_create_r',\
+  '_GEOSMakeValidParams_destroy',\
+  '_GEOSMakeValidParams_destroy_r',\
+  '_GEOSMakeValidParams_setKeepCollapsed',\
+  '_GEOSMakeValidParams_setKeepCollapsed_r',\
+  '_GEOSMakeValidParams_setMethod',\
+  '_GEOSMakeValidParams_setMethod_r',\
+  '_GEOSMakeValidWithParams',\
+  '_GEOSMakeValidWithParams_r',\
+  '_GEOSPreparedDistanceWithin',\
+  '_GEOSPreparedDistanceWithin_r',\
+  '_GEOSWKBWriter_getFlavor',\
+  '_GEOSWKBWriter_getFlavor_r',\
+  '_GEOSWKBWriter_setFlavor',\
+  '_GEOSWKBWriter_setFlavor_r',\
 ]"
