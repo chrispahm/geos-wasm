@@ -16,7 +16,8 @@ else
 TYPE_FLAGS = -O3
 endif
 
-EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s ERROR_ON_UNDEFINED_SYMBOLS=0
+# EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s ERROR_ON_UNDEFINED_SYMBOLS=0
+EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s
 EMMAKE ?= EMCC_CFLAGS="$(EMCC_CFLAGS)" emmake
 EMCMAKE ?= emcmake
 EMCC ?= CFLAGS="$(EMCC_CFLAGS)" emcc
