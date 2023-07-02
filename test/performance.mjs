@@ -26,7 +26,7 @@ const inputGeometry = {
 };
 
 // Define the buffer distance
-const bufferDistance = 100;
+const bufferDistance = 0.001;
 
 // Define the number of iterations to run
 const numIterations = 1000;
@@ -44,7 +44,7 @@ function runPerformanceTest() {
   // Measure the performance of the @turf/turf buffer method
   const turfBufferStart = performance.now();
   for (let i = 0; i < numIterations; i++) {
-    turf.buffer(inputGeometry, bufferDistance);
+    turf.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
   }
   const turfBufferEnd = performance.now();
   const turfBufferTime = turfBufferEnd - turfBufferStart;
