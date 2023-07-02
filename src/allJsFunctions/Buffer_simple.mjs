@@ -38,8 +38,9 @@ export default function buffer(geojson, radius, options = {}) {
   let bufferPtr = null
   if (isBufferWithParams) {
     bufferPtr = GEOSFunctions.GEOSBufferWithParams(geomPtr, bufferParamsPtr, radius);
+  } else {
+    bufferPtr = GEOSFunctions.GEOSBuffer(geomPtr, radius, quadrantSegments);
   }
-  bufferPtr = GEOSFunctions.GEOSBuffer(geomPtr, radius, quadrantSegments);
   // destroy the bufferParamsPtr if it exists
   if (bufferParamsPtr) {
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr);
