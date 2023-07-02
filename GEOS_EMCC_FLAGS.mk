@@ -33,7 +33,13 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSBufferParams_setSingleSided',\
   '_GEOSBufferWithParams',\
   '_GEOSGeom_destroy', \
-  '_finishGEOS'\
+  '_finishGEOS',\
+  '_GEOSGeoJSONReader_create',\
+  '_GEOSGeoJSONReader_destroy',\
+  '_GEOSGeoJSONReader_readGeometry',\
+  '_GEOSGeoJSONWriter_create',\
+  '_GEOSGeoJSONWriter_destroy',\
+  '_GEOSGeoJSONWriter_writeGeometry'\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\

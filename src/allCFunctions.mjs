@@ -22,4 +22,10 @@ export function initCFunctions() {
   GEOSFunctions.GEOSBufferParams_setSingleSided = Module.cwrap('GEOSBufferParams_setSingleSided', null, ["boolean"]);
   GEOSFunctions.GEOSFree = Module.cwrap('GEOSFree', null, ['number']);
   GEOSFunctions.GEOSGeom_destroy = Module.cwrap('GEOSGeom_destroy', null, ['number']);  
+  GEOSFunctions.GEOSGeoJSONReader_create = Module.cwrap('GEOSGeoJSONReader_create', 'number', [null]);
+  GEOSFunctions.GEOSGeoJSONReader_destroy = Module.cwrap('GEOSGeoJSONReader_destroy', null, ['number']);
+  GEOSFunctions.GEOSGeoJSONReader_readGeometry = Module.cwrap('GEOSGeoJSONReader_readGeometry', 'number', ['number', 'number']);
+  GEOSFunctions.GEOSGeoJSONWriter_create = Module.cwrap('GEOSGeoJSONWriter_create', 'number', [null]);
+  GEOSFunctions.GEOSGeoJSONWriter_destroy = Module.cwrap('GEOSGeoJSONWriter_destroy', null, ['number']);
+  GEOSFunctions.GEOSGeoJSONWriter_writeGeometry = Module.cwrap('GEOSGeoJSONWriter_writeGeometry', 'number', ['number', 'number', 'number']);
 }

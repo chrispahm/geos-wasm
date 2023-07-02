@@ -1,5 +1,7 @@
 import { GEOSFunctions } from "../allCFunctions.mjs";
-import { geojsonToPointers, pointersToGeojson } from "../helpers/geojson.mjs";
+// import { geojsonToPointers, pointersToGeojson } from "../helpers/geojson.mjs";
+import fromGeoJSON from './GeoJSONReader.mjs';
+import toGeoJSON from './GeoJSONWriter.mjs';
 
 export default function buffer(geojson, radius, options = {}) {
   const {
@@ -31,20 +33,18 @@ export default function buffer(geojson, radius, options = {}) {
     }
   }
   // create a GEOS object from the GeoJSON
-  // geojsonToPointers always returns an array of pointers  
-  const geomPtrs = geojsonToPointers(geojson);
-  // create a buffer for each geometry
-  const bufferPtrs = geomPtrs.map((geomPtr) => {
-    if (isBufferWithParams) {
-      return GEOSFunctions.GEOSBufferWithParams(geomPtr, bufferParamsPtr, radius);
-    }
-    return GEOSFunctions.GEOSBuffer(geomPtr, radius, quadrantSegments);  
-  });
+  const geomPtr = fromGeoJSON(geojson);
+  // create a buffer
+  let bufferPtr = null
+  if (isBufferWithParams) {
+    bufferPtr = GEOSFunctions.GEOSBufferWithParams(geomPtr, bufferParamsPtr, radius);
+  }
+  bufferPtr = GEOSFunctions.GEOSBuffer(geomPtr, radius, quadrantSegments);
   // destroy the bufferParamsPtr if it exists
   if (bufferParamsPtr) {
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr);
   }
   // update the original GeoJSON with the new geometry
-  const bufferGeojson = pointersToGeojson(bufferPtrs, geojson);
+  const bufferGeojson = toGeoJSON(bufferPtr);
   return bufferGeojson;
 }
