@@ -2,9 +2,11 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
 import pkg from './package.json' assert { type: 'json' }
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [
   // browser-friendly (minified) UMD build
+  /*
   {
     input: 'src/index.mjs',
     output: {
@@ -16,6 +18,7 @@ export default [
       format: 'umd'
     },
     plugins: [
+      nodePolyfills(),
       resolve({
         browser: true
       }),
@@ -23,32 +26,35 @@ export default [
       terser()
     ]
   },
+  */
   {
     input: 'src/index.mjs',
     output: [
       {
         name: 'geos',
         file: pkg.module,
-        globals: {
-          'util': 'util',
-        },
+        inlineDynamicImports: true,
         format: 'es'
       },
       {
         name: 'geos',
-        globals: {
-          'util': 'util',
-        },
+        inlineDynamicImports: true,
         file: 'docs/assets/geos.esm.js',
-        format: 'es'
+        format: 'es',
       }
     ],
     plugins: [
       resolve({
-        browser: true
+        browser: true,
+        preferBuiltins: false,
       }),
-      commonjs(),
-      terser()
+      commonjs({
+        transformMixedEsModules: true
+      }),
+      nodePolyfills(),
+      // 
+      // babel({ babelHelpers: 'bundled' }),
+      // terser()
     ]
   }
 ]

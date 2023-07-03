@@ -28,6 +28,7 @@
     "@turf/center": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "@turf/meta": "^6.5.0",
+    "buffer-es6": "^4.9.3",
     "d3-geo": "^3.1.0",
     "wkt": "^0.1.1"
   },
@@ -36,6 +37,7 @@
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@turf/turf": "^6.5.0",
-    "rollup": "^3.25.3"
+    "rollup": "^3.25.3",
+    "rollup-plugin-polyfill-node": "^0.12.0"
   }
 }
