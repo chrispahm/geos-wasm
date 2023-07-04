@@ -39,6 +39,8 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
+  'setValue',\
+  'getValue',\
   'ccall',\
   'cwrap',\
   'UTF8ToString',\
