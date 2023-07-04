@@ -51,9 +51,9 @@ export default [
       commonjs({
         transformMixedEsModules: true
       }),
-      nodePolyfills(),
-      // 
-      // babel({ babelHelpers: 'bundled' }),
+      nodePolyfills({
+        include: null
+      })
       // terser()
     ]
   }
