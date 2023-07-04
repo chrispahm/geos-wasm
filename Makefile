@@ -51,5 +51,6 @@ $(GEOS_SRC)/Makefile: $(GEOS_SRC)/configure
 $(GEOS_SRC)/configure:
 	mkdir -p $(SRC_DIR); \
 	cd $(SRC_DIR); \
+	echo "{}" > package.json; \
 	wget -nc $(GEOS_URL); \
 	tar -xf geos-$(GEOS_VERSION).tar.bz2;
