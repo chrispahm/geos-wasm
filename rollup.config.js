@@ -5,28 +5,6 @@ import pkg from './package.json' assert { type: 'json' }
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [
-  // browser-friendly (minified) UMD build
-  /*
-  {
-    input: 'src/index.mjs',
-    output: {
-      name: 'geos',
-      file: pkg.browser,
-      globals: {
-        'util': 'util',
-      },
-      format: 'umd'
-    },
-    plugins: [
-      nodePolyfills(),
-      resolve({
-        browser: true
-      }),
-      commonjs(),
-      terser()
-    ]
-  },
-  */
   {
     input: 'src/index.mjs',
     output: [
@@ -53,8 +31,8 @@ export default [
       }),
       nodePolyfills({
         include: null
-      })
-      // terser()
+      }),
+      terser()
     ]
   }
 ]
