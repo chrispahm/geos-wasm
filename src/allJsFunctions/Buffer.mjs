@@ -196,6 +196,9 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
   // update the original GeoJSON with the new geometry
   const bufferedWkb = GEOSGeomToWKB(bufferPtr);  
   const buffered = Geometry.parse(bufferedWkb).toGeoJSON();
+  // destroy the GEOS objects
+  GEOSFunctions.GEOSGeom_destroy(geomPtr);
+  GEOSFunctions.GEOSGeom_destroy(bufferPtr);  
 
   // Detect if empty geometries
   if (coordsIsNaN(buffered.coordinates)) return undefined;
