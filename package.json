@@ -24,7 +24,10 @@
   "author": "Christoph Pahmeyer",
   "license": "LGPL-3.0-or-later",
   "dependencies": {
-    "@syncpoint/wkx": "^0.5.2",
+    "@loaders.gl/core": "^3.4.6",
+    "@loaders.gl/gis": "^3.4.6",
+    "@loaders.gl/json": "^3.4.6",
+    "@loaders.gl/wkt": "^3.4.6",
     "@turf/center": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "@turf/meta": "^6.5.0",

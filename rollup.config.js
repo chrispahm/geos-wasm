@@ -32,7 +32,7 @@ export default [
       nodePolyfills({
         include: null
       }),
-      terser()
+      // terser()
     ]
   }
 ]

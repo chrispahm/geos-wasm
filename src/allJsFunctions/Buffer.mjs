@@ -36,7 +36,10 @@ import {
   lengthToRadians,
   earthRadius,
 } from "@turf/helpers";
-import { Geometry } from "@syncpoint/wkx"
+import { binaryToGeojson } from '@loaders.gl/gis'
+import { WKBWriter, WKBLoader } from '@loaders.gl/wkt';
+import { encodeSync, parseSync } from '@loaders.gl/core';
+import { _GeoJSONLoader } from '@loaders.gl/json';
 
 /**
  * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
@@ -201,8 +204,8 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
   }
   // create a GEOS object from the GeoJSON
   // geojsonToPointers always returns an array of pointers  
-  // const geomPtr = GEOSGeomFromWKT(stringify(projected));
-  const wkb = Geometry.parseGeoJSON(projected).toWkb()
+  // const geomPtr = GEOSGeomFromWKT(stringify(projected));  
+  const wkb = new Uint8Array(encodeSync(projected, WKBWriter));  
   const geomPtr = GEOSGeomFromWKB(wkb);
   const distance = radiansToLength(lengthToRadians(radius, units), "meters");
   let bufferPtr;
@@ -217,7 +220,16 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
   }
   // update the original GeoJSON with the new geometry
   const bufferedWkb = GEOSGeomToWKB(bufferPtr);  
-  const buffered = Geometry.parse(bufferedWkb).toGeoJSON();
+  const binaryBufferedWKB = parseSync(bufferedWkb, WKBLoader);
+  binaryBufferedWKB.featureIds = {
+    value: [0]
+  }
+  binaryBufferedWKB.properties = properties;
+  console.log('binaryBufferedWKB', binaryBufferedWKB);
+  
+  const buffered = binaryToGeojson(binaryBufferedWKB);
+  console.log('buffered', buffered);
+  
   // destroy the GEOS objects
   GEOSFunctions.GEOSGeom_destroy(geomPtr);
   GEOSFunctions.GEOSGeom_destroy(bufferPtr);  

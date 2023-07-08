@@ -20,6 +20,6 @@ export default function GeosGeomToWKB(geomPtr) {
   // free the memory
   GEOSFunctions.GEOSFree(wkbPtr);
   GEOSFunctions.GEOSFree(wkbPtrLength);
-  const buffer = Buffer.from(wkb);
-  return buffer;
+  // const buffer = Buffer.from(wkb);
+  return wkb.buffer;
 }
