@@ -6,6 +6,10 @@ else
 GEOS_EMCC_FLAGS += -O3
 endif
 
+# output a single js file instead of a .js and .wasm file
+# this is ~33% larger than the two file output, but it's easier to use
+# in different environments...
+GEOS_EMCC_FLAGS += -s SINGLE_FILE=1
 GEOS_EMCC_FLAGS += -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s FORCE_FILESYSTEM=1
 GEOS_EMCC_FLAGS += -lworkerfs.js
 GEOS_EMCC_FLAGS += -lnodefs.js
@@ -21,6 +25,8 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_malloc',\
 	'_initGEOS',\
   '_GEOSFree', \
+  '_GEOSGeomFromWKB_buf',\
+  '_GEOSGeomToWKB_buf',\
 	'_GEOSGeomFromWKT',\
   '_GEOSGeomToWKT',\
   '_GEOSBuffer', \
@@ -37,6 +43,8 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
+  'setValue',\
+  'getValue',\
   'ccall',\
   'cwrap',\
   'UTF8ToString',\

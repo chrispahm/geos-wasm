@@ -1,10 +1,31 @@
 /*
 Most of the code in this file is copied from Turf.js, 
 with some modifications to make it work with GEOS instead of JSTS.
+
+The MIT License (MIT)
+
+Copyright (c) 2017 TurfJS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 import { GEOSFunctions } from "../allCFunctions.mjs";
-import GEOSGeomToWKT from "./GeomToWKT.mjs";
-import GEOSGeomFromWKT from "./GeomFromWKT.mjs";
+import GEOSGeomToWKB from "./GeomToWKB.mjs";
+import GEOSGeomFromWKB from "./GeomFromWKB.mjs";
 import center from "@turf/center";
 import { geomEach, featureEach } from "@turf/meta";
 import { geoAzimuthalEquidistant } from "d3-geo";
@@ -15,7 +36,7 @@ import {
   lengthToRadians,
   earthRadius,
 } from "@turf/helpers";
-import { stringify, parse } from "wkt";
+import { Geometry } from "@syncpoint/wkx"
 
 /**
  * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
@@ -151,6 +172,7 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
 
   // Project GeoJSON to Azimuthal Equidistant projection (convert to Meters)
   const projection = defineProjection(geometry);
+
   const projected = {
     type: geometry.type,
     coordinates: projectCoords(geometry.coordinates, projection),
@@ -179,7 +201,9 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
   }
   // create a GEOS object from the GeoJSON
   // geojsonToPointers always returns an array of pointers  
-  const geomPtr = GEOSGeomFromWKT(stringify(projected));
+  // const geomPtr = GEOSGeomFromWKT(stringify(projected));
+  const wkb = Geometry.parseGeoJSON(projected).toWkb()
+  const geomPtr = GEOSGeomFromWKB(wkb);
   const distance = radiansToLength(lengthToRadians(radius, units), "meters");
   let bufferPtr;
   if (isBufferWithParams) {
@@ -192,7 +216,11 @@ function bufferFeature(geojson, radius, units, steps, endCapStyle, joinStyle, mi
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr);
   }
   // update the original GeoJSON with the new geometry
-  const buffered = parse(GEOSGeomToWKT(bufferPtr));
+  const bufferedWkb = GEOSGeomToWKB(bufferPtr);  
+  const buffered = Geometry.parse(bufferedWkb).toGeoJSON();
+  // destroy the GEOS objects
+  GEOSFunctions.GEOSGeom_destroy(geomPtr);
+  GEOSFunctions.GEOSGeom_destroy(bufferPtr);  
 
   // Detect if empty geometries
   if (coordsIsNaN(buffered.coordinates)) return undefined;

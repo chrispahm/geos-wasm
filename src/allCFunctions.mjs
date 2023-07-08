@@ -9,6 +9,8 @@ export function initCFunctions() {
   Module.ccall('initGEOS', null, ['string', 'string'], ['GEOS_INIT_NOTICE=NO', 'GEOS_ENABLE_TESTS=NO']);
 
   GEOSFunctions.initGEOS = Module.cwrap('initGEOS', null, ['string', 'string']);
+  GEOSFunctions.GEOSGeomFromWKB_buf = Module.cwrap('GEOSGeomFromWKB_buf', 'number', ['number', 'number']);
+  GEOSFunctions.GEOSGeomToWKB_buf = Module.cwrap('GEOSGeomToWKB_buf', 'number', ['number', 'number']);
   GEOSFunctions.GEOSGeomToWKT = Module.cwrap('GEOSGeomToWKT', 'number', ['number']);
   GEOSFunctions.GEOSGeomFromWKT = Module.cwrap('GEOSGeomFromWKT', 'number', ['number']);
   GEOSFunctions.GEOSBuffer = Module.cwrap('GEOSBuffer', 'number', ['number', 'number', 'number']);

@@ -32,7 +32,10 @@ export default function initGeosJs(
       GEOSFunctions.finishGEOS();
     }
 
-    CModule(GEOSFunctions.Module).then(() => {
+    
+    Module.locateFile = config.locateFile;
+    
+    CModule(GEOSFunctions.Module).then((res) => {      
       resolve(allJsFunctions);
     });
   });
