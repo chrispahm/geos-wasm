@@ -36,10 +36,18 @@ function runPerformanceTest() {
   // Measure the performance of your buffer method
   const geosBufferStart = performance.now();
   for (let i = 0; i < numIterations; i++) {
-    geos.buffer(inputGeometry, bufferDistance);
+    geos.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
   }
   const geosBufferEnd = performance.now();
   const geosBufferTime = geosBufferEnd - geosBufferStart;
+
+  // Measure the performance of your buffer_simple method
+  const geosBufferSimpleStart = performance.now();
+  for (let i = 0; i < numIterations; i++) {
+    geos.buffer_simple(inputGeometry, bufferDistance);
+  }
+  const geosBufferSimpleEnd = performance.now();
+  const geosBufferSimpleTime = geosBufferSimpleEnd - geosBufferSimpleStart;
 
   // Measure the performance of the @turf/turf buffer method
   const turfBufferStart = performance.now();
@@ -51,6 +59,7 @@ function runPerformanceTest() {
 
   // Output the results
   console.log(`GEOS buffer method took ${geosBufferTime} milliseconds to run ${numIterations} times.`);
+  console.log(`GEOS buffer_simple method took ${geosBufferSimpleTime} milliseconds to run ${numIterations} times.`);
   console.log(`@turf/turf buffer method took ${turfBufferTime} milliseconds to run ${numIterations} times.`);
 }
 
