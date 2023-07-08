@@ -1,6 +1,6 @@
 import { GEOSFunctions } from "../allCFunctions.mjs";
 
-export default function fromGeoJSON(geojson) {
+export default function GEOSGeomFromGeoJSON(geojson) {
   if (typeof geojson === 'object') {
     geojson = JSON.stringify(geojson);
   } else if (typeof geojson !== 'string') {
