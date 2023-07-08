@@ -53,10 +53,15 @@ function runPerformanceTest(inputGeometry, numIterations, bufferSingleFeatures =
   for (let i = 0; i < numIterations; i++) {
     if (bufferSingleFeatures) {
       inputGeometry.features.forEach((feature) => {
-        geos.buffer_simple(feature, bufferDistance);
+        geos.buffer_simple(feature.geometry, bufferDistance);
       });
     } else {
-      geos.buffer_simple(inputGeometry, bufferDistance);
+      if (inputGeometry.type === 'FeatureCollection') {
+        const geoms = turf.geometryCollection(inputGeometry.features.map((feature) => feature.geometry));
+        geos.buffer_simple(geoms, bufferDistance);
+      } else {
+        geos.buffer_simple(inputGeometry, bufferDistance);
+      }
     }
   }
   const geosBufferSimpleEnd = performance.now();
@@ -68,7 +73,7 @@ function runPerformanceTest(inputGeometry, numIterations, bufferSingleFeatures =
   for (let i = 0; i < numIterations; i++) {
     if (bufferSingleFeatures) {
       inputGeometry.features.forEach((feature) => {
-        turf.buffer(feature, bufferDistance);
+        turf.buffer(feature, bufferDistance, { units: 'degrees' });
       });
     } else {
       turf.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
