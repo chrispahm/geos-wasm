@@ -2,9 +2,9 @@ import { performance } from 'perf_hooks';
 import * as turf from '@turf/turf';
 import initGeosJs from '../src/index.mjs';
 const geos = await initGeosJs();
-
+import australiaBorder from './data/aus.json' assert { type: "json" };
 // Define the input geometry
-const inputGeometry = {
+const simpleGeometry = {
   "type": "Polygon",
   "coordinates": [
     [
@@ -29,39 +29,100 @@ const inputGeometry = {
 const bufferDistance = 0.001;
 
 // Define the number of iterations to run
-const numIterations = 1000;
+const runs = 100;
 
 // Define the performance test function
-function runPerformanceTest() {
-  // Measure the performance of your buffer method
+function runPerformanceTest(inputGeometry, numIterations, bufferSingleFeatures = false) {
+  // Measure the performance of the GEOS buffer method
   const geosBufferStart = performance.now();
-  for (let i = 0; i < numIterations; i++) {
-    geos.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
+  for (let i = 0; i < numIterations; i++) { 
+    if (bufferSingleFeatures) {
+      inputGeometry.features.forEach((feature) => {
+        geos.buffer(feature, bufferDistance, { units: 'degrees' });
+      });
+    } else {
+      geos.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
+    }
   }
   const geosBufferEnd = performance.now();
-  const geosBufferTime = geosBufferEnd - geosBufferStart;
+  const geosBufferTime = Math.round(geosBufferEnd - geosBufferStart);
+  const geosTimePerIteration = geosBufferTime / numIterations;
 
   // Measure the performance of your buffer_simple method
   const geosBufferSimpleStart = performance.now();
   for (let i = 0; i < numIterations; i++) {
-    geos.buffer_simple(inputGeometry, bufferDistance);
+    if (bufferSingleFeatures) {
+      inputGeometry.features.forEach((feature) => {
+        geos.buffer_simple(feature, bufferDistance);
+      });
+    } else {
+      geos.buffer_simple(inputGeometry, bufferDistance);
+    }
   }
   const geosBufferSimpleEnd = performance.now();
   const geosBufferSimpleTime = geosBufferSimpleEnd - geosBufferSimpleStart;
+  const geosSimpleTimePerIteration = geosBufferSimpleTime / numIterations;
 
   // Measure the performance of the @turf/turf buffer method
   const turfBufferStart = performance.now();
   for (let i = 0; i < numIterations; i++) {
-    turf.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
+    if (bufferSingleFeatures) {
+      inputGeometry.features.forEach((feature) => {
+        turf.buffer(feature, bufferDistance);
+      });
+    } else {
+      turf.buffer(inputGeometry, bufferDistance, { units: 'degrees' });
+    }
   }
   const turfBufferEnd = performance.now();
-  const turfBufferTime = turfBufferEnd - turfBufferStart;
+  const turfBufferTime = Math.round(turfBufferEnd - turfBufferStart);
+  const turfTimePerIteration = turfBufferTime / numIterations;
 
   // Output the results
   console.log(`GEOS buffer method took ${geosBufferTime} milliseconds to run ${numIterations} times.`);
+  console.log(`Average time per iteration: ${Math.round(geosTimePerIteration)} milliseconds.`);
   console.log(`GEOS buffer_simple method took ${geosBufferSimpleTime} milliseconds to run ${numIterations} times.`);
+  console.log(`Average time per iteration: ${Math.round(geosSimpleTimePerIteration)} milliseconds.`);
   console.log(`@turf/turf buffer method took ${turfBufferTime} milliseconds to run ${numIterations} times.`);
+  console.log(`Average time per iteration: ${Math.round(turfTimePerIteration)} milliseconds.`);
+
+  // log which was faster including multiplication factor
+  if (geosTimePerIteration < turfTimePerIteration) {
+    console.log(`GEOS buffer method was ${Math.round(turfTimePerIteration / geosTimePerIteration * 100) / 100}x faster than @turf/turf buffer method.`);
+  } else {
+    console.log(`@turf/turf buffer method was ${Math.round(geosTimePerIteration / turfTimePerIteration * 100) / 100}x faster than GEOS buffer method.`);
+  }
+  // add a line break
+  console.log();
 }
 
 // Run the performance test
-runPerformanceTest();
+const geometryToTest = [
+  {
+    name: 'Simple',
+    feature: simpleGeometry,
+  },
+  {
+    name: 'Australia',
+    feature: australiaBorder,
+  }
+];
+geometryToTest.forEach(obj => {
+  console.log(`Testing feature ${obj.name}`);
+  runPerformanceTest(obj.feature, runs);
+});
+
+// real life performance test
+console.log('Real life performance test');
+
+// we download all NUTS3 geometries from Eurostat
+// and buffer them by 1km
+const nuts3 = await fetch('https://ec.europa.eu/eurostat/cache/GISCO/distribution/v2/nuts/geojson/NUTS_RG_10M_2021_4326_LEVL_3.geojson').then(res => res.json());
+
+// we try 2 tests: 
+// 1. buffer all geometries at once
+console.log('Buffering all geometries at once');
+runPerformanceTest(nuts3, 1);
+// 2. buffer each geometry individually
+console.log('Buffering each geometry individually');
+runPerformanceTest(nuts3, 1, true);
