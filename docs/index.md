@@ -63,4 +63,6 @@ TLDR; Use [WKB](https://libgeos.org/specifications/wkb/). See [the examples](htt
 
 Transferring data between JavaScript and WASM can be costly, especially [if serialization is involved](https://kylebarron.dev/blog/geos-wasm#serialization-is-costly). Both WKT and GeoJSON are text-based formats, which means that they need to be parsed and serialized in order to transfer them. This is *very* slow and can partially be avoided by using a binary format like WKB. Keep in mind that WKB is not human-readable, so you might want to use WKT or GeoJSON for debugging purposes.
 
-### How to deal with 
+### How to deal with `RuntimeError: table index is out of bounds`
+
+This error is usually thrown when GEOS throws an error in an operation. E.g. when passing an [EWKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry#Format_variations) to `GEOSGeomFromWKT`, which solely supports regular WKT input. Refer to the stack trace to identify the function that threw the error, and check if a) the input is valid and b) the function arguments are of the correct type. Also make sure to check the [test directory](https://github.com/chrispahm/geos-wasm/test/tests) for examples.
