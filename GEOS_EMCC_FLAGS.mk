@@ -1,48 +1,459 @@
 GEOS_EMCC_FLAGS :=
 
 ifeq ($(type), debug)
-GEOS_EMCC_FLAGS += -g4 --source-map-base http://localhost:8080/dist/ -fsanitize=address
+GEOS_EMCC_FLAGS += -gsource-map -fsanitize=address
 else
 GEOS_EMCC_FLAGS += -O3
 endif
 
+# GEOS_EMCC_FLAGS += -gsource-map -fsanitize=leak
 # output a single js file instead of a .js and .wasm file
 # this is ~33% larger than the two file output, but it's easier to use
 # in different environments...
-GEOS_EMCC_FLAGS += -s SINGLE_FILE=1
-GEOS_EMCC_FLAGS += -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s FORCE_FILESYSTEM=1
-GEOS_EMCC_FLAGS += -lworkerfs.js
-GEOS_EMCC_FLAGS += -lnodefs.js
-GEOS_EMCC_FLAGS += -s TOTAL_MEMORY=512MB -s ALLOW_MEMORY_GROWTH=1 -s DISABLE_EXCEPTION_CATCHING=0
+GEOS_EMCC_FLAGS += -s SINGLE_FILE=1 -s ALLOW_TABLE_GROWTH=1
+GEOS_EMCC_FLAGS += -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s FORCE_FILESYSTEM=0
+GEOS_EMCC_FLAGS += -s ALLOW_MEMORY_GROWTH=1 -s DISABLE_EXCEPTION_CATCHING=0
 GEOS_EMCC_FLAGS += -s WASM=1 -s EXPORT_ES6=1 -s MODULARIZE=1 -s 'EXPORT_NAME="CModule"'
-GEOS_EMCC_FLAGS += -s RESERVED_FUNCTION_POINTERS=200
 
-# Enable the next line to export all functions,
-# make sure to disable the EXPORTED_FUNCTIONS array below
-# when doing so.
+# export all functions
 # GEOS_EMCC_FLAGS += -s LINKABLE=1 -s EXPORT_ALL=1 
 GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_malloc',\
-	'_initGEOS',\
-  '_GEOSFree', \
-  '_GEOSGeomFromWKB_buf',\
-  '_GEOSGeomToWKB_buf',\
-	'_GEOSGeomFromWKT',\
+  '_initGEOS',\
+	'_GEOSContext_setNoticeHandler_r',\
+  '_GEOSContext_setErrorHandler_r',\
+  '_GEOS_interruptRegisterCallback',\
+  '_GEOS_interruptRequest',\
+  '_GEOS_interruptCancel',\
+  '_GEOSFree',\
+  '_GEOSFree_r',\
+  '_GEOSDisjoint',\
+  '_GEOSDisjoint_r',\
+  '_GEOSTouches',\
+  '_GEOSTouches_r',\
+  '_GEOSIntersects',\
+  '_GEOSIntersects_r',\
+  '_GEOSCrosses',\
+  '_GEOSCrosses_r',\
+  '_GEOSWithin',\
+  '_GEOSWithin_r',\
+  '_GEOSContains',\
+  '_GEOSContains_r',\
+  '_GEOSOverlaps',\
+  '_GEOSOverlaps_r',\
+  '_GEOSCovers',\
+  '_GEOSCovers_r',\
+  '_GEOSCoveredBy',\
+  '_GEOSCoveredBy_r',\
+  '_GEOSRelatePattern',\
+  '_GEOSRelatePattern_r',\
+  '_GEOSRelatePatternMatch',\
+  '_GEOSRelatePatternMatch_r',\
+  '_GEOSRelate',\
+  '_GEOSRelate_r',\
+  '_GEOSRelateBoundaryNodeRule',\
+  '_GEOSRelateBoundaryNodeRule_r',\
+  '_GEOSisValid',\
+  '_GEOSisValid_r',\
+  '_GEOSisValidReason',\
+  '_GEOSisValidReason_r',\
+  '_GEOSisValidDetail',\
+  '_GEOSisValidDetail_r',\
+  '_GEOSEquals',\
+  '_GEOSEquals_r',\
+  '_GEOSEqualsExact',\
+  '_GEOSEqualsExact_r',\
+  '_GEOSDistance',\
+  '_GEOSDistance_r',\
+  '_GEOSDistanceIndexed',\
+  '_GEOSDistanceIndexed_r',\
+  '_GEOSHausdorffDistance',\
+  '_GEOSHausdorffDistance_r',\
+  '_GEOSHausdorffDistanceDensify',\
+  '_GEOSHausdorffDistanceDensify_r',\
+  '_GEOSFrechetDistance',\
+  '_GEOSFrechetDistance_r',\
+  '_GEOSFrechetDistanceDensify',\
+  '_GEOSFrechetDistanceDensify_r',\
+  '_GEOSArea',\
+  '_GEOSArea_r',\
+  '_GEOSLength',\
+  '_GEOSLength_r',\
+  '_GEOSNearestPoints',\
+  '_GEOSNearestPoints_r',\
+  '_GEOSGeomFromWKT',\
+  '_GEOSGeomFromWKT_r',\
   '_GEOSGeomToWKT',\
-  '_GEOSBuffer', \
+  '_GEOSGeomToWKT_r',\
+  '_GEOSGeomToWKB_buf',\
+  '_GEOSGeomToWKB_buf_r',\
+  '_GEOSGeomFromWKB_buf',\
+  '_GEOSGeomFromWKB_buf_r',\
+  '_GEOSGeomToHEX_buf',\
+  '_GEOSGeomToHEX_buf_r',\
+  '_GEOSGeomFromHEX_buf',\
+  '_GEOSGeomFromHEX_buf_r',\
+  '_GEOSisEmpty',\
+  '_GEOSisEmpty_r',\
+  '_GEOSisSimple',\
+  '_GEOSisSimple_r',\
+  '_GEOSisRing',\
+  '_GEOSisRing_r',\
+  '_GEOSGeomType',\
+  '_GEOSGeomType_r',\
+  '_GEOSGeomTypeId',\
+  '_GEOSGeomTypeId_r',\
+  '_GEOSEnvelope',\
+  '_GEOSEnvelope_r',\
+  '_GEOSIntersection',\
+  '_GEOSIntersection_r',\
+  '_GEOSIntersectionPrec',\
+  '_GEOSIntersectionPrec_r',\
+  '_GEOSBuffer',\
+  '_GEOSBuffer_r',\
+  '_GEOSBufferWithStyle',\
+  '_GEOSBufferWithStyle_r',\
+  '_GEOSSingleSidedBuffer',\
+  '_GEOSSingleSidedBuffer_r',\
+  '_GEOSOffsetCurve',\
+  '_GEOSOffsetCurve_r',\
+  '_GEOSConvexHull',\
+  '_GEOSConvexHull_r',\
+  '_GEOSMinimumRotatedRectangle',\
+  '_GEOSMinimumRotatedRectangle_r',\
+  '_GEOSMaximumInscribedCircle',\
+  '_GEOSMaximumInscribedCircle_r',\
+  '_GEOSLargestEmptyCircle',\
+  '_GEOSLargestEmptyCircle_r',\
+  '_GEOSMinimumWidth',\
+  '_GEOSMinimumWidth_r',\
+  '_GEOSMinimumClearanceLine',\
+  '_GEOSMinimumClearanceLine_r',\
+  '_GEOSMinimumClearance',\
+  '_GEOSMinimumClearance_r',\
+  '_GEOSDifference',\
+  '_GEOSDifference_r',\
+  '_GEOSDifferencePrec',\
+  '_GEOSDifferencePrec_r',\
+  '_GEOSBoundary',\
+  '_GEOSBoundary_r',\
+  '_GEOSSymDifference',\
+  '_GEOSSymDifference_r',\
+  '_GEOSSymDifferencePrec',\
+  '_GEOSSymDifferencePrec_r',\
+  '_GEOSUnion',\
+  '_GEOSUnion_r',\
+  '_GEOSUnionPrec',\
+  '_GEOSUnionPrec_r',\
+  '_GEOSUnaryUnion',\
+  '_GEOSUnaryUnion_r',\
+  '_GEOSUnaryUnionPrec',\
+  '_GEOSUnaryUnionPrec_r',\
+  '_GEOSCoverageUnion',\
+  '_GEOSCoverageUnion_r',\
+  '_GEOSNode',\
+  '_GEOSNode_r',\
+  '_GEOSUnionCascaded',\
+  '_GEOSUnionCascaded_r',\
+  '_GEOSPointOnSurface',\
+  '_GEOSPointOnSurface_r',\
+  '_GEOSClipByRect',\
+  '_GEOSClipByRect_r',\
+  '_GEOSGeom_destroy',\
+  '_GEOSGeom_destroy_r',\
+  '_GEOSGetNumCoordinates',\
+  '_GEOSGetNumCoordinates_r',\
+  '_GEOSNormalize',\
+  '_GEOSNormalize_r',\
+  '_GEOSGetNumInteriorRings',\
+  '_GEOSGetNumInteriorRings_r',\
+  '_GEOSGetNumGeometries',\
+  '_GEOSGetNumGeometries_r',\
+  '_GEOSGetGeometryN',\
+  '_GEOSGetGeometryN_r',\
+  '_GEOSGeomGetPointN',\
+  '_GEOSGeomGetPointN_r',\
+  '_GEOSGeomGetStartPoint',\
+  '_GEOSGeomGetStartPoint_r',\
+  '_GEOSGeomGetEndPoint',\
+  '_GEOSGeomGetEndPoint_r',\
+  '_GEOSisClosed',\
+  '_GEOSisClosed_r',\
+  '_GEOSGeomGetLength',\
+  '_GEOSGeomGetLength_r',\
+  '_GEOSGeomGetNumPoints',\
+  '_GEOSGeomGetNumPoints_r',\
+  '_GEOSGeomGetX',\
+  '_GEOSGeomGetX_r',\
+  '_GEOSGeomGetY',\
+  '_GEOSGeomGetY_r',\
+  '_GEOSGeomGetZ',\
+  '_GEOSGeomGetZ_r',\
+  '_GEOSGetExteriorRing',\
+  '_GEOSGetExteriorRing_r',\
+  '_GEOSGetInteriorRingN',\
+  '_GEOSGetInteriorRingN_r',\
+  '_GEOSGetCentroid',\
+  '_GEOSGetCentroid_r',\
+  '_GEOSMinimumBoundingCircle',\
+  '_GEOSMinimumBoundingCircle_r',\
+  '_GEOSGeom_createCollection',\
+  '_GEOSGeom_createCollection_r',\
+  '_GEOSPolygonize',\
+  '_GEOSPolygonize_r',\
+  '_GEOSPolygonize_valid',\
+  '_GEOSPolygonize_valid_r',\
+  '_GEOSPolygonizer_getCutEdges',\
+  '_GEOSPolygonizer_getCutEdges_r',\
+  '_GEOSPolygonize_full',\
+  '_GEOSPolygonize_full_r',\
+  '_GEOSBuildArea',\
+  '_GEOSBuildArea_r',\
+  '_GEOSMakeValid',\
+  '_GEOSMakeValid_r',\
+  '_GEOSLineMerge',\
+  '_GEOSLineMerge_r',\
+  '_GEOSReverse',\
+  '_GEOSReverse_r',\
+  '_GEOSGetSRID',\
+  '_GEOSGetSRID_r',\
+  '_GEOSSetSRID',\
+  '_GEOSSetSRID_r',\
+  '_GEOSGeom_getUserData',\
+  '_GEOSGeom_getUserData_r',\
+  '_GEOSGeom_setUserData',\
+  '_GEOSGeom_setUserData_r',\
+  '_GEOSHasZ',\
+  '_GEOSHasZ_r',\
+  '_GEOS_getWKBOutputDims',\
+  '_GEOS_getWKBOutputDims_r',\
+  '_GEOS_setWKBOutputDims',\
+  '_GEOS_setWKBOutputDims_r',\
+  '_GEOS_getWKBByteOrder',\
+  '_GEOS_getWKBByteOrder_r',\
+  '_GEOS_setWKBByteOrder',\
+  '_GEOS_setWKBByteOrder_r',\
+  '_GEOSCoordSeq_create',\
+  '_GEOSCoordSeq_create_r',\
+  '_GEOSCoordSeq_setOrdinate',\
+  '_GEOSCoordSeq_setOrdinate_r',\
+  '_GEOSCoordSeq_setX',\
+  '_GEOSCoordSeq_setY',\
+  '_GEOSCoordSeq_setZ',\
+  '_GEOSCoordSeq_setXY',\
+  '_GEOSCoordSeq_setXY_r',\
+  '_GEOSCoordSeq_setXYZ',\
+  '_GEOSCoordSeq_setXYZ_r',\
+  '_GEOSCoordSeq_clone',\
+  '_GEOSCoordSeq_clone_r',\
+  '_GEOSCoordSeq_getOrdinate',\
+  '_GEOSCoordSeq_getOrdinate_r',\
+  '_GEOSCoordSeq_getX',\
+  '_GEOSCoordSeq_getY',\
+  '_GEOSCoordSeq_getZ',\
+  '_GEOSCoordSeq_getXY',\
+  '_GEOSCoordSeq_getXY_r',\
+  '_GEOSCoordSeq_getXYZ',\
+  '_GEOSCoordSeq_getXYZ_r',\
+  '_GEOSCoordSeq_getSize',\
+  '_GEOSCoordSeq_getSize_r',\
+  '_GEOSCoordSeq_getDimensions',\
+  '_GEOSCoordSeq_getDimensions_r',\
+  '_GEOSCoordSeq_isCCW',\
+  '_GEOSCoordSeq_isCCW_r',\
+  '_GEOSCoordSeq_destroy',\
+  '_GEOSCoordSeq_destroy_r',\
+  '_GEOSGeom_getCoordSeq',\
+  '_GEOSGeom_getCoordSeq_r',\
+  '_GEOSGeom_createPoint',\
+  '_GEOSGeom_createPoint_r',\
+  '_GEOSGeom_createPointFromXY',\
+  '_GEOSGeom_createPointFromXY_r',\
+  '_GEOSGeom_createLinearRing',\
+  '_GEOSGeom_createLinearRing_r',\
+  '_GEOSGeom_createLineString',\
+  '_GEOSGeom_createLineString_r',\
+  '_GEOSGeom_createPolygon',\
+  '_GEOSGeom_createPolygon_r',\
+  '_GEOSGeom_clone',\
+  '_GEOSGeom_clone_r',\
+  '_GEOSGeom_setPrecision',\
+  '_GEOSGeom_setPrecision_r',\
+  '_GEOSGeom_getPrecision',\
+  '_GEOSGeom_getPrecision_r',\
+  '_GEOSGeom_getDimensions',\
+  '_GEOSGeom_getDimensions_r',\
+  '_GEOSGeom_getCoordinateDimension',\
+  '_GEOSGeom_getCoordinateDimension_r',\
+  '_GEOSGeom_getXMin',\
+  '_GEOSGeom_getXMin_r',\
+  '_GEOSGeom_getYMin',\
+  '_GEOSGeom_getYMin_r',\
+  '_GEOSGeom_getXMax',\
+  '_GEOSGeom_getXMax_r',\
+  '_GEOSGeom_getYMax',\
+  '_GEOSGeom_getYMax_r',\
+  '_GEOSSimplify',\
+  '_GEOSSimplify_r',\
+  '_GEOSTopologyPreserveSimplify',\
+  '_GEOSTopologyPreserveSimplify_r',\
+  '_GEOSWKTReader_create',\
+  '_GEOSWKTReader_create_r',\
+  '_GEOSWKTReader_destroy',\
+  '_GEOSWKTReader_destroy_r',\
+  '_GEOSWKTReader_read',\
+  '_GEOSWKTReader_read_r',\
+  '_GEOSWKTWriter_create',\
+  '_GEOSWKTWriter_create_r',\
+  '_GEOSWKTWriter_destroy',\
+  '_GEOSWKTWriter_destroy_r',\
+  '_GEOSWKTWriter_write',\
+  '_GEOSWKTWriter_write_r',\
+  '_GEOSWKTWriter_setTrim',\
+  '_GEOSWKTWriter_setTrim_r',\
+  '_GEOSWKTWriter_setRoundingPrecision',\
+  '_GEOSWKTWriter_setRoundingPrecision_r',\
+  '_GEOSWKTWriter_setOutputDimension',\
+  '_GEOSWKTWriter_setOutputDimension_r',\
+  '_GEOSWKTWriter_getOutputDimension',\
+  '_GEOSWKTWriter_getOutputDimension_r',\
+  '_GEOSWKTWriter_setOld3D',\
+  '_GEOSWKTWriter_setOld3D_r',\
+  '_GEOSWKBReader_create',\
+  '_GEOSWKBReader_create_r',\
+  '_GEOSWKBReader_destroy',\
+  '_GEOSWKBReader_destroy_r',\
+  '_GEOSWKBReader_read',\
+  '_GEOSWKBReader_read_r',\
+  '_GEOSWKBReader_readHEX',\
+  '_GEOSWKBReader_readHEX_r',\
+  '_GEOSWKBWriter_create',\
+  '_GEOSWKBWriter_create_r',\
+  '_GEOSWKBWriter_destroy',\
+  '_GEOSWKBWriter_destroy_r',\
+  '_GEOSWKBWriter_write',\
+  '_GEOSWKBWriter_write_r',\
+  '_GEOSWKBWriter_writeHEX',\
+  '_GEOSWKBWriter_writeHEX_r',\
+  '_GEOSWKBWriter_getOutputDimension',\
+  '_GEOSWKBWriter_getOutputDimension_r',\
+  '_GEOSWKBWriter_setOutputDimension',\
+  '_GEOSWKBWriter_setOutputDimension_r',\
+  '_GEOSWKBWriter_getByteOrder',\
+  '_GEOSWKBWriter_getByteOrder_r',\
+  '_GEOSWKBWriter_setByteOrder',\
+  '_GEOSWKBWriter_setByteOrder_r',\
+  '_GEOSWKBWriter_getIncludeSRID',\
+  '_GEOSWKBWriter_getIncludeSRID_r',\
+  '_GEOSWKBWriter_setIncludeSRID',\
+  '_GEOSWKBWriter_setIncludeSRID_r',\
+  '_GEOSPrepare',\
+  '_GEOSPrepare_r',\
+  '_GEOSPreparedGeom_destroy',\
+  '_GEOSPreparedGeom_destroy_r',\
+  '_GEOSPreparedContains',\
+  '_GEOSPreparedContains_r',\
+  '_GEOSPreparedContainsProperly',\
+  '_GEOSPreparedContainsProperly_r',\
+  '_GEOSPreparedCoveredBy',\
+  '_GEOSPreparedCoveredBy_r',\
+  '_GEOSPreparedCovers',\
+  '_GEOSPreparedCovers_r',\
+  '_GEOSPreparedCrosses',\
+  '_GEOSPreparedCrosses_r',\
+  '_GEOSPreparedDisjoint',\
+  '_GEOSPreparedDisjoint_r',\
+  '_GEOSPreparedIntersects',\
+  '_GEOSPreparedIntersects_r',\
+  '_GEOSPreparedOverlaps',\
+  '_GEOSPreparedOverlaps_r',\
+  '_GEOSPreparedTouches',\
+  '_GEOSPreparedTouches_r',\
+  '_GEOSPreparedWithin',\
+  '_GEOSPreparedWithin_r',\
+  '_GEOSPreparedNearestPoints',\
+  '_GEOSPreparedNearestPoints_r',\
+  '_GEOSPreparedDistance',\
+  '_GEOSPreparedDistance_r',\
+  '_GEOSSTRtree_create',\
+  '_GEOSSTRtree_create_r',\
+  '_GEOSSTRtree_insert',\
+  '_GEOSSTRtree_insert_r',\
+  '_GEOSSTRtree_query',\
+  '_GEOSSTRtree_query_r',\
+  '_GEOSSTRtree_nearest',\
+  '_GEOSSTRtree_nearest_r',\
+  '_GEOSSTRtree_nearest_generic',\
+  '_GEOSSTRtree_nearest_generic_r',\
+  '_GEOSSTRtree_iterate',\
+  '_GEOSSTRtree_iterate_r',\
+  '_GEOSSTRtree_remove',\
+  '_GEOSSTRtree_remove_r',\
+  '_GEOSSTRtree_destroy',\
+  '_GEOSSTRtree_destroy_r',\
+  '_GEOSProject',\
+  '_GEOSProject_r',\
+  '_GEOSInterpolate',\
+  '_GEOSInterpolate_r',\
+  '_GEOSProjectNormalized',\
+  '_GEOSProjectNormalized_r',\
+  '_GEOSInterpolateNormalized',\
+  '_GEOSInterpolateNormalized_r',\
+  '_GEOSGeom_extractUniquePoints',\
+  '_GEOSGeom_extractUniquePoints_r',\
+  '_GEOSGeom_createEmptyCollection',\
+  '_GEOSGeom_createEmptyCollection_r',\
+  '_GEOSGeom_createEmptyPoint',\
+  '_GEOSGeom_createEmptyPoint_r',\
+  '_GEOSGeom_createEmptyLineString',\
+  '_GEOSGeom_createEmptyLineString_r',\
+  '_GEOSGeom_createEmptyPolygon',\
+  '_GEOSGeom_createEmptyPolygon_r',\
+  '_GEOSOrientationIndex',\
+  '_GEOSOrientationIndex_r',\
+  '_GEOSSharedPaths',\
+  '_GEOSSharedPaths_r',\
+  '_GEOSSnap',\
+  '_GEOSSnap_r',\
   '_GEOSBufferParams_create',\
+  '_GEOSBufferParams_create_r',\
   '_GEOSBufferParams_destroy',\
+  '_GEOSBufferParams_destroy_r',\
   '_GEOSBufferParams_setEndCapStyle',\
+  '_GEOSBufferParams_setEndCapStyle_r',\
   '_GEOSBufferParams_setJoinStyle',\
+  '_GEOSBufferParams_setJoinStyle_r',\
   '_GEOSBufferParams_setMitreLimit',\
+  '_GEOSBufferParams_setMitreLimit_r',\
   '_GEOSBufferParams_setQuadrantSegments',\
+  '_GEOSBufferParams_setQuadrantSegments_r',\
   '_GEOSBufferParams_setSingleSided',\
+  '_GEOSBufferParams_setSingleSided_r',\
   '_GEOSBufferWithParams',\
-  '_GEOSGeom_destroy', \
+  '_GEOSBufferWithParams_r',\
+  '_GEOSDelaunayTriangulation',\
+  '_GEOSDelaunayTriangulation_r',\
+  '_GEOSVoronoiDiagram',\
+  '_GEOSVoronoiDiagram_r',\
+  '_GEOSSegmentIntersection',\
+  '_GEOSSegmentIntersection_r',\
+  '_GEOS_init_r',\
+  '_GEOSContext_setNoticeMessageHandler_r',\
+  '_GEOSContext_setErrorMessageHandler_r',\
+  '_GEOS_finish_r',\
+  '_GEOSversion',\
+  '_GEOSjtsport',\
+  '_GEOSCoordSeq_setX_r',\
+  '_GEOSCoordSeq_setY_r',\
+  '_GEOSCoordSeq_setZ_r',\
+  '_GEOSCoordSeq_getX_r',\
+  '_GEOSCoordSeq_getY_r',\
   '_finishGEOS'\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
+  'addFunction',\
+  'removeFunction',\
   'setValue',\
   'getValue',\
   'ccall',\
