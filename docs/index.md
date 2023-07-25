@@ -4,7 +4,7 @@ This is a WebAssembly build of the [GEOS](https://libgeos.org/) library. It can 
 
 GEOS-WASM exposes the low-level GEOS C-API to JavaScript without any abstractions. It is intended to be used as a building block for higher-level libraries and specific use cases.
 
-If you're looking for a simple to use geospatial analysis library in JavaScript, check out [turf.js](https://turfjs.org/)!
+If you're looking for a simple to use geospatial analysis library in JavaScript, check out [turf.js](https://turfjs.org/)! Also keep an eye on [GeoArrow](https://github.com/kylebarron/geoarrow-rs), which brings efficient, vectorized geospatial operations in the browser.
 
 ## Installation
 
@@ -54,3 +54,13 @@ geos.GEOSWKTReader_destroy(reader)
 geos.GEOSGeom_destroy(geomPtr)
 geos.GEOSFree(areaPtr)
 ```
+
+## FAQ
+
+### What is the preferred way to pass Geometries between JavaScript and GEOS-WASM?
+
+TLDR; Use [WKB](https://libgeos.org/specifications/wkb/). See [the examples](https://chrispahm.github.io/geos-wasm/examples/) for imlementation details.
+
+Transferring data between JavaScript and WASM can be costly, especially [if serialization is involved](https://kylebarron.dev/blog/geos-wasm#serialization-is-costly). Both WKT and GeoJSON are text-based formats, which means that they need to be parsed and serialized in order to transfer them. This is *very* slow and can partially be avoided by using a binary format like WKB. Keep in mind that WKB is not human-readable, so you might want to use WKT or GeoJSON for debugging purposes.
+
+### How to deal with 

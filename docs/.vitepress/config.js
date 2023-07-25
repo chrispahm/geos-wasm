@@ -15,7 +15,7 @@ export default defineConfig({
   description: "API documentation for GEOS-WASM",
   lang: 'en-US',
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/geos-wasm/favicon.ico' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@chrispahm' }],
     ['meta', { name: 'twitter:creator', content: '@chrispahm' }],
@@ -51,7 +51,8 @@ export default defineConfig({
         text: 'Getting Started',
         items: [
           { text: 'Installation', link: '/#installation' },
-          { text: 'Usage', link: '/#usage' }
+          { text: 'Usage', link: '/#usage' },
+          { text: 'FAQ', link: '/#faq' },
         ]
       },
       {
