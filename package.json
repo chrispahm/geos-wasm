@@ -1,14 +1,18 @@
 {
   "name": "geos-wasm",
   "version": "0.0.1",
-  "description": "Experimental GEOS WASM port",
+  "description": "A WebAssembly build of GEOS",
   "type": "module",
-  "main": "./src/index.mjs",
-  "browser": "./build/package/geos.umd.js",
+  "main": "./build/package/geos.esm.js",
+  "browser": "./build/package/geos.esm.js",
   "module": "./build/package/geos.esm.js",
   "directories": {
     "test": "test"
   },
+  "files": [
+    "build/package/geos.esm.js",
+    "src"
+  ],
   "scripts": {
     "make": "rm -f build/package/* && make && npm run build",
     "build": "rollup -c && npx tsc",
