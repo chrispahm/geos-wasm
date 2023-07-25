@@ -1,7 +1,7 @@
 {
   // Change this to match your project
   "include": [
-    "src/geosFunctions.mjs"
+    "src/allCFunctions.mjs"
   ],
   "compilerOptions": {
     "module": "NodeNext",
