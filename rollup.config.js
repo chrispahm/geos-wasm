@@ -1,8 +1,10 @@
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
-import pkg from './package.json' assert { type: 'json' }
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { readFileSync } from 'fs'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const pkg = JSON.parse(readFileSync('./package.json'))
 
 export default [
   {
@@ -18,13 +20,13 @@ export default [
         name: 'geos',
         inlineDynamicImports: true,
         file: 'docs/assets/geos.esm.js',
-        format: 'es',
+        format: 'es'
       }
     ],
     plugins: [
       resolve({
         browser: true,
-        preferBuiltins: false,
+        preferBuiltins: false
       }),
       commonjs({
         transformMixedEsModules: true
