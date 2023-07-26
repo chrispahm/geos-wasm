@@ -26,6 +26,34 @@ GEOS provides many of the algorithms used by [PostGIS](http://www.postgis.net/),
 import initGeosJs from './src/index.mjs';
 const geos = await initGeosJs();
 ```
+## Example
+
+```js
+import initGeosJs from '../../build/package/geos.esm.js'
+// initGeosJs returns a promise that resolves to a GEOS object
+const geos = await initGeosJs()
+
+// use the GEOS object to call GEOS functions
+// Example: get the area of a polygon
+// create a WKT reader
+const reader = geos.GEOSWKTReader_create()
+const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
+// read the WKT string into a GEOS geometry -> returns a pointer
+const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+// create a pointer where the area will be written to
+const areaPtr = geos.Module._malloc(8)
+// calculate the area of the geometry
+geos.GEOSArea(geomPtr, areaPtr)
+// read the area from the pointer into a JS number
+const area = geos.Module.getValue(areaPtr, 'double')
+
+console.log(area) // area = 1
+
+// free the WKT reader, the geometry, and the pointer
+geos.GEOSWKTReader_destroy(reader)
+geos.GEOSGeom_destroy(geomPtr)
+geos.GEOSFree(areaPtr)
+```
 
 ## API
 
