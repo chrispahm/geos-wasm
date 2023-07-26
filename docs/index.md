@@ -26,7 +26,7 @@ in a browser, you can use a CDN like [Skypack](https://www.skypack.dev/view/geos
 
 This library exposes a single function `initGeosJs` that returns a promise that resolves to a GEOS object. The GEOS object contains all the GEOS functions as properties. The GEOS object is a wrapper around the [GEOS C-API](https://libgeos.org/doxygen/geos__c_8h.html).
 
-Using GEOS-WASM is essentially the same as using GEOS in C. This means that you have to manage memory yourself and deal with pointers, which can be a bit tricky. You can find examples by checking the [examples](/examples) section of the documentation, as well reading through the [tests directory](https://github.com/chrispahm/geos-wasm/test/tests).
+Using GEOS-WASM is essentially the same as using GEOS in C. This means that you have to manage memory yourself and deal with pointers, which can be a bit tricky. You can find examples by checking the [examples](/examples/buffer) section of the documentation, as well reading through the [tests directory](https://github.com/chrispahm/geos-wasm/test/tests).
 
 ```js
 import initGeosJs from '../../build/package/geos.esm.js'
