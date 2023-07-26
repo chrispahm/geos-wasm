@@ -4,7 +4,7 @@
 Tests if two geometries cross.
 
 **Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if true, 0 if false, -1 on error.  
+**Returns**: <code>number</code> - = 1 if true, 0 if false, -1 on error.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ Tests if two geometries cross.
 Tests if two geometries cross in a given context.
 
 **Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if true, 0 if false, -1 on error.  
+**Returns**: <code>number</code> - = 1 if true, 0 if false, -1 on error.  
 
 | Param | Type | Description |
 | --- | --- | --- |

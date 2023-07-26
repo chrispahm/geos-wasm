@@ -229,6 +229,41 @@ Computes the distance between two geometries using a prepared geometry for the f
 
 
 ---
+<a name="exp_module_geos--geos.GEOSPreparedDistanceWithin"></a>
+
+## geos.GEOSPreparedDistanceWithin ⇒ <code>number</code> ⏏
+Tests whether the distance between a prepared geometry and another geometry is within a specified distance.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 if the geometries are within the distance, 0 if not, or -1 on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a6f5a0b7f6f9e3a9c4b0b8a3c1a4d4e6d  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| prep | <code>number</code> | A pointer to a GEOS prepared geometry object. |
+| g2 | <code>number</code> | A pointer to a GEOS geometry object. |
+| dist | <code>number</code> | A double value representing the distance threshold. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedDistanceWithin_r"></a>
+
+## geos.GEOSPreparedDistanceWithin\_r ⇒ <code>number</code> ⏏
+Computes the distance between a prepared geometry and another geometry, and checks if it is within a given tolerance.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 if the geometries are within the given distance of each other, 0 if not, or -1 on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a9f7c0b6f9b2c6a0e3f4f5a7d8b9e5d  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ctx | <code>number</code> | A GEOS context handle. |
+| prep | <code>number</code> | A pointer to a prepared GEOS geometry object. |
+| g | <code>number</code> | A pointer to a GEOS geometry object. |
+| tolerance | <code>number</code> | A non-negative distance value. |
+
+
+---
 <a name="exp_module_geos--geos.GEOSPreparedDistance_r"></a>
 
 ## geos.GEOSPreparedDistance\_r ⇒ <code>number</code> ⏏

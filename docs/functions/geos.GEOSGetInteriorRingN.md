@@ -2,6 +2,7 @@
 
 ## geos.GEOSGetInteriorRingN ⇒ <code>number</code> ⏏
 Returns the Nth interior ring of a polygon geometry.
+Note: Returned object is a pointer to internal storage: it must NOT be destroyed directly.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - - The interior ring geometry, or null if an error occurred or the index is out of range.  

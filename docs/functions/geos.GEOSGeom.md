@@ -527,12 +527,12 @@ Creates a geometry collection of a specified type from an array of geometries.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the collection, or NULL on error.  
-**See**: https://geos.osgeo.org/doxygen/classgeos_1_1geom_1_1GeometryFactory.html#a0c8f6a2a9f5b7a3d7e5c7b0f8b6f9c0e  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a871ccb7efc6dd63162b3547fcd76c638  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>number</code> | An integer representing the geometry type, such as 1 for POINT, 4 for MULTIPOINT, etc. |
-| geoms | <code>string</code> | A pointer to an array of pointers to GEOS geometry objects. |
+| geoms | <code>number</code> | A pointer to a list of GEOS geometry pointers. |
 | ngeoms | <code>number</code> | The number of geometries in the array. |
 
 

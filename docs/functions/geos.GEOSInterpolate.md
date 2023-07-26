@@ -1,7 +1,7 @@
 <a name="exp_module_geos--geos.GEOSInterpolate"></a>
 
 ## geos.GEOSInterpolate ⇒ <code>number</code> ⏏
-Returns a point along a line representing the given distance from the origin along the geometry.
+Measuring from start of line, return point that is distance the start. Line parameter must be a LineString. The returned point is not guaranteed to intersect the line due to limitations of floating point calculations.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - A new GEOSGeometry pointer representing the interpolated point, or NULL on exception.  
@@ -53,7 +53,7 @@ This is a thread-safe variant of GEOSInterpolateNormalized that takes a GEOS con
 <a name="exp_module_geos--geos.GEOSInterpolate_r"></a>
 
 ## geos.GEOSInterpolate\_r ⇒ <code>number</code> ⏏
-Returns a point along a line representing the given distance from the origin along the geometry, using a reentrant context.
+Measuring from start of line, return point that is distance the start. Line parameter must be a LineString. The returned point is not guaranteed to intersect the line due to limitations of floating point calculations.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - A new GEOSGeometry pointer representing the interpolated point, or NULL on exception.  

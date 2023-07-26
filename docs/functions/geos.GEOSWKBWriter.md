@@ -77,6 +77,37 @@ Returns the byte order used by the writer.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSWKBWriter_getFlavor"></a>
+
+## geos.GEOSWKBWriter\_getFlavor ⇒ <code>number</code> ⏏
+Returns the output format of a WKB writer.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - An integer representing the output format, such as 0 for WKB_ISO, 1 for WKB_SFSQL, or 2 for WKB_HEX.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4c9b8b4f8e2f6d3a0e5c5b7b0a6f  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| writer | <code>number</code> | A pointer to a GEOS WKB writer object. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBWriter_getFlavor_r"></a>
+
+## geos.GEOSWKBWriter\_getFlavor\_r ⇒ <code>number</code> ⏏
+Returns the output format of a WKB writer.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - An integer representing the output format, such as 0 for WKB_ISO, 1 for WKB_SFSQL, or 2 for WKB_HEX. Returns -1 on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a0a7f9c4a6f5b8e0f3c8b9a2d1b6b4e3a  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A GEOS context handle. |
+| writer | <code>number</code> | A pointer to a GEOS WKB writer object. |
+
+
+---
 <a name="exp_module_geos--geos.GEOSWKBWriter_getIncludeSRID"></a>
 
 ## geos.GEOSWKBWriter\_getIncludeSRID ⇒ <code>number</code> ⏏
@@ -161,6 +192,38 @@ Sets the byte order for the writer with a context handle.
 | handle | <code>number</code> | A pointer to the GEOS context handle. |
 | writer | <code>number</code> | The GEOSWKBWriter pointer. |
 | byteOrder | <code>number</code> | The byte order to use (GEOS_WKB_XDR or GEOS_WKB_NDR). |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBWriter_setFlavor"></a>
+
+## geos.GEOSWKBWriter\_setFlavor ⇒ <code>void</code> ⏏
+Sets the output format of a WKB writer to either WKB or EWKB.
+
+**Kind**: Exported member  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9a0e1f9fa62b0d657c4b18e01a276a94  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| writer | <code>number</code> | A pointer to a GEOS WKB writer object. |
+| flavor | <code>number</code> | An integer representing the output format, 1 for WKB, 2 for EWKB. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBWriter_setFlavor_r"></a>
+
+## geos.GEOSWKBWriter\_setFlavor\_r ⇒ <code>number</code> ⏏
+Sets the output format of a WKB writer to either WKB or EWKB.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a7f9a6d3a5f2b0f1a4c6b4c2e3b9b8a9e  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A GEOS context handle. |
+| writer | <code>number</code> | A pointer to a GEOS WKB writer object. |
+| flavor | <code>number</code> | An integer representing the output format, 1 for WKB, 2 for EWKB. |
 
 
 ---
