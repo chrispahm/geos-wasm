@@ -4,7 +4,7 @@ This is a WebAssembly build of the [GEOS](https://libgeos.org/) library. It can 
 
 GEOS-WASM exposes the low-level GEOS C-API to JavaScript without any abstractions. It is intended to be used as a building block for higher-level libraries and specific use cases.
 
-If you're looking for a simple to use geospatial analysis library in JavaScript, check out [turf.js](https://turfjs.org/)! Also keep an eye on [GeoArrow](https://github.com/kylebarron/geoarrow-rs), which brings efficient, vectorized geospatial operations in the browser.
+If you're looking for a simple to use geospatial analysis library in JavaScript, check out [turf.js](https://turfjs.org/)! Also keep an eye on [GeoArrow](https://github.com/kylebarron/geoarrow-rs), which brings efficient, vectorized geospatial operations to the browser.
 
 ## Installation
 
