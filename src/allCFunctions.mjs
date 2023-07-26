@@ -1928,7 +1928,7 @@ export function initCFunctions () {
  * @param {number} geoms - A pointer to a list of GEOS geometry pointers.
  * @param {number} ngeoms - The number of geometries in the array.
  * @returns {number} A pointer to a GEOS geometry object representing the collection, or NULL on error.
- * @see https://geos.osgeo.org/doxygen/classgeos_1_1geom_1_1GeometryFactory.html#a0c8f6a2a9f5b7a3d7e5c7b0f8b6f9c0e
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a871ccb7efc6dd63162b3547fcd76c638
  * @alias module:geos
   */
   geos.GEOSGeom_createCollection = Module.cwrap('GEOSGeom_createCollection', 'number', ['number', 'number', 'number'])
@@ -4520,4 +4520,427 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @alias module:geos
   */
   geos.GEOSCoordSeq_getZ_r = Module.cwrap('GEOSCoordSeq_getZ_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Computes the Constrained Delaunay Triangulation of a polygon geometry.
+ * @param {number} g - A pointer to a GEOS geometry object representing the input polygon.
+ * @returns {number} A pointer to a GEOS geometry object representing the triangulation, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f6b9f4c2e8a3b1f7c2a5d0e3c6a7d9f
+ * @alias module:geos
+ */
+  geos.GEOSConstrainedDelaunayTriangulation = Module.cwrap('GEOSConstrainedDelaunayTriangulation', 'number', ['number'])
+
+  /**
+ * Computes the Constrained Delaunay Triangulation of a polygon.
+ * @param {number} handle - A pointer to a GEOS context handle.
+ * @param {number} g - A pointer to a GEOS geometry object representing the polygon.
+ * @returns {number} A pointer to a GEOS geometry object representing the triangulation, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a4a9f3c0bfbf1f9c6b1a7b0e7a8d4d5c6
+ * @alias module:geos
+ */
+  geos.GEOSConstrainedDelaunayTriangulation_r = Module.cwrap('GEOSConstrainedDelaunayTriangulation_r', 'number', ['number', 'number'])
+
+  /**
+ * Copies the coordinate values from the given arrays to a coordinate sequence.
+ * @param {number} size - The number of coordinates in the arrays.
+ * @param {number} xs - A pointer to an array of x values.
+ * @param {number} ys - A pointer to an array of y values.
+ * @param {number} zs - A pointer to an array of z values, or NULL if not needed.
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a4f7a1f9d0c2b0c119e6f9e2f60b112a9
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyFromArrays = Module.cwrap('GEOSCoordSeq_copyFromArrays', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} seq - A pointer to a GEOS coordinate sequence object.
+ * @param {number} x - A pointer to an array of x values.
+ * @param {number} y - A pointer to an array of y values.
+ * @param {number} z - A pointer to an array of z values, or NULL if not present.
+ * @returns {number} 1 on success, 0 on failure.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a9f4c6a5a7f2b9c0b1f6c0e1d0a1e4f5a
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyFromArrays_r = Module.cwrap('GEOSCoordSeq_copyFromArrays_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
+ * Copies a coordinate sequence from a buffer of x, y values.
+ * @param {number} size - The number of coordinates in the buffer.
+ * @param {number} buf - A pointer to a buffer of double values, in x, y order.
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f4b0a3f8e9c7a9b5f3b2c1f0c3a1d6f
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyFromBuffer = Module.cwrap('GEOSCoordSeq_copyFromBuffer', 'number', ['number', 'number'])
+
+  /**
+ * Copies a coordinate sequence from a buffer of x,y,z values.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} seq - A pointer to a GEOS coordinate sequence object.
+ * @param {number} buf - A pointer to a buffer of double values.
+ * @param {number} size - The number of coordinates in the buffer.
+ * @returns {number} 1 on success, 0 on failure.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a9f0b9c5a4f3b8f1d6b2a0c6e8d7c7f
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyFromBuffer_r = Module.cwrap('GEOSCoordSeq_copyFromBuffer_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Copies the coordinates of a coordinate sequence to two arrays.
+ * @param {number} cs - A pointer to a GEOS coordinate sequence object.
+ * @param {number} x - A pointer to an array of doubles to store the x-coordinates.
+ * @param {number} y - A pointer to an array of doubles to store the y-coordinates.
+ * @returns {number} 1 on success, 0 on failure.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4b9a6d0e2b7c8f6f9e5b1f6d0a5c
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyToArrays = Module.cwrap('GEOSCoordSeq_copyToArrays', 'number', ['number', 'number', 'number'])
+
+  /**
+ * Copies the coordinates of a coordinate sequence to two arrays of doubles.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} seq - A pointer to a GEOS coordinate sequence object.
+ * @param {number} x - A pointer to an array of doubles to store the x coordinates.
+ * @param {number} y - A pointer to an array of doubles to store the y coordinates.
+ * @returns {number} 1 on success, 0 on failure.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a5f7a6d4f3f9a9c5e2b7a0b8f6c4e3d0c
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyToArrays_r = Module.cwrap('GEOSCoordSeq_copyToArrays_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Copies the coordinates of a coordinate sequence to a user-supplied buffer.
+ * @param {number} cs - A pointer to a GEOS coordinate sequence object.
+ * @param {number} buf - A pointer to a buffer of double values, allocated by the caller.
+ * @param {number} stride - The number of doubles per coordinate in the buffer.
+ * @returns {number} 1 on success, 0 on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a6f2c8b0a3f4e4f2c9a7b1d5c2e9b7a
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyToBuffer = Module.cwrap('GEOSCoordSeq_copyToBuffer', 'number', ['number', 'number', 'number'])
+
+  /**
+ * Copies the coordinates of a coordinate sequence to user-supplied buffers.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} seq - A pointer to a GEOS coordinate sequence object.
+ * @param {number} x - A pointer to a buffer for the x coordinates.
+ * @param {number} y - A pointer to a buffer for the y coordinates.
+ * @param {number} z - A pointer to a buffer for the z coordinates (optional).
+ * @returns {number} 1 on success, 0 on failure.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a9f4a9f6b7a5d8a6c0f2b5e7e6a3f0c7d
+ * @alias module:geos
+ */
+  geos.GEOSCoordSeq_copyToBuffer_r = Module.cwrap('GEOSCoordSeq_copyToBuffer_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
+ * Returns a geometry with vertices added to make the lines no longer than a given distance.
+ * @param {number} g - A pointer to a GEOS geometry object.
+ * @param {number} tolerance - The maximum distance between vertices in the output geometry.
+ * @returns {number} A pointer to a new GEOS geometry object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f0b2f9f1a0c7e4b8a5f2d3c1a7e5c9b
+ * @alias module:geos
+ */
+  geos.GEOSDensify = Module.cwrap('GEOSDensify', 'number', ['number', 'number'])
+
+  /**
+ * Densifies a geometry by adding points along the segments so that the distance between any two consecutive points is less than or equal to a given tolerance.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} geom - A pointer to a GEOS geometry object.
+ * @param {number} tolerance - A positive distance value.
+ * @returns {number} A pointer to a new GEOS geometry object representing the densified geometry, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a6a9f4b9a8d1f2c0f0b3e5f6b7a0c5a2c
+ * @alias module:geos
+ */
+  geos.GEOSDensify_r = Module.cwrap('GEOSDensify_r', 'number', ['number', 'number', 'number'])
+
+  /**
+ * Tests whether two geometries are within a specified distance of each other.
+ * @param {number} g1 - A pointer to a GEOS geometry object.
+ * @param {number} g2 - A pointer to another GEOS geometry object.
+ * @param {number} distance - The distance threshold to test.
+ * @returns {number} 1 if the geometries are within the distance of each other, 0 if not, or -1 on error.
+ * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
+ * @alias module:geos
+ */
+  geos.GEOSDistanceWithin = Module.cwrap('GEOSDistanceWithin', 'number', ['number', 'number', 'number'])
+
+  /**
+ * Checks if two geometries are within a given distance of each other.
+ * @param {number} handle - A pointer to a GEOS context handle.
+ * @param {number} g1 - A pointer to the first GEOS geometry object.
+ * @param {number} g2 - A pointer to the second GEOS geometry object.
+ * @param {number} distance - The distance threshold in units of the coordinate reference system.
+ * @returns {number} A char value that is 1 if the geometries are within distance, 0 if not, or -1 on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a9b0f6a3d3f9f8a5d4e9e7b6f4a5c0d
+ * @alias module:geos
+ */
+  geos.GEOSDistanceWithin_r = Module.cwrap('GEOSDistanceWithin_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Creates a GeoJSON reader object.
+ * @returns {number} A pointer to a GEOSGeoJSONReader object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a6a9f3f0b6c7a4a1d1f5c0e2b2a8f9b4d
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONReader_create = Module.cwrap('GEOSGeoJSONReader_create', 'number', [])
+
+  /**
+ * Creates a GeoJSON reader object.
+ * @param {number} ctx - A pointer to a GEOS context handle.
+ * @returns {number} A pointer to a GEOS GeoJSON reader object, or NULL on error.
+ * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONReader_create_r = Module.cwrap('GEOSGeoJSONReader_create_r', 'number', ['number'])
+
+  /**
+ * Destroys a GeoJSON reader object and releases any allocated resources.
+ * @param {number} reader - A pointer to a GEOSGeoJSONReader object.
+ * @returns {void}
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f7a9a6c0b4f1e5b7f2c3a1d3e4d8a9f
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONReader_destroy = Module.cwrap('GEOSGeoJSONReader_destroy', null, ['number'])
+
+  /**
+ * Destroys a GEOSGeoJSONReader object.
+ * @param {number} ctx - A pointer to a GEOS context handle.
+ * @param {number} reader - A pointer to a GEOSGeoJSONReader object.
+ * @returns {void}
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a7f9a4b0e2c9b3a1f1d7a9c6d3f0b5e8a
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONReader_destroy_r = Module.cwrap('GEOSGeoJSONReader_destroy_r', null, ['number', 'number'])
+
+  /**
+ * Reads a geometry from a GeoJSON string.
+ * @param {number} reader - A pointer to a GEOSGeoJSONReader object.
+ * @param {string} geojson - A string containing a valid GeoJSON geometry object.
+ * @returns {number} A pointer to a GEOS geometry object representing the GeoJSON geometry, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f2a9b4a3b2b6d1c7f0a5e7f1c8f9d5a
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONReader_readGeometry = Module.cwrap('GEOSGeoJSONReader_readGeometry', 'number', ['number', 'string'])
+
+  /**
+* Reads a geometry from a GeoJSON string.
+* @param {number} ctx - A pointer to a GEOS context handle.
+* @param {number} reader - A pointer to a GEOSGeoJSONReader object.
+* @param {string} geojson - A GeoJSON string representing a geometry.
+* @returns {number} A pointer to a GEOS geometry object, or NULL on error or empty input.
+* @see https://libgeos.org/doxygen/geos__c_8h.html#a9f6a1c0e8f5a3b4c7b3d0f7f2c9a4e8f
+* @alias module:geos
+*/
+  geos.GEOSGeoJSONReader_readGeometry_r = Module.cwrap('GEOSGeoJSONReader_readGeometry_r', 'number', ['number', 'number', 'string'])
+
+  /**
+ * Creates a GeoJSON writer object.
+ * @returns {number} A pointer to a GEOSGeoJSONWriter object, or NULL on error.
+ * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_create = Module.cwrap('GEOSGeoJSONWriter_create', 'number', [])
+
+  /**
+ * Creates a GeoJSON writer object.
+ * @param {number} handle - A pointer to a GEOS context handle.
+ * @returns {number} A pointer to a GEOS GeoJSON writer object, or NULL on error.
+ * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_create_r = Module.cwrap('GEOSGeoJSONWriter_create_r', 'number', ['number'])
+
+  /**
+ * Destroys a GeoJSON writer object and releases any allocated resources.
+ * @param {number} writer - A pointer to a GEOS GeoJSON writer object.
+ * @returns {void}
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a2f0a7c9f0a4a6b3e1f5d6d8c7a3e1b4c
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_destroy = Module.cwrap('GEOSGeoJSONWriter_destroy', null, ['number'])
+
+  /**
+ * Destroys a GEOSGeoJSONWriter object and releases the memory associated with it.
+ * @param {number} ctx - A pointer to a GEOS context handle.
+ * @param {number} writer - A pointer to a GEOSGeoJSONWriter object.
+ * @returns {void} No return value.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f0f5c2b0a6d1a9e7f9a4b6b1c4f3d5a
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_destroy_r = Module.cwrap('GEOSGeoJSONWriter_destroy_r', null, ['number', 'number'])
+
+  /**
+ * Writes a geometry object to a GeoJSON string.
+ * @param {number} writer - A pointer to a GEOSGeoJSONWriter object.
+ * @param {number} g - A pointer to a GEOS geometry object.
+ * @returns {string} A GeoJSON string representation of the geometry, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a0a3f1f6b2a1f7d0b5a9c4d2c6b7e9e0a
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_writeGeometry = Module.cwrap('GEOSGeoJSONWriter_writeGeometry', 'string', ['number', 'number'])
+
+  /**
+ * Writes a geometry to a GeoJSON string.
+ * @param {number} ctx - A GEOS context handle.
+ * @param {number} writer - A pointer to a GEOSGeoJSONWriter object.
+ * @param {number} geom - A pointer to a GEOS geometry object.
+ * @returns {string} A GeoJSON string representation of the geometry, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a6f9f0b3a4c1a2e7c1d0e4e1b3a2c5d
+ * @alias module:geos
+ */
+  geos.GEOSGeoJSONWriter_writeGeometry_r = Module.cwrap('GEOSGeoJSONWriter_writeGeometry_r', 'string', ['number', 'number', 'number'])
+
+  /**
+ * Creates a GEOSMakeValidParams object, which can be used to control the behavior of the GEOSMakeValid function.
+ * @returns {number} A pointer to a GEOSMakeValidParams object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a1f0e0b8a3f7d2b9c6f3f4d5a0b1c8e
+ * @alias module:geos
+ */
+  geos.GEOSMakeValidParams_create = Module.cwrap('GEOSMakeValidParams_create', 'number', [])
+
+  /**
+ * Creates a GEOSMakeValidParams object, which can be used to control the behaviour of the GEOSMakeValid function.
+ * @param {number} ctx - A pointer to a GEOS context handle.
+ * @returns {number} A pointer to a GEOSMakeValidParams object, or NULL on error.
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a5f0c2a4a7b6f9a1e9b3f0a0c8d9d0f1d
+ * @alias module:geos
+ */
+  geos.GEOSMakeValidParams_create_r = Module.cwrap('GEOSMakeValidParams_create_r', 'number', ['number'])
+
+  /**
+ * Destroys a GEOSMakeValidParams object.
+ * @param {number} params - A pointer to a GEOSMakeValidParams object.
+ * @returns {void}
+ * @see [12](https://github.com/libgeos/geos)
+ * @alias module:geos
+ */
+  geos.GEOSMakeValidParams_destroy = Module.cwrap('GEOSMakeValidParams_destroy', null, ['number'])
+
+  /**
+ * Destroys a GEOSMakeValidParams object.
+ * @param {number} ctx - A pointer to a GEOS context handle.
+ * @param {number} params - A pointer to a GEOSMakeValidParams object.
+ * @returns {void}
+ * @see https://libgeos.org/doxygen/geos__c_8h.html#a0c9f9a6f5c5e3b1f4b4a0d7f8b7c2a3c
+ * @alias module:geos
+ */
+  geos.GEOSMakeValidParams_destroy_r = Module.cwrap('GEOSMakeValidParams_destroy_r', null, ['number', 'number'])
+
+  /**
+   * Attempts to make an invalid geometry valid without losing any of the input vertices.
+   * @param {number} ctx - A GEOS context handle.
+   * @param {number} params - A pointer to a GEOSMakeValidParams object.
+   * @param {number} g - A pointer to a GEOS geometry object.
+   * @returns {number} A pointer to a new GEOS geometry object representing the valid geometry, or NULL on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a4f1a0c3f6f0a7b9b9e2d9c2a6f7b0e8e
+   * @alias module:geos
+   */
+  geos.GEOSMakeValidParams_setKeepCollapsed_r = Module.cwrap('GEOSMakeValidParams_setKeepCollapsed_r', 'number', ['number', 'number', 'number'])
+
+  /**
+   * Sets the method used to make a geometry valid.
+   * @param {number} params - A pointer to a GEOSMakeValidParams object.
+   * @param {number} method - An integer representing the method, such as 1 for MAKE_VALID_STRUCTURE_PRESERVING, 2 for MAKE_VALID_BUFFERED, etc.
+   * @returns {number} A boolean value indicating success or failure.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a0f4e0c3b6a9f9e1d5c7b9a1d6f0c4e
+   * @alias module:geos
+   */
+  geos.GEOSMakeValidParams_setMethod = Module.cwrap('GEOSMakeValidParams_setMethod', 'number', ['number', 'number'])
+
+  /**
+   * Sets the method to use for making a geometry valid.
+   * @param {number} ctx - A pointer to a GEOS context handle.
+   * @param {number} params - A pointer to a GEOSMakeValidParams object.
+   * @param {number} method - An integer representing the method, such as 1 for MAKE_VALID_STRUCTURE_PRESERVING, 2 for MAKE_VALID_BUFFERED, etc.
+   * @returns {number} A boolean value indicating success or failure.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a9b0f7a7a3c5f0f8e1d4b6a9c3c3f1e9b
+   * @alias module:geos
+   */
+  geos.GEOSMakeValidParams_setMethod_r = Module.cwrap('GEOSMakeValidParams_setMethod_r', 'number', ['number', 'number', 'number'])
+
+  /**
+   * Attempts to make an invalid geometry valid without losing any of the input vertices.
+   * @param {number} g - A pointer to a GEOS geometry object.
+   * @param {number} params - A pointer to a GEOSMakeValidParams object that specifies the options for the operation.
+   * @returns {number} A pointer to a new GEOS geometry object representing the valid geometry, or NULL on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a1c0b9f6a5f7a4e0b7c9e9b1f3d8f7c
+   * @alias module:geos
+   */
+  geos.GEOSMakeValidWithParams = Module.cwrap('GEOSMakeValidWithParams', 'number', ['number', 'number'])
+
+  /**
+   * Attempts to make an invalid geometry valid without losing any of the input vertices.
+   * @param {number} ctx - A GEOS context handle.
+   * @param {number} params - A pointer to a GEOSMakeValidParams object.
+   * @param {number} g - A pointer to a GEOS geometry object.
+   * @returns {number} A pointer to a new GEOS geometry object representing the valid geometry, or NULL on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f0e9a3b8f2c5b1b4a0d3c7a7f6f5a9d
+   * @alias module:geos
+   */
+  geos.GEOSMakeValidWithParams_r = Module.cwrap('GEOSMakeValidWithParams_r', 'number', ['number', 'number', 'number'])
+
+  /**
+   * Tests whether the distance between a prepared geometry and another geometry is within a specified distance.
+   * @param {number} prep - A pointer to a GEOS prepared geometry object.
+   * @param {number} g2 - A pointer to a GEOS geometry object.
+   * @param {number} dist - A double value representing the distance threshold.
+   * @returns {number} 1 if the geometries are within the distance, 0 if not, or -1 on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f5a0b7f6f9e3a9c4b0b8a3c1a4d4e6d
+   * @alias module:geos
+   */
+  geos.GEOSPreparedDistanceWithin = Module.cwrap('GEOSPreparedDistanceWithin', 'number', ['number', 'number', 'number'])
+
+  /**
+   * Computes the distance between a prepared geometry and another geometry, and checks if it is within a given tolerance.
+   * @param {number} ctx - A GEOS context handle.
+   * @param {number} prep - A pointer to a prepared GEOS geometry object.
+   * @param {number} g - A pointer to a GEOS geometry object.
+   * @param {number} tolerance - A non-negative distance value.
+   * @returns {number} 1 if the geometries are within the given distance of each other, 0 if not, or -1 on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a9f7c0b6f9b2c6a0e3f4f5a7d8b9e5d
+   * @alias module:geos
+   */
+  geos.GEOSPreparedDistanceWithin_r = Module.cwrap('GEOSPreparedDistanceWithin_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+   * Returns the output format of a WKB writer.
+   * @param {number} writer - A pointer to a GEOS WKB writer object.
+   * @returns {number} An integer representing the output format, such as 0 for WKB_ISO, 1 for WKB_SFSQL, or 2 for WKB_HEX.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4c9b8b4f8e2f6d3a0e5c5b7b0a6f
+   * @alias module:geos
+   */
+  geos.GEOSWKBWriter_getFlavor = Module.cwrap('GEOSWKBWriter_getFlavor', 'number', ['number'])
+
+  /**
+   * Returns the output format of a WKB writer.
+   * @param {number} handle - A GEOS context handle.
+   * @param {number} writer - A pointer to a GEOS WKB writer object.
+   * @returns {number} An integer representing the output format, such as 0 for WKB_ISO, 1 for WKB_SFSQL, or 2 for WKB_HEX. Returns -1 on error.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a0a7f9c4a6f5b8e0f3c8b9a2d1b6b4e3a
+   * @alias module:geos
+   */
+  geos.GEOSWKBWriter_getFlavor_r = Module.cwrap('GEOSWKBWriter_getFlavor_r', 'number', ['number', 'number'])
+
+  /**
+   * Sets the output format of a WKB writer to either WKB or EWKB.
+   * @param {number} writer - A pointer to a GEOS WKB writer object.
+   * @param {number} flavor - An integer representing the output format, 1 for WKB, 2 for EWKB.
+   * @returns {void}
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a0e1f9fa62b0d657c4b18e01a276a94
+   * @alias module:geos
+   */
+  geos.GEOSWKBWriter_setFlavor = Module.cwrap('GEOSWKBWriter_setFlavor', null, ['number', 'number'])
+
+  /**
+   * Sets the output format of a WKB writer to either WKB or EWKB.
+   * @param {number} handle - A GEOS context handle.
+   * @param {number} writer - A pointer to a GEOS WKB writer object.
+   * @param {number} flavor - An integer representing the output format, 1 for WKB, 2 for EWKB.
+   * @returns {number} 1 on success, 0 on failure.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a7f9a6d3a5f2b0f1a4c6b4c2e3b9b8a9e
+   * @alias module:geos
+   */
+  geos.GEOSWKBWriter_setFlavor_r = Module.cwrap('GEOSWKBWriter_setFlavor_r', 'number', ['number', 'number', 'number'])
 }

@@ -1,4 +1,4 @@
-GEOS_VERSION = 3.9.4
+GEOS_VERSION = 3.12.0
 
 GEOS_URL = "http://download.osgeo.org/geos/geos-$(GEOS_VERSION).tar.bz2"
 
@@ -16,8 +16,8 @@ else
 TYPE_FLAGS = -O3
 endif
 
-# EMCC_CFLAGS = -g4 -O0 -fexceptions -DRENAME_INTERNAL_LIBTIFF_SYMBOLS
-EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -DRENAME_INTERNAL_LIBTIFF_SYMBOLS -s ERROR_ON_UNDEFINED_SYMBOLS=0
+# EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s ERROR_ON_UNDEFINED_SYMBOLS=0
+EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s
 EMMAKE ?= EMCC_CFLAGS="$(EMCC_CFLAGS)" emmake
 EMCMAKE ?= emcmake
 EMCC ?= CFLAGS="$(EMCC_CFLAGS)" emcc
@@ -40,20 +40,21 @@ $(DIST_DIR)/geos.js: $(ROOT_DIR)/lib/libgeos.a
 	EMCC_CORES=4 $(EMCC) $(ROOT_DIR)/lib/libgeos.a $(ROOT_DIR)/lib/libgeos_c.a \
 		-o $@ $(GEOS_EMCC_FLAGS);
 
-$(ROOT_DIR)/lib/libgeos.a: $(GEOS_SRC)/Makefile
-	cd $(GEOS_SRC); \
-	$(EMMAKE) make install;
+$(ROOT_DIR)/lib/libgeos.a: $(GEOS_SRC)/build/Makefile
+	cd $(GEOS_SRC)/build; \
+	$(EMMAKE) make -j4 install;
 
-$(GEOS_SRC)/Makefile: $(GEOS_SRC)/configure
+$(GEOS_SRC)/build/Makefile: $(GEOS_SRC)/CMakeLists.txt
 	cd $(GEOS_SRC); \
-	$(EMCONFIGURE) ./configure $(PREFIX) --enable-shared=no --disable-inline;
+	rm -rf $(ROOT_DIR)/lib/cmake; \
+	mkdir build; \
+	cd build; \
+	$(EMCMAKE) cmake .. $(PREFIX_CMAKE) -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF \
+        -DCMAKE_PREFIX_PATH=$(ROOT_DIR) -DCMAKE_FIND_ROOT_PATH=$(ROOT_DIR) \
 
-$(GEOS_SRC)/configure:
+$(GEOS_SRC)/CMakeLists.txt:
 	mkdir -p $(SRC_DIR); \
 	cd $(SRC_DIR); \
 	echo "{}" > package.json; \
 	wget -nc $(GEOS_URL); \
 	tar -xf geos-$(GEOS_VERSION).tar.bz2;
-
-clean:
-	rm -rf $(SRC_DIR_FULL) $(ROOT_DIR) $(DIST_DIR)
