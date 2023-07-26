@@ -2,10 +2,11 @@ import { performance } from 'perf_hooks'
 import * as turf from '@turf/turf'
 import { readFileSync } from 'fs'
 import initGeosJs from '../src/index.mjs'
+import geosBuffer from '../docs/assets/buffer.js'
 
 const geos = await initGeosJs()
 
-const australiaBorder = JSON.parse(readFileSync('./data/aus.json'))
+const australiaBorder = JSON.parse(readFileSync('./test/data/AUS.json'))
 
 // Define the input geometry
 const simpleGeometry = {
@@ -42,10 +43,10 @@ function runPerformanceTest (inputGeometry, numIterations, bufferSingleFeatures 
   for (let i = 0; i < numIterations; i++) {
     if (bufferSingleFeatures) {
       inputGeometry.features.forEach((feature) => {
-        geos.buffer(feature, bufferDistance)
+        geosBuffer(feature, bufferDistance, { GEOS: geos })
       })
     } else {
-      geos.buffer(inputGeometry, bufferDistance)
+      geosBuffer(inputGeometry, bufferDistance, { GEOS: geos })
     }
   }
   const geosBufferEnd = performance.now()
