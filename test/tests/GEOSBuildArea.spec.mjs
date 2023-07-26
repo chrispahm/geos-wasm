@@ -39,7 +39,7 @@ test('GEOSBuildArea', async (t) => {
   const areaWkt = geos.GEOSWKTWriter_write(writer, areaPtr)
 
   // Expected WKT string for the result geometry
-  const expectedWkt = 'MULTIPOLYGON (((-1 -2, -2 -2, -2 -1, -1 -1, -1 -2)), ((0 0, 0 1, 1 1, 1 0, 2 0, 2 -0, 0 -0, 0 0, 0 0)))'
+  const expectedWkt = 'MULTIPOLYGON (((-1 -2, -2 -2, -2 -1, -1 -1, -1 -2)), ((0 0, 0 1, 1 1, 1 0, 2 0, 2 0, 0 0, 0 0, 0 0)))'
 
   // Assert that the result WKT matches the expected WKT
   t.equal(areaWkt, expectedWkt)

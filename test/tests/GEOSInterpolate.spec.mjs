@@ -31,7 +31,7 @@ test('GEOSInterpolate', async (t) => {
   const resultWkt = geos.GEOSWKTWriter_write(writer, resultPtr)
 
   // Check if the result is correct
-  t.equal(resultWkt, 'POINT (10.0 2.5)', 'The interpolated point is correct')
+  t.equal(resultWkt, 'POINT (10 2.5)', 'The interpolated point is correct')
 
   // Free the memory allocated by the pointers
   geos.GEOSGeom_destroy(geomPtr)

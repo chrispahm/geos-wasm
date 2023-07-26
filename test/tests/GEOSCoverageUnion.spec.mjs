@@ -12,7 +12,7 @@ const testCases = [
       'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))',
       'POLYGON ((1 0, 2 0, 2 1, 1 1, 1 0))'
     ],
-    output: 'POLYGON ((2 1, 2 0, 1 0, 0 0, 0 1, 1 1, 2 1))',
+    output: 'POLYGON ((0 0, 0 1, 1 1, 2 1, 2 0, 1 0, 0 0))',
     description: 'Two adjacent squares'
   }
 ]

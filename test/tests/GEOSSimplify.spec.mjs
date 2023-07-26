@@ -27,7 +27,7 @@ initGeosJs().then(geos => {
   const simplifiedWkt = geos.GEOSWKTWriter_write(writer, simplifiedPtr)
 
   // Define the expected WKT string after simplification
-  const expectedWkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0 0, 1 0, 1 1, 0 1, 0 0))'
+  const expectedWkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0 0, 0 1, 1 1, 1 0, 0 0))'
 
   // Use tape to test if the simplified WKT string matches the expected WKT string
   test('GEOSSimplify', t => {

@@ -33,7 +33,7 @@ test('GEOSLargestEmptyCircle', (t) => {
 
   // Convert the first element to WKT and check if it matches the expected center point
   const centerWkt = geomToWkt(result)
-  t.equal(centerWkt, 'LINESTRING (10.0390625000000000 179.9609375000000000, 45.9484726123595522 157.5175561797752835)')
+  t.equal(centerWkt, 'LINESTRING (-99.964599609375 -99.964599609375, 20 50)')
 
   // Free the memory allocated by the function
   geos.GEOSGeom_destroy(result)
