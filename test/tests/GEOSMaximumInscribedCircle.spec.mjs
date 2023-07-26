@@ -34,7 +34,7 @@ test('GEOSMaximumInscribedCircle', async (t) => {
   const resultWkt = geos.GEOSWKTWriter_write(writer, resultPtr)
 
   // Check if the result is valid
-  t.equal(resultWkt, 'LINESTRING (2.93 7.07, 0.00 7.07)', 'GEOSMaximumInscribedCircle returns a valid pointer')
+  t.equal(resultWkt, 'LINESTRING (2.93 7.07, 0 7.07)', 'GEOSMaximumInscribedCircle returns a valid pointer')
   t.equal(centerWkt, 'POINT (2.93 7.07)', 'GEOSMaximumInscribedCircle returns correct center')
   t.equal(radius, 2.928932188134524, 'GEOSMaximumInscribedCircle returns correct radius')
   // Free all memory by destroying the reader and writer

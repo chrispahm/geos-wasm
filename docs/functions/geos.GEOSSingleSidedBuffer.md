@@ -18,9 +18,9 @@ This function does not support buffering MultiLineStrings (the result will be an
 | g | <code>number</code> | The input geometry pointer. |
 | width | <code>number</code> | The buffer width. |
 | quadsegs | <code>number</code> | The number of segments per quadrant. |
-| side | <code>number</code> | The side to buffer. 1 for left, -1 for right. |
-| endCapStyle | <code>number</code> | The end cap style. One of 1 = GEOSBUF_CAP_ROUND, 2 = GEOSBUF_CAP_FLAT or 3 = GEOSBUF_CAP_SQUARE. |
 | joinStyle | <code>number</code> | The join style. One of 1 = GEOSBUF_JOIN_ROUND, 2 = GEOSBUF_JOIN_MITRE or 3 = GEOSBUF_JOIN_BEVEL. |
+| mitreLimit | <code>number</code> | The mitre limit. A positive number or zero. |
+| side | <code>number</code> | The side to buffer. 1 for left, -1 for right. |
 
 
 ---

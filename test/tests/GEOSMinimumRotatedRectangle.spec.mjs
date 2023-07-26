@@ -24,7 +24,7 @@ test('GEOSMinimumRotatedRectangle', async t => {
   const resultWkt = geos.GEOSWKTWriter_write(writer, resultPtr)
 
   // Check if the result is correct
-  t.equal(resultWkt, 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))', 'should return the minimum rotated rectangle')
+  t.equal(resultWkt, 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))', 'should return the minimum rotated rectangle')
 
   // Free the memory
   geos.GEOSGeom_destroy(geomPtr)

@@ -1,6 +1,7 @@
 <a name="exp_module_geos--geos.GEOSisClosed"></a>
 
 ## geos.GEOSisClosed ⇒ <code>number</code> ⏏
+Tests whether the input geometry is closed. A closed geometry is a linestring or multilinestring with the start and end points being the same.
 Returns 1 if the geometry is closed, 0 otherwise.
 
 **Kind**: Exported member  
@@ -16,6 +17,7 @@ Returns 1 if the geometry is closed, 0 otherwise.
 <a name="exp_module_geos--geos.GEOSisClosed_r"></a>
 
 ## geos.GEOSisClosed\_r ⇒ <code>number</code> ⏏
+Tests whether the input geometry is closed. A closed geometry is a linestring or multilinestring with the start and end points being the same.
 Returns 1 if the geometry is closed, 0 otherwise.
 
 **Kind**: Exported member  

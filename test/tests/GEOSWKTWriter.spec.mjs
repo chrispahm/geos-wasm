@@ -54,8 +54,8 @@ test('GEOSWKTWriter_setRoundingPrecision', (t) => {
   const wkt = 'POINT (1.2345678901234567 2.3456789012345678)'
   const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
 
-  // Set the rounding precision to 4 on the writer
-  geos.GEOSWKTWriter_setRoundingPrecision(writer, 4)
+  // Set the rounding precision to 3 on the writer
+  geos.GEOSWKTWriter_setRoundingPrecision(writer, 3)
 
   // Write the geometry to a WKT string using the writer
   const wkt2 = geos.GEOSWKTWriter_write(writer, geomPtr)

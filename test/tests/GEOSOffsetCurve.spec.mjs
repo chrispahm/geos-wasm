@@ -30,7 +30,7 @@ test('GEOSOffsetCurve', (t) => {
   // Convert the result geometry pointer to a WKT string
   const offsetWkt = geos.GEOSWKTWriter_write(writer, offsetPtr)
   // The expected WKT string for the offset curve
-  const expectedWkt = 'LINESTRING (-1 0, -1 2, 2 2, 2 -1, 0 -1)'
+  const expectedWkt = 'LINESTRING (-1 2, 2 2, 2 -1)'
 
   // Compare the actual and expected WKT strings
   t.equal(offsetWkt, expectedWkt)

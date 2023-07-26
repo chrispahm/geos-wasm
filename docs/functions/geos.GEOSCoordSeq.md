@@ -28,6 +28,148 @@ Clone a coordinate sequence.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyFromArrays"></a>
+
+## geos.GEOSCoordSeq\_copyFromArrays ⇒ <code>number</code> ⏏
+Copies the coordinate values from the given arrays to a coordinate sequence.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - A pointer to a GEOS coordinate sequence object, or NULL on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a4f7a1f9d0c2b0c119e6f9e2f60b112a9  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| size | <code>number</code> | The number of coordinates in the arrays. |
+| xs | <code>number</code> | A pointer to an array of x values. |
+| ys | <code>number</code> | A pointer to an array of y values. |
+| zs | <code>number</code> | A pointer to an array of z values, or NULL if not needed. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyFromArrays_r"></a>
+
+## geos.GEOSCoordSeq\_copyFromArrays\_r ⇒ <code>number</code> ⏏
+Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9f4c6a5a7f2b9c0b1f6c0e1d0a1e4f5a  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ctx | <code>number</code> | A GEOS context handle. |
+| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| x | <code>number</code> | A pointer to an array of x values. |
+| y | <code>number</code> | A pointer to an array of y values. |
+| z | <code>number</code> | A pointer to an array of z values, or NULL if not present. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyFromBuffer"></a>
+
+## geos.GEOSCoordSeq\_copyFromBuffer ⇒ <code>number</code> ⏏
+Copies a coordinate sequence from a buffer of x, y values.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - A pointer to a GEOS coordinate sequence object, or NULL on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a6f4b0a3f8e9c7a9b5f3b2c1f0c3a1d6f  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| size | <code>number</code> | The number of coordinates in the buffer. |
+| buf | <code>number</code> | A pointer to a buffer of double values, in x, y order. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyFromBuffer_r"></a>
+
+## geos.GEOSCoordSeq\_copyFromBuffer\_r ⇒ <code>number</code> ⏏
+Copies a coordinate sequence from a buffer of x,y,z values.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a7a9f0b9c5a4f3b8f1d6b2a0c6e8d7c7f  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ctx | <code>number</code> | A GEOS context handle. |
+| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| buf | <code>number</code> | A pointer to a buffer of double values. |
+| size | <code>number</code> | The number of coordinates in the buffer. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyToArrays"></a>
+
+## geos.GEOSCoordSeq\_copyToArrays ⇒ <code>number</code> ⏏
+Copies the coordinates of a coordinate sequence to two arrays.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4b9a6d0e2b7c8f6f9e5b1f6d0a5c  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cs | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| x | <code>number</code> | A pointer to an array of doubles to store the x-coordinates. |
+| y | <code>number</code> | A pointer to an array of doubles to store the y-coordinates. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyToArrays_r"></a>
+
+## geos.GEOSCoordSeq\_copyToArrays\_r ⇒ <code>number</code> ⏏
+Copies the coordinates of a coordinate sequence to two arrays of doubles.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a5f7a6d4f3f9a9c5e2b7a0b8f6c4e3d0c  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ctx | <code>number</code> | A GEOS context handle. |
+| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| x | <code>number</code> | A pointer to an array of doubles to store the x coordinates. |
+| y | <code>number</code> | A pointer to an array of doubles to store the y coordinates. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyToBuffer"></a>
+
+## geos.GEOSCoordSeq\_copyToBuffer ⇒ <code>number</code> ⏏
+Copies the coordinates of a coordinate sequence to a user-supplied buffer.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on error.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9a6f2c8b0a3f4e4f2c9a7b1d5c2e9b7a  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cs | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| buf | <code>number</code> | A pointer to a buffer of double values, allocated by the caller. |
+| stride | <code>number</code> | The number of doubles per coordinate in the buffer. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSCoordSeq_copyToBuffer_r"></a>
+
+## geos.GEOSCoordSeq\_copyToBuffer\_r ⇒ <code>number</code> ⏏
+Copies the coordinates of a coordinate sequence to user-supplied buffers.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9f4a9f6b7a5d8a6c0f2b5e7e6a3f0c7d  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ctx | <code>number</code> | A GEOS context handle. |
+| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
+| x | <code>number</code> | A pointer to a buffer for the x coordinates. |
+| y | <code>number</code> | A pointer to a buffer for the y coordinates. |
+| z | <code>number</code> | A pointer to a buffer for the z coordinates (optional). |
+
+
+---
 <a name="exp_module_geos--geos.GEOSCoordSeq_create"></a>
 
 ## geos.GEOSCoordSeq\_create ⇒ <code>number</code> ⏏

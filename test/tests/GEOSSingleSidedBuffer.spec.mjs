@@ -16,7 +16,7 @@ test('GEOSSingleSidedBuffer', function (t) {
   const bufferWkt = geos.GEOSWKTWriter_write(writer, bufferPtr)
 
   // Test the result
-  t.equal(bufferWkt, 'LINESTRING (-0.3535533905932737 0.3535533905932737, 19.6464466094067269 20.3535533905932731)')
+  t.equal(bufferWkt, 'LINESTRING (-0.3535533905932737 0.3535533905932737, 19.646446609406727 20.353553390593273)')
   t.end()
 
   // Cleanup

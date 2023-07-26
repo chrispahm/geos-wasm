@@ -4,7 +4,7 @@
 Tests if two geometries overlap in their interior points.
 
 **Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if true, 0 if false, -1 on error.  
+**Returns**: <code>number</code> - = 1 if true, 0 if false, -1 on error.  
 
 | Param | Type | Description |
 | --- | --- | --- |

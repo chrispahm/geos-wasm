@@ -5,7 +5,7 @@ Calculate the area of a geometry.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - 1 on success, 0 on exception  
-**See**: https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1Area.html  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#af5eec7e8796b756cf007fd21bb3a88ad  
 
 | Param | Type | Description |
 | --- | --- | --- |
