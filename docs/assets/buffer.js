@@ -89,6 +89,7 @@ function GEOSGeomToWKB (geomPtr) {
  * @param {number} [options.joinStyle=1] join style (1 = round, 2 = mitre, 3 = bevel)
  * @param {number} [options.mitreLimit=5] mitre limit
  * @param {boolean} [options.singleSided=false] whether to generate a single-sided or double-sided buffer
+ * @param {Object} [options.GEOS] GEOS library
  * @returns {FeatureCollection|Feature<Polygon|MultiPolygon>|undefined} buffered features
  * @example
  * const point = turf.point([-90.548630, 14.616599]);
