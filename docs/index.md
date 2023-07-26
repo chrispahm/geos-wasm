@@ -1,6 +1,11 @@
+<script setup>
+import { data as geosVersion } from './index.data.js'
+const changelogUrl = `https://github.com/libgeos/geos/blob/${geosVersion}/NEWS.md`
+</script>
+
 # GEOS-WASM
 
-This is a WebAssembly build of the [GEOS](https://libgeos.org/) library. It can be used in the browser, Node.js, bun, and deno.
+This is a WebAssembly build of the [GEOS](https://libgeos.org/) library (<a :href="changelogUrl" target="blank">v{{ geosVersion }}</a>). It can be used in the browser, Node.js, bun, and deno.
 
 GEOS-WASM exposes the low-level GEOS C-API to JavaScript without any abstractions. It is intended to be used as a building block for higher-level libraries and specific use cases.
 

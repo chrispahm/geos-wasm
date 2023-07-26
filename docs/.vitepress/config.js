@@ -60,6 +60,7 @@ export default defineConfig({
         items: [
           { text: 'Buffer', link: '/examples/buffer' },
           { text: 'Maximum-Inscribed-Circle', link: '/examples/maximum-inscribed-circle' },
+          { text: 'ObservableHQ', link: 'https://observablehq.com/@chrispahm/hello-geos-wasm' },
         ]
       },
       {
