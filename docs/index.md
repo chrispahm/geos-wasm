@@ -66,3 +66,47 @@ Transferring data between JavaScript and WASM can be costly, especially [if seri
 ### How to deal with `RuntimeError: table index is out of bounds`
 
 This error is usually thrown when GEOS throws an error in an operation. E.g. when passing an [EWKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry#Format_variations) to `GEOSGeomFromWKT`, which solely supports regular WKT input. Refer to the stack trace to identify the function that threw the error, and check if a) the input is valid and b) the function arguments are of the correct type. Also make sure to check the [test directory](https://github.com/chrispahm/geos-wasm/test/tests) for examples.
+
+### How can I define a callback function (e.g. for `GEOSSTRtree_query`)?
+
+You can define a callback function using the `Module.addFunction` method. The first argument is the function that will be called, the second argument is the return type, and the third argument is an array of argument types. The function will return a pointer to the callback function, which you can pass to the GEOS function.
+
+```js
+ const tree = geos.GEOSSTRtree_create(2)
+  // Add two geometries to the index, the parameters are (index, geometry, item),
+  // and only the item will be inserted into the the tree.
+  // We use the geometry pointer as an item, but it doesn't have to be.
+  geos.GEOSSTRtree_insert(tree, geom1, geom1)
+  geos.GEOSSTRtree_insert(tree, geom2, geom2)
+
+  // Define a callback function that will be called for each item that intersects with the query geometry
+  function queryCallback (itemPtr, userdata) {
+    console.log(itemPtr, userdata)    
+  }
+
+  // Create a pointer to the JS callback function
+  const queryCallbackPtr = geos.Module.addFunction(queryCallback, 'vii')
+
+  // Query the index with a geometry that intersects with the first item
+  geos.GEOSSTRtree_query(tree, geom3, queryCallbackPtr)
+  ```
+
+### How can I pass an array of geometries to a GEOS function?
+
+You can pass an array of geometries to a GEOS function by creating an `Int32Array` of geometry pointers,
+and subsequently set the array on the heap. The following example shows how to pass an array of WKT strings to the `GEOSPolygonize` function.
+
+```js
+  // Convert the input geometries to GEOS geometry pointers
+  // inputsWkts is an array of WKT strings
+  const inputGeoms = inputWkts.map(wktToGeom)
+
+  // Create an array of geometry pointers
+  const geomPtrs = new Int32Array(inputGeoms)
+  // Copy the array to the heap
+  const geomVecPtr = geos.Module._malloc(geomPtrs.length * geomPtrs.BYTES_PER_ELEMENT)
+  geos.Module.HEAP32.set(geomPtrs, geomVecPtr >> 2)
+
+  // Call the GEOSPolygonize function with the input geometries
+  const outputGeomPtr = geos.GEOSPolygonize(geomVecPtr, inputGeoms.length)
+```
