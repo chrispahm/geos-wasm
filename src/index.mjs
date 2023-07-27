@@ -3,9 +3,7 @@ import CModule from '../build/package/geos.js'
 
 let geosJsPromise
 
-export default function initGeosJs (
-  config = {}
-) {
+export default function initGeosJs () {
   if (geosJsPromise) return geosJsPromise
   geosJsPromise = new Promise((resolve) => {
     const Module = geos.Module
