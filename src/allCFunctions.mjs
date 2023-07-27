@@ -1,4 +1,3 @@
-/// <reference types="emscripten" />
 /**
  * @module geos
  */
@@ -62,11 +61,15 @@ export const geos = {
   }
 }
 
-export function initCFunctions () {
+export function initCFunctions (config = {}) {
+  const {
+    initGEOS = true,
+    errorHandler = null,
+    noticeHandler = null
+  } = config
+
   if (geos.initGEOS) return
   const Module = geos.Module
-
-  Module.ccall('initGEOS', null, ['string', 'string'], ['GEOS_INIT_NOTICE=NO', 'GEOS_ENABLE_TESTS=NO'])
 
   /**
  * Sets the notice handler for a GEOS context.
@@ -91,26 +94,26 @@ export function initCFunctions () {
  * @param {number} callback - The callback function pointer.
  * @alias module:geos
   */
-  geos.GEOS_interruptRegisterCallback = Module.cwrap('GEOS_interruptRegisterCallback', null, ['number'])
+  geos.GEOS_interruptRegisterCallback = null
 
   /**
  * Requests an interrupt of the current GEOS operation.
  * @alias module:geos
   */
-  geos.GEOS_interruptRequest = Module.cwrap('GEOS_interruptRequest', null, [])
+  geos.GEOS_interruptRequest = null
 
   /**
  * Cancels an interrupt request of the current GEOS operation.
  * @alias module:geos
   */
-  geos.GEOS_interruptCancel = Module.cwrap('GEOS_interruptCancel', null, [])
+  geos.GEOS_interruptCancel = null
 
   /**
  * Frees a GEOS object allocated by the library.
  * @param {number} obj - The GEOS object pointer.
  * @alias module:geos
   */
-  geos.GEOSFree = Module.cwrap('GEOSFree', null, ['number'])
+  geos.GEOSFree = null
 
   /**
  * Frees a GEOS object allocated by the library in a given context.
@@ -127,7 +130,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSDisjoint = Module.cwrap('GEOSDisjoint', 'number', ['number', 'number'])
+  geos.GEOSDisjoint = null
 
   /**
  * Tests if two geometries are disjoint in a given context.
@@ -146,7 +149,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSTouches = Module.cwrap('GEOSTouches', 'number', ['number', 'number'])
+  geos.GEOSTouches = null
 
   /**
  * Tests if two geometries touch at one or more points in a given context.
@@ -165,7 +168,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSIntersects = Module.cwrap('GEOSIntersects', 'number', ['number', 'number'])
+  geos.GEOSIntersects = null
 
   /**
  * Tests if two geometries intersect in interior or boundary points in a given context.
@@ -184,7 +187,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSCrosses = Module.cwrap('GEOSCrosses', 'number', ['number', 'number'])
+  geos.GEOSCrosses = null
 
   /**
  * Tests if two geometries cross in a given context.
@@ -203,7 +206,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSWithin = Module.cwrap('GEOSWithin', 'number', ['number', 'number'])
+  geos.GEOSWithin = null
 
   /**
  * Tests if the first geometry is within the second geometry in a given context.
@@ -222,7 +225,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSContains = Module.cwrap('GEOSContains', 'number', ['number', 'number'])
+  geos.GEOSContains = null
 
   /**
  * Tests if the first geometry contains the second geometry in a given context.
@@ -241,7 +244,7 @@ export function initCFunctions () {
  * @returns {number} = 1 if true, 0 if false, -1 on error.
  * @alias module:geos
   */
-  geos.GEOSOverlaps = Module.cwrap('GEOSOverlaps', 'number', ['number', 'number'])
+  geos.GEOSOverlaps = null
 
   /**
  * Tests whether two geometries overlap.
@@ -260,7 +263,7 @@ export function initCFunctions () {
  * @return {number} 1 if the first geometry covers the second geometry, 0 if not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSCovers = Module.cwrap('GEOSCovers', 'number', ['number', 'number'])
+  geos.GEOSCovers = null
 
   /**
  * Tests whether the first geometry covers the second geometry in a given context.
@@ -279,7 +282,7 @@ export function initCFunctions () {
  * @return {number} 1 if the first geometry is covered by the second geometry, 0 if not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSCoveredBy = Module.cwrap('GEOSCoveredBy', 'number', ['number', 'number'])
+  geos.GEOSCoveredBy = null
 
   /**
  * Tests whether the first geometry is covered by the second geometry in a given context.
@@ -300,7 +303,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f
  * @alias module:geos
   */
-  geos.GEOSRelatePattern = Module.cwrap('GEOSRelatePattern', 'number', ['number', 'number', 'string'])
+  geos.GEOSRelatePattern = null
 
   /**
  * Tests whether two geometries are related according to a given DE-9IM intersection matrix pattern in a thread-safe manner.
@@ -322,7 +325,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f
  * @alias module:geos
   */
-  geos.GEOSRelatePatternMatch = Module.cwrap('GEOSRelatePatternMatch', 'number', ['string', 'string'])
+  geos.GEOSRelatePatternMatch = null
 
   /**
  * Tests whether a DE-9IM intersection matrix matches a given pattern in a thread-safe manner.
@@ -343,7 +346,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f
  * @alias module:geos
   */
-  geos.GEOSRelate = Module.cwrap('GEOSRelate', 'string', ['number', 'number'])
+  geos.GEOSRelate = null
 
   /**
  * Computes the DE-9IM intersection matrix for two geometries.
@@ -366,7 +369,7 @@ export function initCFunctions () {
  * @see https://docs.rs/geos-sys/2.0.1/geos_sys/fn.GEOSRelateBoundaryNodeRule.html
  * @alias module:geos
   */
-  geos.GEOSRelateBoundaryNodeRule = Module.cwrap('GEOSRelateBoundaryNodeRule', 'string', ['number', 'number', 'number'])
+  geos.GEOSRelateBoundaryNodeRule = null
 
   /**
  * Computes the DE-9IM intersection matrix for two geometries using a specified Boundary Node Rule.
@@ -387,7 +390,7 @@ export function initCFunctions () {
  * @see https://docs.rs/geos-sys/1.0.10/geos_sys/fn.GEOSisValid.html
  * @alias module:geos
   */
-  geos.GEOSisValid = Module.cwrap('GEOSisValid', 'number', ['number'])
+  geos.GEOSisValid = null
 
   /**
  * Tests whether a geometry is valid according to the OGC rules for geometry validity.
@@ -406,7 +409,7 @@ export function initCFunctions () {
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a0f3a7b9f9c6b5a1d0c2f6c8e3a4d4b5e|GEOSisValidReason}
  * @alias module:geos
   */
-  geos.GEOSisValidReason = Module.cwrap('GEOSisValidReason', 'string', ['number'])
+  geos.GEOSisValidReason = null
 
   /**
  * Returns text stating if a geometry is valid, or if invalid a reason why. Thread-safe version.
@@ -429,7 +432,7 @@ export function initCFunctions () {
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a1f7b2d9e0a7d2e9d7e6f4a7a2f3e5b9d|GEOSisValidDetail}
  * @alias module:geos
   */
-  geos.GEOSisValidDetail = Module.cwrap('GEOSisValidDetail', 'number', ['number', 'number', 'string', 'number'])
+  geos.GEOSisValidDetail = null
 
   /**
  * Returns a valid_detail row, containing a boolean stating if a geometry is valid,
@@ -453,7 +456,7 @@ export function initCFunctions () {
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a5b6b7a4a8a0c5f0c1a2e3a9d9b4f6c7f|GEOSEquals}
  * @alias module:geos
   */
-  geos.GEOSEquals = Module.cwrap('GEOSEquals', 'number', ['number', 'number'])
+  geos.GEOSEquals = null
 
   /**
  * Tests whether two geometries are topologically equal.
@@ -473,7 +476,7 @@ export function initCFunctions () {
  * @return {number} 1 if equal, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSEqualsExact = Module.cwrap('GEOSEqualsExact', 'number', ['number', 'number', 'number'])
+  geos.GEOSEqualsExact = null
 
   /**
  * Tests whether two geometries are exactly equal, up to a specified tolerance.
@@ -494,7 +497,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSDistance = Module.cwrap('GEOSDistance', 'number', ['number', 'number', 'number'])
+  geos.GEOSDistance = null
 
   /**
  * Computes the distance between the closest points of two geometries.
@@ -518,7 +521,7 @@ export function initCFunctions () {
  * @since 3.7
  * @alias module:geos
   */
-  geos.GEOSDistanceIndexed = Module.cwrap('GEOSDistanceIndexed', 'number', ['number', 'number', 'number'])
+  geos.GEOSDistanceIndexed = null
 
   /**
  * Computes the distance between two geometries using an indexed algorithm.
@@ -546,7 +549,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSHausdorffDistance = Module.cwrap('GEOSHausdorffDistance', 'number', ['number', 'number', 'number'])
+  geos.GEOSHausdorffDistance = null
 
   /**
  * Computes the Hausdorff distance between two geometries.
@@ -577,7 +580,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSHausdorffDistanceDensify = Module.cwrap('GEOSHausdorffDistanceDensify', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSHausdorffDistanceDensify = null
 
   /**
  * Computes the Hausdorff distance between two geometries, densifying them by a given fraction.
@@ -611,7 +614,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1distance_1_1DiscreteFrechetDistance.html
  * @alias module:geos
   */
-  geos.GEOSFrechetDistance = Module.cwrap('GEOSFrechetDistance', 'number', ['number', 'number', 'number'])
+  geos.GEOSFrechetDistance = null
 
   /**
  * Computes the Fréchet distance between two geometries using a GEOS context handle.
@@ -648,7 +651,7 @@ export function initCFunctions () {
  * @see https://r-spatial.github.io/sf/reference/geos_measures.html
  * @alias module:geos
   */
-  geos.GEOSFrechetDistanceDensify = Module.cwrap('GEOSFrechetDistanceDensify', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSFrechetDistanceDensify = null
 
   /**
  * Computes the Fréchet distance between two geometries using a GEOS context handle, densifying them by a given fraction.
@@ -687,7 +690,7 @@ export function initCFunctions () {
  * const areaValue = geos.Module.getValue(area, 'double')
  * console.log(areaValue) // 100
   */
-  geos.GEOSArea = Module.cwrap('GEOSArea', 'number', ['number', 'number'])
+  geos.GEOSArea = null
 
   /**
  * Calculate the area of a geometry using a custom context handle.
@@ -706,7 +709,7 @@ export function initCFunctions () {
  * @returns {number} 1 on success, 0 on exception
  * @alias module:geos
   */
-  geos.GEOSLength = Module.cwrap('GEOSLength', 'number', ['number', 'number'])
+  geos.GEOSLength = null
 
   /**
  * Calculate the length of a geometry using a custom context handle.
@@ -725,7 +728,7 @@ export function initCFunctions () {
  * @returns {string} A JSON string representing a GEOSGeometry object containing two points, or null on exception
  * @alias module:geos
   */
-  geos.GEOSNearestPoints = Module.cwrap('GEOSNearestPoints', 'string', ['string', 'string'])
+  geos.GEOSNearestPoints = null
 
   /**
  * Returns a GEOSCoordSequence of the nearest points between two geometries.
@@ -743,7 +746,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to the GEOSGeometry object.
  * @alias module:geos
   */
-  geos.GEOSGeomFromWKT = Module.cwrap('GEOSGeomFromWKT', 'number', ['number'])
+  geos.GEOSGeomFromWKT = null
 
   /**
  * Returns a GEOSGeometry from a Well-Known Text (WKT) representation.
@@ -760,7 +763,7 @@ export function initCFunctions () {
  * @returns {number} A WKT representation of the geometry.
  * @alias module:geos
   */
-  geos.GEOSGeomToWKT = Module.cwrap('GEOSGeomToWKT', 'number', ['number'])
+  geos.GEOSGeomToWKT = null
 
   /**
  * Returns a Well-Known Text (WKT) representation of a GEOSGeometry.
@@ -778,7 +781,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a buffer containing the WKB representation of the geometry, or NULL on exception. The caller is responsible for freeing the buffer with GEOSFree().
  * @alias module:geos
   */
-  geos.GEOSGeomToWKB_buf = Module.cwrap('GEOSGeomToWKB_buf', 'number', ['number', 'number'])
+  geos.GEOSGeomToWKB_buf = null
 
   /**
  * Converts a GEOSGeometry to a WKB representation using a context handle.
@@ -797,7 +800,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a newly allocated GEOSGeometry, or NULL on exception. The caller is responsible for destroying it with GEOSGeom_destroy().
  * @alias module:geos
   */
-  geos.GEOSGeomFromWKB_buf = Module.cwrap('GEOSGeomFromWKB_buf', 'number', ['number', 'number'])
+  geos.GEOSGeomFromWKB_buf = null
 
   /**
  * Converts a WKB representation to a GEOSGeometry using a context handle.
@@ -816,7 +819,7 @@ export function initCFunctions () {
  * @returns {string} A null-terminated string containing the HEX-encoded WKB representation of the geometry, or NULL on exception. The caller is responsible for freeing the string with GEOSFree().
  * @alias module:geos
   */
-  geos.GEOSGeomToHEX_buf = Module.cwrap('GEOSGeomToHEX_buf', 'string', ['number', 'number'])
+  geos.GEOSGeomToHEX_buf = null
 
   /**
  * Converts a geometry to a hexadecimal representation of its WKB.
@@ -835,7 +838,7 @@ export function initCFunctions () {
  * @returns {number} A geometry, or NULL on exception. The caller is responsible for destroying it.
  * @alias module:geos
   */
-  geos.GEOSGeomFromHEX_buf = Module.cwrap('GEOSGeomFromHEX_buf', 'number', ['string', 'number'])
+  geos.GEOSGeomFromHEX_buf = null
 
   /**
  * Converts a hexadecimal representation of WKB to a geometry with a GEOS context handle.
@@ -853,7 +856,7 @@ export function initCFunctions () {
  * @returns {number} 1 if the geometry is empty, 0 if it is not, or 2 on exception.
  * @alias module:geos
   */
-  geos.GEOSisEmpty = Module.cwrap('GEOSisEmpty', 'number', ['number'])
+  geos.GEOSisEmpty = null
 
   /**
  * Tests whether a geometry is empty with a GEOS context handle.
@@ -871,7 +874,7 @@ export function initCFunctions () {
  * @returns {number} 1 if the geometry is simple, 0 if not, or -1 on error
  * @alias module:geos
   */
-  geos.GEOSisSimple = Module.cwrap('GEOSisSimple', 'number', ['number'])
+  geos.GEOSisSimple = null
 
   /**
  * Tests whether a geometry is simple (thread-safe version).
@@ -890,7 +893,7 @@ export function initCFunctions () {
  * @returns {number} 1 if the geometry is a ring, 0 if not, or -1 on error
  * @alias module:geos
   */
-  geos.GEOSisRing = Module.cwrap('GEOSisRing', 'number', ['number'])
+  geos.GEOSisRing = null
 
   /**
  * Tests whether a geometry is a ring (thread-safe version).
@@ -909,7 +912,7 @@ export function initCFunctions () {
  * @returns {string} the type name of the geometry, or NULL on error
  * @alias module:geos
   */
-  geos.GEOSGeomType = Module.cwrap('GEOSGeomType', 'string', ['number'])
+  geos.GEOSGeomType = null
 
   /**
  * Returns the name of a geometry's type.
@@ -928,7 +931,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6e4b5f2c7d0b6a9a3e7b2d5f8d7f9e4c
  * @alias module:geos
   */
-  geos.GEOSGeomTypeId = Module.cwrap('GEOSGeomTypeId', 'number', ['number'])
+  geos.GEOSGeomTypeId = null
 
   /**
  * Returns the type ID of a geometry.
@@ -947,7 +950,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a5d7f5dcbdb489edddbb43374ece97c
  * @alias module:geos
   */
-  geos.GEOSEnvelope = Module.cwrap('GEOSEnvelope', 'number', ['number'])
+  geos.GEOSEnvelope = null
 
   /**
  * Computes an envelope (bounding box) of a geometry.
@@ -966,7 +969,17 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
  * @alias module:geos
   */
-  geos.GEOSIntersection = Module.cwrap('GEOSIntersection', 'number', ['number', 'number'])
+  geos.GEOSIntersection = null
+
+  /**
+ * Computes a geometry that represents the point set intersection of the input geometries.
+ * @param {number} handle - A pointer to the GEOS context handle.
+ * @param {number} g1 - A pointer to the first geometry.
+ * @param {number} g2 - A pointer to the second geometry.
+ * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
+ * @alias module:geos
+  */
+  geos.GEOSIntersection_r = Module.cwrap('GEOSIntersection_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Computes a geometry that represents the point set intersection of the input geometries using a precision model.
@@ -976,7 +989,18 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
  * @alias module:geos
   */
-  geos.GEOSIntersectionPrec = Module.cwrap('GEOSIntersectionPrec', 'number', ['number', 'number', 'number'])
+  geos.GEOSIntersectionPrec = null
+
+  /**
+* Computes a geometry that represents the point set intersection of the input geometries using a precision model.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} g1 - A pointer to the first geometry.
+* @param {number} g2 - A pointer to the second geometry.
+* @param {number} gridSize - The grid size for the precision model.
+* @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
+* @alias module:geos
+*/
+  geos.GEOSIntersectionPrec_r = Module.cwrap('GEOSIntersectionPrec_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
  * Computes a geometry that represents the point set difference of the input geometries.
@@ -985,7 +1009,17 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
  * @alias module:geos
   */
-  geos.GEOSDifference = Module.cwrap('GEOSDifference', 'number', ['number', 'number'])
+  geos.GEOSDifference = null
+
+  /**
+* Computes a geometry that represents the point set difference of the input geometries.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} ga - A pointer to the first geometry.
+* @param {number} gb - A pointer to the second geometry.
+* @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
+* @alias module:geos
+*/
+  geos.GEOSDifference_r = Module.cwrap('GEOSDifference_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Computes a geometry that represents the point set difference of the input geometries using a precision model.
@@ -995,7 +1029,18 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
  * @alias module:geos
   */
-  geos.GEOSDifferencePrec = Module.cwrap('GEOSDifferencePrec', 'number', ['number', 'number', 'number'])
+  geos.GEOSDifferencePrec = null
+
+  /**
+* Computes a geometry that represents the point set difference of the input geometries using a precision model.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} ga - A pointer to the first geometry.
+* @param {number} gb - A pointer to the second geometry.
+* @param {number} gridSize - The grid size for the precision model.
+* @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
+* @alias module:geos
+*/
+  geos.GEOSDifferencePrec_r = Module.cwrap('GEOSDifferencePrec_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
  * Computes a buffer area around this geometry having the given width and with a specified accuracy of approximation for circular arcs.
@@ -1031,7 +1076,7 @@ export function initCFunctions () {
  * @returns {number} The buffered geometry pointer or NULL if an exception occurred.
  * @alias module:geos
   */
-  geos.GEOSBufferWithStyle = Module.cwrap('GEOSBufferWithStyle', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSBufferWithStyle = null
 
   /**
  * Creates a buffer around a geometry with a specified width, number of segments per quadrant, end cap style, join style and mitre limit using a given context handle.
@@ -1099,7 +1144,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a06557cad6153f56703b6875d4f21dc18
  * @alias module:geos
   */
-  geos.GEOSOffsetCurve = Module.cwrap('GEOSOffsetCurve', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSOffsetCurve = null
 
   /**
  * Computes an offset curve from a geometry using a handle. An offset curve is a linear geometry which is offset a given distance from the input. If the offset distance is positive the curve lies on the left side of the input; if it is negative the curve is on the right side. The curve(s) have the same direction as the input line(s).
@@ -1122,7 +1167,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1ConvexHull.html
  * @alias module:geos
   */
-  geos.GEOSConvexHull = Module.cwrap('GEOSConvexHull', 'number', ['number'])
+  geos.GEOSConvexHull = null
 
   /**
  * Computes the convex hull of a geometry using a handle. The convex hull is the smallest convex geometry that contains all the points in the input geometry.
@@ -1135,12 +1180,97 @@ export function initCFunctions () {
   geos.GEOSConvexHull_r = Module.cwrap('GEOSConvexHull_r', 'number', ['number', 'number'])
 
   /**
+   * Returns a "concave hull" of a geometry. A concave hull is a polygon which contains all the points of the input, but is a better approximation than the convex hull to the area occupied by the input. Frequently used to convert a multi-point into a polygonal area. that contains all the points in the input Geometry.
+   *
+   * A set of points has a sequence of hulls of increasing concaveness, determined by a numeric target parameter. The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the target criterion parameter is reached. This can be expressed as a ratio between the lengths of the longest and shortest edges. 1 produces the convex hull; 0 produces a hull with maximum concaveness
+   * @param {number} geom - A pointer to a GEOSGeometry object.
+   * @param {number} ratio - The edge length ratio value, between 0 and 1.
+   * @param {number} allowHoles - When non-zero, the polygonal output may contain holes.
+   * @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+   * @alias module:geos
+   */
+  geos.GEOSConcaveHull = null
+
+  /**
+   * Returns a "concave hull" of a geometry. A concave hull is a polygon which contains all the points of the input, but is a better approximation than the convex hull to the area occupied by the input. Frequently used to convert a multi-point into a polygonal area. that contains all the points in the input Geometry.
+   *
+   * A set of points has a sequence of hulls of increasing concaveness, determined by a numeric target parameter. The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the target criterion parameter is reached. This can be expressed as a ratio between the lengths of the longest and shortest edges. 1 produces the convex hull; 0 produces a hull with maximum concaveness
+   * @param {number} handle - A pointer to the GEOS context handle.
+   * @param {number} geom - A pointer to a GEOSGeometry object.
+   * @param {number} ratio - The edge length ratio value, between 0 and 1.
+   * @param {number} allowHoles - When non-zero, the polygonal output may contain holes.
+   * @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+   * @alias module:geos
+   */
+  geos.GEOSConcaveHull_r = Module.cwrap('GEOSConcaveHull_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+ * Returns a "concave hull" of a geometry. A concave hull is a polygon which contains all the points of the input, but is a better approximation than the convex hull to the area occupied by the input. Frequently used to convert a multi-point into a polygonal area. that contains all the points in the input Geometry.
+ *
+ * A set of points has a sequence of hulls of increasing concaveness, determined by a numeric target parameter. The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the specified maximm edge length is reached. A large value produces the convex hull, 0 produces the hull of maximim concaveness.
+ * @param {number} geom - A pointer to a GEOSGeometry object.
+ * @param {number} length - The maximum edge length (0 or greater).
+ * @param {number} allowHoles - When non-zero, the polygonal output may contain holes.
+ * @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+ * @alias module:geos
+ */
+  geos.GEOSConcaveHullByLength = null
+
+  /**
+   * Returns a "concave hull" of a geometry. A concave hull is a polygon which contains all the points of the input, but is a better approximation than the convex hull to the area occupied by the input. Frequently used to convert a multi-point into a polygonal area. that contains all the points in the input Geometry.
+   *
+   * A set of points has a sequence of hulls of increasing concaveness, determined by a numeric target parameter. The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the specified maximm edge length is reached. A large value produces the convex hull, 0 produces the hull of maximim concaveness.
+   * @param {number} handle - A pointer to the GEOS context handle.
+   * @param {number} geom - A pointer to a GEOSGeometry object.
+   * @param {number} length - The maximum edge length (0 or greater).
+   * @param {number} allowHoles - When non-zero, the polygonal output may contain holes.
+   * @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+   * @alias module:geos
+   */
+  geos.GEOSConcaveHullByLength_r = Module.cwrap('GEOSConcaveHullByLength_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Constructs a concave hull of a set of polygons, respecting the polygons as constraints.
+
+* A concave hull is a (possibly) non-convex polygon containing all the input polygons. The computed hull "fills the gap" between the polygons, and does not intersect their interior. A set of polygons has a sequence of hulls of increasing concaveness, determined by a numeric target parameter.
+
+* The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the target criterion parameter is reached. The "Maximum Edge Length" parameter limits the length of the longest edge between polygons to be no larger than this value. This can be expressed as a ratio between the lengths of the longest and shortest edges.
+
+* The input polygons must be a valid MultiPolygon (i.e. they must be non-overlapping).
+* @param {number} geom - A pointer to a GEOSGeometry object.
+* @param {number} lengthRatio - specifies the Maximum Edge Length as a fraction of the difference between the longest and shortest edge lengths between the polygons. This normalizes the Maximum Edge Length to be scale-free. A value of 1 produces the convex hull; a value of 0 produces the original polygons.
+* @param {number} isTight - does the hull follow the outer boundaries of the input polygons.
+* @param {number} isHolesAllowed - is the concave hull allowed to contain holes?
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+* @alias module:geos
+*/
+  geos.GEOSConcaveHullOfPolygons = null
+
+  /**
+* Constructs a concave hull of a set of polygons, respecting the polygons as constraints.
+
+* A concave hull is a (possibly) non-convex polygon containing all the input polygons. The computed hull "fills the gap" between the polygons, and does not intersect their interior. A set of polygons has a sequence of hulls of increasing concaveness, determined by a numeric target parameter.
+
+* The concave hull is constructed by removing the longest outer edges of the Delaunay Triangulation of the space between the polygons, until the target criterion parameter is reached. The "Maximum Edge Length" parameter limits the length of the longest edge between polygons to be no larger than this value. This can be expressed as a ratio between the lengths of the longest and shortest edges.
+
+* The input polygons must be a valid MultiPolygon (i.e. they must be non-overlapping).
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} geom - A pointer to a GEOSGeometry object.
+* @param {number} lengthRatio - specifies the Maximum Edge Length as a fraction of the difference between the longest and shortest edge lengths between the polygons. This normalizes the Maximum Edge Length to be scale-free. A value of 1 produces the convex hull; a value of 0 produces the original polygons.
+* @param {number} isTight - does the hull follow the outer boundaries of the input polygons.
+* @param {number} isHolesAllowed - is the concave hull allowed to contain holes?
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+* @alias module:geos
+*/
+  geos.GEOSConcaveHullOfPolygons_r = Module.cwrap('GEOSConcaveHullOfPolygons_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
  * Computes the minimum rotated rectangle (MRR) of a geometry. The MRR is similar to an envelope, but not necessarily aligned with coordinate axes. It has minimum area among all rectangles enclosing its input geometry.
  * @param {number} geom - A pointer to a GEOSGeometry object.
  * @returns {number} A pointer to a new GEOSGeometry object representing the MRR, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSMinimumRotatedRectangle = Module.cwrap('GEOSMinimumRotatedRectangle', 'number', ['number'])
+  geos.GEOSMinimumRotatedRectangle = null
 
   /**
  * Computes the minimum-area rotated rectangle containing a geometry.
@@ -1158,7 +1288,7 @@ export function initCFunctions () {
  * @returns {number} The pointer to the output geometry, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSMaximumInscribedCircle = Module.cwrap('GEOSMaximumInscribedCircle', 'number', ['number', 'number'])
+  geos.GEOSMaximumInscribedCircle = null
 
   /**
  * Constructs the "maximum inscribed circle" (MIC) for a polygonal geometry, up to a specified tolerance. The MIC is determined by a point in the interior of the area which has the farthest distance from the area boundary, along with a boundary point at that distance. In the context of geography the center of the MIC is known as the "pole of inaccessibility". A cartographic use case is to determine a suitable point to place a map label within a polygon. The radius length of the MIC is a measure of how "narrow" a polygon is. It is the distance at which the negative buffer becomes empty. The class supports polygons with holes and multipolygons. The implementation uses a successive-approximation technique over a grid of square cells covering the area geometry. The grid is refined using a branch-and-bound algorithm. Point containment and distance are computed in a performant way by using spatial indexes. Returns a two-point linestring, with one point at the center of the inscribed circle and the other on the boundary of the inscribed circle.
@@ -1182,7 +1312,7 @@ export function initCFunctions () {
  * @returns {number} The pointer to the output geometry, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSLargestEmptyCircle = Module.cwrap('GEOSLargestEmptyCircle', 'number', ['number', 'number', 'number'])
+  geos.GEOSLargestEmptyCircle = null
 
   /**
  * Constructs the "largest empty circle" (LEC) for a set of obstacle geometries and within a polygonal boundary, with accuracy to to a specified distance tolerance. The obstacles may be any collection of points, lines and polygons. The LEC is the largest circle whose interior does not intersect with any obstacle. and which has its center inside the given boundary. If no boundary is provided, the convex hull of the obstacles is used. The LEC center is the point in the interior of the boundary which has the farthest distance from the obstacles (up to the given distance tolerance). The LEC is determined by the center point and a point indicating the circle radius (which will lie on an obstacle).
@@ -1206,7 +1336,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a LineString containing two points defining the minimum width line segment, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSMinimumWidth = Module.cwrap('GEOSMinimumWidth', 'number', ['number'])
+  geos.GEOSMinimumWidth = null
 
   /**
  * Computes the minimum width of a geometry in a reentrant way.
@@ -1225,7 +1355,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a LineString containing two points defining the minimum clearance line segment, or NULL on exception or if no such line exists (e.g. for an empty or point geometry).
  * @alias module:geos
   */
-  geos.GEOSMinimumClearanceLine = Module.cwrap('GEOSMinimumClearanceLine', 'number', ['number'])
+  geos.GEOSMinimumClearanceLine = null
 
   /**
  * Computes the minimum clearance line of a geometry in a reentrant way.
@@ -1245,7 +1375,7 @@ export function initCFunctions () {
  * @returns {number} 1 on success, 0 on exception or if no such distance exists (e.g. for an empty or point geometry).
  * @alias module:geos
   */
-  geos.GEOSMinimumClearance = Module.cwrap('GEOSMinimumClearance', 'number', ['number', 'number'])
+  geos.GEOSMinimumClearance = null
 
   /**
  * Computes the minimum clearance of a geometry.
@@ -1270,7 +1400,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html
  * @alias module:geos
   */
-  geos.GEOSDifference = Module.cwrap('GEOSDifference', 'number', ['number', 'number'])
+  geos.GEOSDifference = null
 
   /**
  * Computes the difference between two geometries using a reentrant API.
@@ -1294,7 +1424,7 @@ export function initCFunctions () {
  * @return {number} A new GEOS geometry representing the difference, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSDifferencePrec = Module.cwrap('GEOSDifferencePrec', 'number', ['number', 'number', 'number'])
+  geos.GEOSDifferencePrec = null
 
   /**
  * Computes the difference between two geometries using a precision model grid size and a reentrant API.
@@ -1322,7 +1452,7 @@ export function initCFunctions () {
  * const wkt = geos.GEOSWKTWriter_write(writer, boundary)
  * console.log(wkt) // 'LINESTRING (0 0, 0 1, 1 1, 1 0, 0 0)'
   */
-  geos.GEOSBoundary = Module.cwrap('GEOSBoundary', 'number', ['number'])
+  geos.GEOSBoundary = null
 
   /**
  * Computes the boundary of a geometry in a thread-safe manner.
@@ -1340,7 +1470,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a new GEOSGeometry object representing the symmetric difference, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSSymDifference = Module.cwrap('GEOSSymDifference', 'number', ['number', 'number'])
+  geos.GEOSSymDifference = null
 
   /**
  * Computes the symmetric difference of two geometries in a thread-safe manner.
@@ -1360,7 +1490,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a new GEOSGeometry object representing the symmetric difference, or NULL on exception or invalid input.
  * @alias module:geos
   */
-  geos.GEOSSymDifferencePrec = Module.cwrap('GEOSSymDifferencePrec', 'number', ['number', 'number', 'number'])
+  geos.GEOSSymDifferencePrec = null
 
   /**
  * Computes a symmetric difference of two geometries using a specified precision model.
@@ -1380,7 +1510,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSUnion = Module.cwrap('GEOSUnion', 'number', ['number', 'number'])
+  geos.GEOSUnion = null
 
   /**
  * Computes a union of two geometries using a specified context handle.
@@ -1400,7 +1530,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to the resulting geometry, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSUnionPrec = Module.cwrap('GEOSUnionPrec', 'number', ['number', 'number', 'number'])
+  geos.GEOSUnionPrec = null
 
   /**
  * Computes a union of two geometries using a specified precision model and context handle.
@@ -1420,7 +1550,7 @@ export function initCFunctions () {
  * @see https://postgis.net/docs/ST_UnaryUnion.html
  * @alias module:geos
   */
-  geos.GEOSUnaryUnion = Module.cwrap('GEOSUnaryUnion', 'number', ['number'])
+  geos.GEOSUnaryUnion = null
 
   /**
  * Computes the union of all the input geometries using a GEOS context handle.
@@ -1440,7 +1570,7 @@ export function initCFunctions () {
  * @see https://postgis.net/docs/ST_UnaryUnion.html
  * @alias module:geos
   */
-  geos.GEOSUnaryUnionPrec = Module.cwrap('GEOSUnaryUnionPrec', 'number', ['number', 'number'])
+  geos.GEOSUnaryUnionPrec = null
 
   /**
  * Computes the union of all the input geometries with a specified precision grid size using a GEOS context handle.
@@ -1460,7 +1590,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CoverageUnionOp.html
  * @alias module:geos
   */
-  geos.GEOSCoverageUnion = Module.cwrap('GEOSCoverageUnion', 'number', ['number'])
+  geos.GEOSCoverageUnion = null
 
   /**
  * Computes the union of a collection of polygonal geometries that are correctly noded and do not overlap.
@@ -1479,7 +1609,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html
  * @alias module:geos
   */
-  geos.GEOSNode = Module.cwrap('GEOSNode', 'number', ['number'])
+  geos.GEOSNode = null
 
   /**
  * Computes a geometric shape that represents the points shared by two or more geometries.
@@ -1498,7 +1628,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CascadedPolygonUnion.html
  * @alias module:geos
   */
-  geos.GEOSUnionCascaded = Module.cwrap('GEOSUnionCascaded', 'number', ['number'])
+  geos.GEOSUnionCascaded = null
 
   /**
  * Computes the union of a collection of polygonal geometries using an optimized algorithm.
@@ -1516,7 +1646,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a GEOSGeometry object representing a point on the surface of g, or null if an error occurs.
  * @alias module:geos
   */
-  geos.GEOSPointOnSurface = Module.cwrap('GEOSPointOnSurface', 'number', ['number'])
+  geos.GEOSPointOnSurface = null
 
   /**
  * Computes a point that lies on the surface of a geometry, using a thread-safe context handle.
@@ -1537,7 +1667,7 @@ export function initCFunctions () {
  * @returns {number} The clipped geometry or NULL on exception Caller is responsible for freeing with GEOSGeom_destroy().
  * @alias module:geos
   */
-  geos.GEOSClipByRect = Module.cwrap('GEOSClipByRect', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSClipByRect = null
 
   /**
  * Clips a geometry by a rectangular extent, using a thread-safe context handle.
@@ -1557,7 +1687,7 @@ export function initCFunctions () {
  * @param {number} g - A pointer to a GEOSGeometry object.
  * @alias module:geos
   */
-  geos.GEOSGeom_destroy = Module.cwrap('GEOSGeom_destroy', null, ['number'])
+  geos.GEOSGeom_destroy = null
 
   /**
  * Destroys a GEOS geometry object.
@@ -1575,7 +1705,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a7b4e0c2f9d3f1a6d4b9a9c1d5e0f3a2e
  * @alias module:geos
   */
-  geos.GEOSGetNumCoordinates = Module.cwrap('GEOSGetNumCoordinates', 'number', ['number'])
+  geos.GEOSGetNumCoordinates = null
 
   /**
  * Returns the number of coordinates in a GEOS geometry object (thread-safe version).
@@ -1597,7 +1727,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a5a7f0c9b3f9a1d0f4e5c2a7b5b3e6a8d
  * @alias module:geos
   */
-  geos.GEOSNormalize = Module.cwrap('GEOSNormalize', 'number', ['number'])
+  geos.GEOSNormalize = null
 
   /**
  * Normalizes a GEOS geometry object in place, so that it has a canonical form (thread-safe version).
@@ -1618,7 +1748,7 @@ export function initCFunctions () {
  * @returns {number} The number of interior rings in the polygon, or -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSGetNumInteriorRings = Module.cwrap('GEOSGetNumInteriorRings', 'number', ['number'])
+  geos.GEOSGetNumInteriorRings = null
 
   /**
  * Returns the number of interior rings in the polygon (thread-safe version).
@@ -1635,7 +1765,7 @@ export function initCFunctions () {
  * @returns {number} The number of geometries in the collection, or -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSGetNumGeometries = Module.cwrap('GEOSGetNumGeometries', 'number', ['number'])
+  geos.GEOSGetNumGeometries = null
 
   /**
  * Returns the number of geometries in a collection (thread-safe version).
@@ -1653,7 +1783,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a newly allocated GEOSGeometry object corresponding to the geometry at index n. The caller is responsible for destroying it. Returns NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSGetGeometryN = Module.cwrap('GEOSGetGeometryN', 'number', ['number', 'number'])
+  geos.GEOSGetGeometryN = null
 
   /**
  * Return the Nth geometry of a collection.
@@ -1674,7 +1804,7 @@ export function initCFunctions () {
  * NULL on exception or if n is out of range.
  * @alias module:geos
   */
-  geos.GEOSGeomGetPointN = Module.cwrap('GEOSGeomGetPointN', 'number', ['number', 'number'])
+  geos.GEOSGeomGetPointN = null
 
   /**
  * Return the Nth point of a LineString (thread-safe version).
@@ -1694,7 +1824,7 @@ export function initCFunctions () {
  * NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSGeomGetStartPoint = Module.cwrap('GEOSGeomGetStartPoint', 'number', ['number'])
+  geos.GEOSGeomGetStartPoint = null
 
   /**
  * Returns the first point of a geometry.
@@ -1713,7 +1843,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9c6f7f5d3b9a0f1a0d4c1a4e2a0b6e8b
  * @alias module:geos
   */
-  geos.GEOSGeomGetEndPoint = Module.cwrap('GEOSGeomGetEndPoint', 'number', ['number'])
+  geos.GEOSGeomGetEndPoint = null
 
   /**
  * Returns the endpoint of a LineString geometry.
@@ -1733,7 +1863,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a5d3f7f2e7d5e7b2c3d9a3c9f2e8a6b4b
  * @alias module:geos
   */
-  geos.GEOSisClosed = Module.cwrap('GEOSisClosed', 'number', ['number'])
+  geos.GEOSisClosed = null
 
   /**
  * Tests whether the input geometry is closed. A closed geometry is a linestring or multilinestring with the start and end points being the same.
@@ -1754,7 +1884,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a4e9f6a5bbec6edea7adba6ffac72fe48
  * @alias module:geos
   */
-  geos.GEOSGeomGetLength = Module.cwrap('GEOSGeomGetLength', 'number', ['number', 'number'])
+  geos.GEOSGeomGetLength = null
 
   /**
  * Computes the length of a geometry.
@@ -1772,7 +1902,7 @@ export function initCFunctions () {
  * @returns {number} The number of points, or -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSGeomGetNumPoints = Module.cwrap('GEOSGeomGetNumPoints', 'number', ['number'])
+  geos.GEOSGeomGetNumPoints = null
 
   /**
  * Returns the number of points in a geometry.
@@ -1790,7 +1920,7 @@ export function initCFunctions () {
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSGeomGetX = Module.cwrap('GEOSGeomGetX', 'number', ['number', 'number'])
+  geos.GEOSGeomGetX = null
 
   /**
  * Returns the X coordinate of a point geometry.
@@ -1809,7 +1939,7 @@ export function initCFunctions () {
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSGeomGetY = Module.cwrap('GEOSGeomGetY', 'number', ['number', 'number'])
+  geos.GEOSGeomGetY = null
 
   /**
  * Returns the Y coordinate of a point geometry in a thread-safe manner.
@@ -1828,7 +1958,7 @@ export function initCFunctions () {
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSGeomGetZ = Module.cwrap('GEOSGeomGetZ', 'number', ['number', 'number'])
+  geos.GEOSGeomGetZ = null
 
   /**
  * Returns the Z coordinate of a point geometry in a thread-safe manner.
@@ -1846,7 +1976,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to a newly allocated GEOSGeometry object of type LinearRing, or NULL on exception. The caller is responsible for destroying it with GEOSGeom_destroy().
  * @alias module:geos
   */
-  geos.GEOSGetExteriorRing = Module.cwrap('GEOSGetExteriorRing', 'number', ['number'])
+  geos.GEOSGetExteriorRing = null
 
   /**
  * Returns the exterior ring of a polygon geometry.
@@ -1867,7 +1997,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html
  * @alias module:geos
   */
-  geos.GEOSGetInteriorRingN = Module.cwrap('GEOSGetInteriorRingN', 'number', ['number', 'number'])
+  geos.GEOSGetInteriorRingN = null
 
   /**
  * Returns the Nth interior ring of a polygon geometry.
@@ -1887,7 +2017,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1Centroid.html
  * @alias module:geos
   */
-  geos.GEOSGetCentroid = Module.cwrap('GEOSGetCentroid', 'number', ['number'])
+  geos.GEOSGetCentroid = null
 
   /**
  * Computes the centroid point of a geometry.
@@ -1908,7 +2038,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#af09ef325324bec3c1ccb981db52eec4f
  * @alias module:geos
   */
-  geos.GEOSMinimumBoundingCircle = Module.cwrap('GEOSMinimumBoundingCircle', 'number', ['number', 'number', 'number'])
+  geos.GEOSMinimumBoundingCircle = null
 
   /**
  * Returns a geometry which represents the "minimum bounding circle", the smallest circle that contains the input.
@@ -1931,19 +2061,19 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a871ccb7efc6dd63162b3547fcd76c638
  * @alias module:geos
   */
-  geos.GEOSGeom_createCollection = Module.cwrap('GEOSGeom_createCollection', 'number', ['number', 'number', 'number'])
+  geos.GEOSGeom_createCollection = null
 
   /**
  * Creates a geometry collection of a specified type from an array of geometries using a thread-safe context handle.
  * @param {number} handle - A pointer to a GEOS context handle.
  * @param {number} type - An integer representing the geometry type, such as 1 for POINT, 4 for MULTIPOINT, etc.
- * @param {string} geoms - A pointer to an array of pointers to GEOS geometry objects.
+ * @param {number} geoms - A pointer to an array of pointers to GEOS geometry objects.
  * @param {number} ngeoms - The number of geometries in the array.
  * @returns {number} A pointer to a GEOS geometry object representing the collection, or NULL on error.
  * @see https://geos.osgeo.org/doxygen/classgeos_1_1geom_1_1GeometryFactory.html#a0c8f6a2a9f5b7a3d7e5c7b0f8b6f9c0e
  * @alias module:geos
   */
-  geos.GEOSGeom_createCollection_r = Module.cwrap('GEOSGeom_createCollection_r', 'number', ['number', 'number', 'string', 'number'])
+  geos.GEOSGeom_createCollection_r = Module.cwrap('GEOSGeom_createCollection_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
  * Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
@@ -1967,7 +2097,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9d98e448d3b846d591c726d1c0000d25
  * @alias module:geos
   */
-  geos.GEOSPolygonize = Module.cwrap('GEOSPolygonize', 'number', ['number', 'number'])
+  geos.GEOSPolygonize = null
 
   /**
  * Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
@@ -2008,7 +2138,7 @@ export function initCFunctions () {
  * @returns {number} A GeometryCollection containing the polygons formed by the polygonization.
  * @alias module:geos
   */
-  geos.GEOSPolygonize_valid = Module.cwrap('GEOSPolygonize_valid', 'number', ['number', 'number'])
+  geos.GEOSPolygonize_valid = null
 
   /**
  * Polygonizes a set of valid Geometrys which contain linework that
@@ -2038,7 +2168,7 @@ export function initCFunctions () {
  * @returns {string} A MultiLineString containing the boundary segments.
  * @alias module:geos
   */
-  geos.GEOSPolygonizer_getCutEdges = Module.cwrap('GEOSPolygonizer_getCutEdges', 'string', ['string', 'number'])
+  geos.GEOSPolygonizer_getCutEdges = null
 
   /**
  * Gets the list of line segments forming the boundary between
@@ -2079,7 +2209,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f0a7f5c9a3b6d7f9b4d1c8e2a0d4f5a
  * @alias module:geos
   */
-  geos.GEOSPolygonize_full = Module.cwrap('GEOSPolygonize_full', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSPolygonize_full = null
 
   /**
  * Polygonizes a set of Geometrys which contain linework that
@@ -2120,7 +2250,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0a8f4f9d7e3b9c1a2b6a0f1b5c4a7d0f
  * @alias module:geos
   */
-  geos.GEOSBuildArea = Module.cwrap('GEOSBuildArea', 'number', ['number'])
+  geos.GEOSBuildArea = null
 
   /**
  * Creates an areal geometry formed by constituent linework of given geometry.
@@ -2149,7 +2279,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f0a7f5c9a3b6d7f9b4d1c8e2a0d4f5a
  * @alias module:geos
   */
-  geos.GEOSMakeValid = Module.cwrap('GEOSMakeValid', 'number', ['number'])
+  geos.GEOSMakeValid = null
 
   /**
  * Returns a geometry that is valid according to the GEOS library.
@@ -2168,7 +2298,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1operation_1_1linemerge_1_1LineMerger.html
  * @alias module:geos
   */
-  geos.GEOSLineMerge = Module.cwrap('GEOSLineMerge', 'number', ['number'])
+  geos.GEOSLineMerge = null
 
   /**
  * Merges a collection of linear components into maximal-length linestrings, using a GEOS context handle.
@@ -2187,7 +2317,7 @@ export function initCFunctions () {
  * @see https://libgeos.org/doxygen/classgeos_1_1geom_1_1Geometry.html
  * @alias module:geos
   */
-  geos.GEOSReverse = Module.cwrap('GEOSReverse', 'number', ['number'])
+  geos.GEOSReverse = null
 
   /**
  * Reverses the order of the coordinates in a geometry, using a GEOS context handle.
@@ -2205,7 +2335,7 @@ export function initCFunctions () {
  * @returns {number} The SRID of the geometry, or 0 if not set.
  * @alias module:geos
   */
-  geos.GEOSGetSRID = Module.cwrap('GEOSGetSRID', 'number', ['number'])
+  geos.GEOSGetSRID = null
 
   /**
  * Returns the Spatial Reference System ID (SRID) of a geometry in a thread-safe manner.
@@ -2222,7 +2352,7 @@ export function initCFunctions () {
  * @param {number} SRID - The SRID value to set.
  * @alias module:geos
   */
-  geos.GEOSSetSRID = Module.cwrap('GEOSSetSRID', null, ['number', 'number'])
+  geos.GEOSSetSRID = null
 
   /**
  * Sets the Spatial Reference System ID (SRID) of a geometry in a thread-safe manner.
@@ -2239,7 +2369,7 @@ export function initCFunctions () {
  * @returns {string} The user data of the geometry, or null if not set or not a string.
  * @alias module:geos
   */
-  geos.GEOSGeom_getUserData = Module.cwrap('GEOSGeom_getUserData', 'string', ['string'])
+  geos.GEOSGeom_getUserData = null
 
   /**
  * Get the user data pointer associated with a geometry.
@@ -2258,7 +2388,7 @@ export function initCFunctions () {
  * @param {string} userData - The user data pointer to be set.
  * @alias module:geos
   */
-  geos.GEOSGeom_setUserData = Module.cwrap('GEOSGeom_setUserData', null, ['number', 'string'])
+  geos.GEOSGeom_setUserData = null
 
   /**
  * Set the user data pointer associated with a geometry.
@@ -2277,7 +2407,7 @@ export function initCFunctions () {
  * @returns {number} 1 if the geometry has Z dimension, 0 otherwise, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSHasZ = Module.cwrap('GEOSHasZ', 'number', ['number'])
+  geos.GEOSHasZ = null
 
   /**
  * Check if a geometry has a Z coordinate dimension.
@@ -2293,7 +2423,7 @@ export function initCFunctions () {
  * @return {number} The output dimension (2 or 3).
  * @alias module:geos
   */
-  geos.GEOS_getWKBOutputDims = Module.cwrap('GEOS_getWKBOutputDims', 'number', [])
+  geos.GEOS_getWKBOutputDims = null
 
   /**
  * Get the output dimension of WKB geometries in a given context.
@@ -2309,7 +2439,7 @@ export function initCFunctions () {
  * @return {number} The previous output dimension.
  * @alias module:geos
   */
-  geos.GEOS_setWKBOutputDims = Module.cwrap('GEOS_setWKBOutputDims', 'number', ['number'])
+  geos.GEOS_setWKBOutputDims = null
 
   /**
  * Set the output dimension of WKB geometries in a given context.
@@ -2359,7 +2489,7 @@ export function initCFunctions () {
  * @returns {number} A pointer to the created coordinate sequence or NULL on error.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_create = Module.cwrap('GEOSCoordSeq_create', 'number', ['number', 'number'])
+  geos.GEOSCoordSeq_create = null
 
   /**
  * Create a coordinate sequence of a given size and dimension in a given context.
@@ -2380,7 +2510,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setOrdinate = Module.cwrap('GEOSCoordSeq_setOrdinate', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_setOrdinate = null
 
   /**
  * Set an ordinate value in a coordinate sequence (thread-safe version).
@@ -2402,7 +2532,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setX = Module.cwrap('GEOSCoordSeq_setX', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_setX = null
 
   /**
  * Set Y ordinate values in a coordinate sequence.
@@ -2412,7 +2542,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setY = Module.cwrap('GEOSCoordSeq_setY', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_setY = null
 
   /**
  * Set Z ordinate values in a coordinate sequence.
@@ -2422,7 +2552,7 @@ export function initCFunctions () {
  * @return {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setZ = Module.cwrap('GEOSCoordSeq_setZ', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_setZ = null
 
   /**
  * Set X and Y ordinate values in a coordinate sequence.
@@ -2434,7 +2564,7 @@ export function initCFunctions () {
  * @since 2.2
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setXY = Module.cwrap('GEOSCoordSeq_setXY', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_setXY = null
 
   /**
  * Set X and Y ordinate values in a coordinate sequence (reentrant).
@@ -2460,7 +2590,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @since 2.2
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_setXYZ = Module.cwrap('GEOSCoordSeq_setXYZ', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_setXYZ = null
 
   /**
  * Set X, Y and Z ordinate values in a coordinate sequence (reentrant).
@@ -2482,7 +2612,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number|null} A pointer to a new coordinate sequence object or null on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_clone = Module.cwrap('GEOSCoordSeq_clone', 'number', ['number'])
+  geos.GEOSCoordSeq_clone = null
 
   /**
  * Clone a coordinate sequence.
@@ -2503,7 +2633,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9b7d0e4b5c8f2d7e4a9b0d6c3a9f1a7c
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getOrdinate = Module.cwrap('GEOSCoordSeq_getOrdinate', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_getOrdinate = null
 
   /**
  * Get an ordinate value from a coordinate sequence in a thread-safe way.
@@ -2527,7 +2657,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9b7d0e4b5c8f2d7e4a9b0d6c3a9f1a7c
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getX = Module.cwrap('GEOSCoordSeq_getX', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_getX = null
 
   /**
  * Get the Y ordinate value from a coordinate sequence.
@@ -2538,7 +2668,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9b7d0e4b5c8f2d7e4a9b0d6c3a9f1a7c
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getY = Module.cwrap('GEOSCoordSeq_getY', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_getY = null
 
   /**
  * Get the Z ordinate value of a coordinate in a sequence.
@@ -2548,7 +2678,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getZ = Module.cwrap('GEOSCoordSeq_getZ', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_getZ = null
 
   /**
  * Get the X and Y ordinate values of a coordinate in a sequence.
@@ -2559,7 +2689,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getXY = Module.cwrap('GEOSCoordSeq_getXY', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_getXY = null
 
   /**
  * Get the X and Y ordinate values of a coordinate in a sequence using a context handle.
@@ -2583,7 +2713,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getXYZ = Module.cwrap('GEOSCoordSeq_getXYZ', 'number', ['number', 'number', 'number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_getXYZ = null
 
   /**
  * Get the X, Y and Z ordinate values of a coordinate in a sequence using a context handle.
@@ -2605,7 +2735,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getSize = Module.cwrap('GEOSCoordSeq_getSize', 'number', ['number', 'number'])
+  geos.GEOSCoordSeq_getSize = null
 
   /**
  * Get the size of a coordinate sequence (thread-safe).
@@ -2624,7 +2754,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getDimensions = Module.cwrap('GEOSCoordSeq_getDimensions', 'number', ['number', 'number'])
+  geos.GEOSCoordSeq_getDimensions = null
 
   /**
  * Get the dimensions of a coordinate sequence (thread-safe).
@@ -2643,7 +2773,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_isCCW = Module.cwrap('GEOSCoordSeq_isCCW', 'number', ['number', 'number'])
+  geos.GEOSCoordSeq_isCCW = null
 
   /**
  * Checks whether a coordinate sequence forms a counter-clockwise ring.
@@ -2660,7 +2790,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} s - The coordinate sequence to destroy.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_destroy = Module.cwrap('GEOSCoordSeq_destroy', null, ['number'])
+  geos.GEOSCoordSeq_destroy = null
 
   /**
  * Destroys a coordinate sequence with a context handle.
@@ -2676,7 +2806,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} A pointer to the coordinate sequence, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_getCoordSeq = Module.cwrap('GEOSGeom_getCoordSeq', 'number', ['number'])
+  geos.GEOSGeom_getCoordSeq = null
 
   /**
  * Returns the coordinate sequence of a geometry with a context handle.
@@ -2694,7 +2824,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * Caller is responsible for freeing with GEOSGeom_destroy().
  * @alias module:geos
   */
-  geos.GEOSGeom_createPoint = Module.cwrap('GEOSGeom_createPoint', 'number', ['number'])
+  geos.GEOSGeom_createPoint = null
 
   /**
  * Creates a point geometry from a coordinate sequence (reentrant).
@@ -2716,7 +2846,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @since 3.8
  * @alias module:geos
   */
-  geos.GEOSGeom_createPointFromXY = Module.cwrap('GEOSGeom_createPointFromXY', 'number', ['number', 'number'])
+  geos.GEOSGeom_createPointFromXY = null
 
   /**
  * Creates a point geometry from a pair of coordinates (reentrant).
@@ -2739,7 +2869,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * Caller is responsible for freeing with GEOSGeom_destroy().
  * @alias module:geos
   */
-  geos.GEOSGeom_createLinearRing = Module.cwrap('GEOSGeom_createLinearRing', 'number', ['number'])
+  geos.GEOSGeom_createLinearRing = null
 
   /**
  * Creates a linear ring geometry from a coordinate sequence.
@@ -2756,7 +2886,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} The pointer to the created geometry or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_createLineString = Module.cwrap('GEOSGeom_createLineString', 'number', ['number'])
+  geos.GEOSGeom_createLineString = null
 
   /**
  * Creates a line string geometry from a coordinate sequence.
@@ -2775,7 +2905,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} The pointer to the created geometry or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_createPolygon = Module.cwrap('GEOSGeom_createPolygon', 'number', ['number', 'number', 'number'])
+  geos.GEOSGeom_createPolygon = null
 
   /**
  * Creates a polygon geometry from an outer ring and an optional array of inner rings.
@@ -2803,7 +2933,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} The pointer to the cloned geometry object, or null on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_clone = Module.cwrap('GEOSGeom_clone', 'number', ['number'])
+  geos.GEOSGeom_clone = null
 
   /**
  * Set the precision of a geometry object.
@@ -2824,7 +2954,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_setPrecision = Module.cwrap('GEOSGeom_setPrecision', 'number', ['number', 'number', 'number'])
+  geos.GEOSGeom_setPrecision = null
 
   /**
  * Get the precision of a geometry object.
@@ -2832,7 +2962,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} The precision value of the geometry object, or NaN on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_getPrecision = Module.cwrap('GEOSGeom_getPrecision', 'number', ['number', 'number'])
+  geos.GEOSGeom_getPrecision = null
 
   /**
  * Get the precision model of a geometry.
@@ -2851,7 +2981,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a4a2a3f2b9c7d6f9f0c8e5b4a0d6c1e7d}
  * @alias module:geos
   */
-  geos.GEOSGeom_getDimensions = Module.cwrap('GEOSGeom_getDimensions', 'number', ['number'])
+  geos.GEOSGeom_getDimensions = null
 
   /**
  * Get the inherent dimension of a geometry object, which must be less than or equal to the coordinate dimension.
@@ -2870,7 +3000,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a3f7a6b7f8b6a3e5d2e9e4a4f5d8a0b1c}
  * @alias module:geos
   */
-  geos.GEOSGeom_getCoordinateDimension = Module.cwrap('GEOSGeom_getCoordinateDimension', 'number', ['number'])
+  geos.GEOSGeom_getCoordinateDimension = null
 
   /**
  * Get the coordinate dimension of a geometry object.
@@ -2890,7 +3020,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @since 3.7
  * @alias module:geos
   */
-  geos.GEOSGeom_getXMin = Module.cwrap('GEOSGeom_getXMin', 'number', ['number', 'number'])
+  geos.GEOSGeom_getXMin = null
 
   /**
  * Finds the minimum X value in the geometry (thread-safe version).
@@ -2911,7 +3041,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @since 3.7
  * @alias module:geos
   */
-  geos.GEOSGeom_getYMin = Module.cwrap('GEOSGeom_getYMin', 'number', ['number', 'number'])
+  geos.GEOSGeom_getYMin = null
 
   /**
  * Finds the minimum Y value in the geometry (thread-safe version).
@@ -2932,7 +3062,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @since 3.7
  * @alias module:geos
   */
-  geos.GEOSGeom_getXMax = Module.cwrap('GEOSGeom_getXMax', 'number', ['number', 'number'])
+  geos.GEOSGeom_getXMax = null
 
   /**
  * Returns the maximum X coordinate of the geometry.
@@ -2953,7 +3083,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9c6f3a7b7d4a5f3a9e8f1c6b0b4e2d9f
  * @alias module:geos
   */
-  geos.GEOSGeom_getYMax = Module.cwrap('GEOSGeom_getYMax', 'number', ['number', 'number'])
+  geos.GEOSGeom_getYMax = null
 
   /**
  * Returns the maximum Y coordinate of the geometry.
@@ -2976,7 +3106,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/classgeos_1_1simplify_1_1DouglasPeuckerSimplifier.html
  * @alias module:geos
   */
-  geos.GEOSSimplify = Module.cwrap('GEOSSimplify', 'number', ['number', 'number'])
+  geos.GEOSSimplify = null
 
   /**
  * Simplifies a Geometry using the standard Douglas-Peucker algorithm.
@@ -2999,7 +3129,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/classgeos_1_1simplify_1_1TopologyPreservingSimplifier.html
  * @alias module:geos
   */
-  geos.GEOSTopologyPreserveSimplify = Module.cwrap('GEOSTopologyPreserveSimplify', 'number', ['number', 'number'])
+  geos.GEOSTopologyPreserveSimplify = null
 
   /**
  * Simplifies a geometry, ensuring that the result is a valid geometry having the same dimension and number of components as the input. Thread-safe version.
@@ -3018,7 +3148,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html
  * @alias module:geos
   */
-  geos.GEOSWKTReader_create = Module.cwrap('GEOSWKTReader_create', 'number', [])
+  geos.GEOSWKTReader_create = null
 
   /**
  * Creates a new GEOSWKTReader object. Thread-safe version.
@@ -3034,7 +3164,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} reader - A pointer to a GEOSWKTReader object.
  * @alias module:geos
   */
-  geos.GEOSWKTReader_destroy = Module.cwrap('GEOSWKTReader_destroy', null, ['number'])
+  geos.GEOSWKTReader_destroy = null
 
   /**
  * Destroys a GEOSWKTReader object.
@@ -3054,7 +3184,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e|GEOSWKTReader_read_r}
  * @alias module:geos
   */
-  geos.GEOSWKTReader_read = Module.cwrap('GEOSWKTReader_read', 'number', ['number', 'string'])
+  geos.GEOSWKTReader_read = null
 
   /**
  * Reads a WKT string and returns a GEOSGeometry object.
@@ -3074,7 +3204,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e|GEOSWKTWriter_create}
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_create = Module.cwrap('GEOSWKTWriter_create', 'number', [])
+  geos.GEOSWKTWriter_create = null
 
   /**
  * Creates a GEOSWKTWriter object.
@@ -3090,7 +3220,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} writer - The pointer to the GEOSWKTWriter object to be destroyed.
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_destroy = Module.cwrap('GEOSWKTWriter_destroy', null, ['number'])
+  geos.GEOSWKTWriter_destroy = null
 
   /**
  * Destroys a GEOSWKTWriter object using a context handle.
@@ -3107,7 +3237,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {string} The WKT representation of the geometry, or null on error.
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_write = Module.cwrap('GEOSWKTWriter_write', 'string', ['number', 'number'])
+  geos.GEOSWKTWriter_write = null
 
   /**
  * Converts a GEOSGeometry object to a WKT string using a context handle.
@@ -3125,7 +3255,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} trim - A boolean value indicating whether to trim or not. 1 for true, 0 for false.
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_setTrim = Module.cwrap('GEOSWKTWriter_setTrim', null, ['number', 'number'])
+  geos.GEOSWKTWriter_setTrim = null
 
   /**
  * Sets the number trimming option on a GEOSWKTWriter.
@@ -3146,7 +3276,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} precision - The number of decimal places.
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_setRoundingPrecision = Module.cwrap('GEOSWKTWriter_setRoundingPrecision', null, ['number', 'number'])
+  geos.GEOSWKTWriter_setRoundingPrecision = null
 
   /**
  * Sets the number places after the decimal to output in WKT.
@@ -3169,7 +3299,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} dim - The output dimension (2 or 3).
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_setOutputDimension = Module.cwrap('GEOSWKTWriter_setOutputDimension', null, ['number', 'number'])
+  geos.GEOSWKTWriter_setOutputDimension = null
 
   /**
  * Sets the output dimension on a GEOSWKTWriter.
@@ -3192,7 +3322,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_getOutputDimension = Module.cwrap('GEOSWKTWriter_getOutputDimension', 'number', ['number'])
+  geos.GEOSWKTWriter_getOutputDimension = null
 
   /**
  * Get the output dimension of a GEOSWKTWriter object (thread-safe version).
@@ -3211,7 +3341,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_setOld3D = Module.cwrap('GEOSWKTWriter_setOld3D', null, ['number', 'number'])
+  geos.GEOSWKTWriter_setOld3D = null
 
   /**
  * Set whether to use the old-style 3D WKT representation (Z inside brackets) (thread-safe version).
@@ -3229,7 +3359,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in
  * @alias module:geos
   */
-  geos.GEOSWKBReader_create = Module.cwrap('GEOSWKBReader_create', 'number', [])
+  geos.GEOSWKBReader_create = null
 
   /**
  * Creates a new WKB reader object.
@@ -3244,7 +3374,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} reader - The pointer to the WKB reader object.
  * @alias module:geos
   */
-  geos.GEOSWKBReader_destroy = Module.cwrap('GEOSWKBReader_destroy', null, ['number'])
+  geos.GEOSWKBReader_destroy = null
 
   /**
  * Destroys a WKB reader object using a context handle.
@@ -3262,7 +3392,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} - The pointer to the geometry object, or null if an error occurred.
  * @alias module:geos
   */
-  geos.GEOSWKBReader_read = Module.cwrap('GEOSWKBReader_read', 'number', ['number', 'string', 'number'])
+  geos.GEOSWKBReader_read = null
 
   /**
  * Reads a geometry from a WKB byte buffer using a context handle.
@@ -3283,7 +3413,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to a GEOSGeometry object, or null on error.
  * @alias module:geos
   */
-  geos.GEOSWKBReader_readHEX = Module.cwrap('GEOSWKBReader_readHEX', 'number', ['number', 'string', 'number'])
+  geos.GEOSWKBReader_readHEX = null
 
   /**
  * Reads a geometry from a hexadecimal WKB representation with a context handle.
@@ -3301,7 +3431,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to a GEOSWKBWriter object, or null on error.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_create = Module.cwrap('GEOSWKBWriter_create', 'number', [])
+  geos.GEOSWKBWriter_create = null
 
   /**
  * Creates a new GEOSWKBWriter object with a context handle.
@@ -3316,7 +3446,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} writer - A pointer to a GEOSWKBWriter object.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_destroy = Module.cwrap('GEOSWKBWriter_destroy', null, ['number'])
+  geos.GEOSWKBWriter_destroy = null
 
   /**
  * Destroys a GEOSWKBWriter object.
@@ -3333,7 +3463,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {string} A WKB byte array as a string.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_write = Module.cwrap('GEOSWKBWriter_write', 'string', ['number', 'number', 'number'])
+  geos.GEOSWKBWriter_write = null
 
   /**
  * Writes a geometry as a WKB byte array with a context handle.
@@ -3354,7 +3484,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {string} A WKB hex-encoded byte array as a string.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_writeHEX = Module.cwrap('GEOSWKBWriter_writeHEX', 'string', ['number', 'number', 'number'])
+  geos.GEOSWKBWriter_writeHEX = null
 
   /**
  * Writes a geometry as a WKB hex-encoded byte array with a context handle.
@@ -3373,7 +3503,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} The output dimension (2 or 3).
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_getOutputDimension = Module.cwrap('GEOSWKBWriter_getOutputDimension', 'number', ['number'])
+  geos.GEOSWKBWriter_getOutputDimension = null
 
   /**
  * Get the output dimension of a WKBWriter object (thread-safe).
@@ -3390,7 +3520,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} newDimension - The new output dimension (2 or 3).
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_setOutputDimension = Module.cwrap('GEOSWKBWriter_setOutputDimension', null, ['number', 'number'])
+  geos.GEOSWKBWriter_setOutputDimension = null
 
   /**
  * Set the output dimension of a WKBWriter object (thread-safe).
@@ -3441,7 +3571,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if SRID values are included, 0 otherwise.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_getIncludeSRID = Module.cwrap('GEOSWKBWriter_getIncludeSRID', 'number', ['number'])
+  geos.GEOSWKBWriter_getIncludeSRID = null
 
   /**
  * Returns whether the writer includes SRID values in output WKB with a context handle.
@@ -3458,7 +3588,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} writeSRID - A boolean value indicating whether to include SRID or not.
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_setIncludeSRID = Module.cwrap('GEOSWKBWriter_setIncludeSRID', null, ['number', 'number'])
+  geos.GEOSWKBWriter_setIncludeSRID = null
 
   /**
  * Sets whether output WKB should have an SRID header, with a context handle.
@@ -3475,7 +3605,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A GEOSPreparedGeometry pointer, or NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSPrepare = Module.cwrap('GEOSPrepare', 'number', ['number'])
+  geos.GEOSPrepare = null
 
   /**
  * Creates a prepared geometry from a regular geometry, with a context handle.
@@ -3491,7 +3621,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} g - A GEOSPreparedGeometry pointer.
  * @alias module:geos
   */
-  geos.GEOSPreparedGeom_destroy = Module.cwrap('GEOSPreparedGeom_destroy', null, ['number'])
+  geos.GEOSPreparedGeom_destroy = null
 
   /**
  * Destroys a prepared geometry object.
@@ -3518,7 +3648,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if prepGeom1 contains geom2, 0 if not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedContains = Module.cwrap('GEOSPreparedContains', 'number', ['number', 'number'])
+  geos.GEOSPreparedContains = null
 
   /**
  * Tests whether a prepared geometry properly contains another geometry. Proper containment means that the test geometry is contained in the interior of the target geometry, and does not intersect its boundary.
@@ -3537,7 +3667,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if prepGeom1 properly contains geom2, 0 if not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedContainsProperly = Module.cwrap('GEOSPreparedContainsProperly', 'number', ['number', 'number'])
+  geos.GEOSPreparedContainsProperly = null
 
   /**
  * Tests whether a geometry is covered by another geometry.
@@ -3546,7 +3676,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} 1 if g2 is covered by pg1, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedCoveredBy = Module.cwrap('GEOSPreparedCoveredBy', 'number', ['number', 'number'])
+  geos.GEOSPreparedCoveredBy = null
 
   /**
  * Tests whether a geometry is covered by another geometry, using a GEOS context handle.
@@ -3565,7 +3695,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} 1 if pg1 covers g2, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedCovers = Module.cwrap('GEOSPreparedCovers', 'number', ['number', 'number'])
+  geos.GEOSPreparedCovers = null
 
   /**
  * Tests whether a geometry covers another geometry, using a GEOS context handle.
@@ -3584,7 +3714,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} 1 if pg1 crosses g2, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedCrosses = Module.cwrap('GEOSPreparedCrosses', 'number', ['number', 'number'])
+  geos.GEOSPreparedCrosses = null
 
   /**
  * Computes whether the given geometries cross.
@@ -3603,7 +3733,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} 1 if the geometries are disjoint, 0 if they are not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedDisjoint = Module.cwrap('GEOSPreparedDisjoint', 'number', ['number', 'number'])
+  geos.GEOSPreparedDisjoint = null
 
   /**
  * Computes whether the given geometries are disjoint.
@@ -3622,7 +3752,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} 1 if the geometries intersect, 0 if they do not, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedIntersects = Module.cwrap('GEOSPreparedIntersects', 'number', ['number', 'number'])
+  geos.GEOSPreparedIntersects = null
 
   /**
  * Computes whether the given geometries intersect.
@@ -3641,7 +3771,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if the geometries overlap, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedOverlaps = Module.cwrap('GEOSPreparedOverlaps', 'number', ['number', 'number'])
+  geos.GEOSPreparedOverlaps = null
 
   /**
  * Tests whether two geometries overlap, using a context handle.
@@ -3660,7 +3790,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if the geometries touch, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedTouches = Module.cwrap('GEOSPreparedTouches', 'number', ['number', 'number'])
+  geos.GEOSPreparedTouches = null
 
   /**
  * Tests whether two geometries touch at one or more points, using a context handle.
@@ -3679,7 +3809,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if the first geometry is within the second geometry, 0 if not, -1 on exception.
  * @alias module:geos
   */
-  geos.GEOSPreparedWithin = Module.cwrap('GEOSPreparedWithin', 'number', ['number', 'number'])
+  geos.GEOSPreparedWithin = null
 
   /**
  * Tests whether a geometry is within another geometry.
@@ -3698,7 +3828,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to a coordinate sequence containing the nearest points, or NULL on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedNearestPoints = Module.cwrap('GEOSPreparedNearestPoints', 'number', ['number', 'number'])
+  geos.GEOSPreparedNearestPoints = null
 
   /**
  * Computes the nearest points of two geometries using a GEOS context handle.
@@ -3718,7 +3848,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if the distance was computed successfully, 0 otherwise, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSPreparedDistance = Module.cwrap('GEOSPreparedDistance', 'number', ['number', 'number', 'number'])
+  geos.GEOSPreparedDistance = null
 
   /**
  * Computes the distance between two geometries using a prepared geometry for the first argument and a GEOS context handle.
@@ -3737,7 +3867,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to the GEOS STRTree object.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_create = Module.cwrap('GEOSSTRtree_create', 'number', ['number'])
+  geos.GEOSSTRtree_create = null
 
   /**
  * Creates a GEOS STRTree with a context handle, a spatial index for quickly querying geometries by their bounding boxes.
@@ -3755,7 +3885,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} item - A pointer to the item associated with the geometry. This can be any arbitrary data that can be cast to a void pointer.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_insert = Module.cwrap('GEOSSTRtree_insert', null, ['number', 'number', 'number'])
+  geos.GEOSSTRtree_insert = null
 
   /**
  * Inserts a geometry into a GEOS STRTree with a context handle, along with an associated item that can be retrieved later.
@@ -3775,7 +3905,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {any} userdata - A pointer to any user data that needs to be passed to the callback function. This can be any arbitrary data that can be cast to a void pointer.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_query = Module.cwrap('GEOSSTRtree_query', null, ['number', 'number', 'function', 'any'])
+  geos.GEOSSTRtree_query = null
 
   /**
  * Queries the tree for all items whose extents intersect the given geometry's envelope and applies an
@@ -3796,7 +3926,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to the nearest item, or NULL if the tree is empty.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_nearest = Module.cwrap('GEOSSTRtree_nearest', 'number', ['number', 'number'])
+  geos.GEOSSTRtree_nearest = null
 
   /**
  * Returns the item whose extent is nearest to the given geometry's envelope, using a custom distance function.
@@ -3818,7 +3948,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {any} A pointer to the nearest item, or NULL if the tree is empty or an error occurred.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_nearest_generic = Module.cwrap('GEOSSTRtree_nearest_generic', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSSTRtree_nearest_generic = null
 
   /**
  * Returns the item whose extent is nearest to the given item's envelope, using a custom distance function.
@@ -3840,7 +3970,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {any} userdata - An optional user data to be passed to the callback function.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_iterate = Module.cwrap('GEOSSTRtree_iterate', null, ['number', 'number'])
+  geos.GEOSSTRtree_iterate = null
 
   /**
  * Iterates over every item in an STRtree using a reentrant context handle.
@@ -3860,7 +3990,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if the item was found and removed, 0 otherwise.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_remove = Module.cwrap('GEOSSTRtree_remove', 'number', ['number', 'number', 'number'])
+  geos.GEOSSTRtree_remove = null
 
   /**
  * Removes an item from an STRtree that has a matching geometry and user data using a reentrant context handle.
@@ -3878,7 +4008,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} tree - A pointer to a GEOSSTRtree object.
  * @alias module:geos
   */
-  geos.GEOSSTRtree_destroy = Module.cwrap('GEOSSTRtree_destroy', null, ['number'])
+  geos.GEOSSTRtree_destroy = null
 
   /**
  * Destroys a GEOSSTRtree spatial index.
@@ -3897,7 +4027,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a557
  * @alias module:geos
   */
-  geos.GEOSProject = Module.cwrap('GEOSProject', 'number', ['number', 'number'])
+  geos.GEOSProject = null
 
   /**
  * Returns the distance of a point projected on a line from the origin of the line, using a reentrant context.
@@ -3918,7 +4048,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a1849
  * @alias module:geos
   */
-  geos.GEOSInterpolate = Module.cwrap('GEOSInterpolate', 'number', ['number', 'number'])
+  geos.GEOSInterpolate = null
 
   /**
  * Measuring from start of line, return point that is distance the start. Line parameter must be a LineString. The returned point is not guaranteed to intersect the line due to limitations of floating point calculations.
@@ -3940,7 +4070,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://docs.rs/geos-sys/1.0.13/geos_sys/fn.GEOSProjectNormalized.html}
  * @alias module:geos
   */
-  geos.GEOSProjectNormalized = Module.cwrap('GEOSProjectNormalized', 'number', ['number', 'number'])
+  geos.GEOSProjectNormalized = null
 
   /**
  * Returns the distance of point p projected on line g from the origin of g,
@@ -3964,7 +4094,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://rdrr.io/cran/geos/man/geos_project.html}
  * @alias module:geos
   */
-  geos.GEOSInterpolateNormalized = Module.cwrap('GEOSInterpolateNormalized', 'number', ['number', 'number'])
+  geos.GEOSInterpolateNormalized = null
 
   /**
  * Returns the point along line g representing the given distance from the origin along the geometry.
@@ -3986,7 +4116,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to a new GEOSGeometry object representing a multipoint, or NULL on error.
  * @alias module:geos
   */
-  geos.GEOSGeom_extractUniquePoints = Module.cwrap('GEOSGeom_extractUniquePoints', 'number', ['number'])
+  geos.GEOSGeom_extractUniquePoints = null
 
   /**
  * Extracts every unique point from a geometry.
@@ -4003,7 +4133,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} An empty geometry collection, or null on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_createEmptyCollection = Module.cwrap('GEOSGeom_createEmptyCollection', 'number', ['number'])
+  geos.GEOSGeom_createEmptyCollection = null
 
   /**
  * Creates an empty geometry collection of a given type with a context handle.
@@ -4019,7 +4149,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} An empty point geometry, or null on exception.
  * @alias module:geos
   */
-  geos.GEOSGeom_createEmptyPoint = Module.cwrap('GEOSGeom_createEmptyPoint', 'number', [])
+  geos.GEOSGeom_createEmptyPoint = null
 
   /**
  * Creates an empty point geometry with a context handle.
@@ -4036,7 +4166,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/usage/c_api/#geosgeom_createemptylinestring
  * @alias module:geos
   */
-  geos.GEOSGeom_createEmptyLineString = Module.cwrap('GEOSGeom_createEmptyLineString', 'number', [])
+  geos.GEOSGeom_createEmptyLineString = null
 
   /**
  * Creates an empty line string geometry using a reentrant context handle.
@@ -4055,7 +4185,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/usage/c_api/#geosgeom_createemptypolygon
  * @alias module:geos
   */
-  geos.GEOSGeom_createEmptyPolygon = Module.cwrap('GEOSGeom_createEmptyPolygon', 'number', [])
+  geos.GEOSGeom_createEmptyPolygon = null
 
   /**
  * Creates an empty polygon geometry using a reentrant context handle.
@@ -4081,7 +4211,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1Orientation.html#a5b9f8c4a7c6f0a3f3a4e7c8d6b9a5d7b
  * @alias module:geos
   */
-  geos.GEOSOrientationIndex = Module.cwrap('GEOSOrientationIndex', 'number', ['number', 'number', 'number', 'number', 'number', 'number'])
+  geos.GEOSOrientationIndex = null
 
   /**
  * Computes the orientation index of the direction of the point q relative to
@@ -4108,7 +4238,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html}
  * @alias module:geos
   */
-  geos.GEOSSharedPaths = Module.cwrap('GEOSSharedPaths', 'number', ['number', 'number'])
+  geos.GEOSSharedPaths = null
 
   /**
  * Computes a geometry representing the shared paths between two linear geometries using a GEOS context handle.
@@ -4131,7 +4261,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html}
  * @alias module:geos
   */
-  geos.GEOSSnap = Module.cwrap('GEOSSnap', 'number', ['number', 'number', 'number'])
+  geos.GEOSSnap = null
 
   /**
  * Snaps two geometries together with a given tolerance using a GEOS context handle.
@@ -4150,7 +4280,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to the newly allocated GEOSBufferParams object
  * @alias module:geos
   */
-  geos.GEOSBufferParams_create = Module.cwrap('GEOSBufferParams_create', 'number', [])
+  geos.GEOSBufferParams_create = null
 
   /**
  * Create a new GEOSBufferParams object with a context handle
@@ -4165,7 +4295,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} params A pointer to the GEOSBufferParams object to destroy
  * @alias module:geos
   */
-  geos.GEOSBufferParams_destroy = Module.cwrap('GEOSBufferParams_destroy', null, ['number'])
+  geos.GEOSBufferParams_destroy = null
 
   /**
  * Destroy a GEOSBufferParams object with a context handle
@@ -4182,7 +4312,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on failure
  * @alias module:geos
   */
-  geos.GEOSBufferParams_setEndCapStyle = Module.cwrap('GEOSBufferParams_setEndCapStyle', null, ['number', 'number'])
+  geos.GEOSBufferParams_setEndCapStyle = null
 
   /**
  * Sets the end cap style of the buffer parameters.
@@ -4207,7 +4337,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {null}
  * @alias module:geos
   */
-  geos.GEOSBufferParams_setJoinStyle = Module.cwrap('GEOSBufferParams_setJoinStyle', null, ['number', 'number'])
+  geos.GEOSBufferParams_setJoinStyle = null
 
   /**
  * Sets the join style of the buffer parameters.
@@ -4233,7 +4363,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {null}
  * @alias module:geos
   */
-  geos.GEOSBufferParams_setMitreLimit = Module.cwrap('GEOSBufferParams_setMitreLimit', null, ['number', 'number'])
+  geos.GEOSBufferParams_setMitreLimit = null
 
   /**
  * Sets the mitre limit of the buffer parameters.
@@ -4256,7 +4386,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {null} - No return value.
  * @alias module:geos
   */
-  geos.GEOSBufferParams_setQuadrantSegments = Module.cwrap('GEOSBufferParams_setQuadrantSegments', null, ['number', 'number'])
+  geos.GEOSBufferParams_setQuadrantSegments = null
 
   /**
  * Sets the number of line segments used to approximate an angle fillet, with a context handle.
@@ -4281,7 +4411,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {null} - No return value.
  * @alias module:geos
   */
-  geos.GEOSBufferParams_setSingleSided = Module.cwrap('GEOSBufferParams_setSingleSided', null, ['number', 'number'])
+  geos.GEOSBufferParams_setSingleSided = null
 
   /**
  * Sets whether the computed buffer should be single-sided, with a context handle.
@@ -4307,7 +4437,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} - A pointer to a GEOSGeometry object representing the output geometry, or NULL if an exception occurred.
  * @alias module:geos
   */
-  geos.GEOSBufferWithParams = Module.cwrap('GEOSBufferWithParams', 'number', ['number', 'number', 'number'])
+  geos.GEOSBufferWithParams = null
 
   /**
  * Creates a buffer area around this geometry having the given width and with a specified accuracy of approximation for circular arcs.
@@ -4328,7 +4458,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to the geometry representing the Delaunay triangulation. Returns NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSDelaunayTriangulation = Module.cwrap('GEOSDelaunayTriangulation', 'number', ['number', 'number', 'number'])
+  geos.GEOSDelaunayTriangulation = null
 
   /**
  * Computes a Delaunay triangulation of the vertices of the given geometry using a GEOS context handle.
@@ -4350,7 +4480,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} A pointer to the geometry representing the Voronoi diagram. Returns NULL on exception.
  * @alias module:geos
   */
-  geos.GEOSVoronoiDiagram = Module.cwrap('GEOSVoronoiDiagram', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSVoronoiDiagram = null
 
   /**
  * Computes a Voronoi diagram from the vertices of the given geometry using a GEOS context handle.
@@ -4379,7 +4509,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 if an intersection point is found, 0 if no intersection point is found, or -1 on error.
  * @alias module:geos
   */
-  geos.GEOSSegmentIntersection = Module.cwrap('GEOSSegmentIntersection', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'])
+  geos.GEOSSegmentIntersection = null
 
   /**
  * Computes the intersection point of two line segments, if there is one. This is a reentrant version that takes a GEOS context handle as an argument.
@@ -4436,14 +4566,14 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {string} The version of GEOS
  * @alias module:geos
   */
-  geos.GEOSversion = Module.cwrap('GEOSversion', 'string', [])
+  geos.GEOSversion = null
 
   /**
  * Return the JTS port of GEOS as a string
  * @return {string} The JTS port of GEOS
  * @alias module:geos
   */
-  geos.GEOSjtsport = Module.cwrap('GEOSjtsport', 'string', [])
+  geos.GEOSjtsport = null
 
   /**
  * Set the X coordinate of a point in a CoordinateSequence
@@ -4508,7 +4638,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getZ_ = Module.cwrap('GEOSCoordSeq_getZ_', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_getZ_ = null
 
   /**
  * Gets the Z ordinate value for a given coordinate in a GEOSCoordSequence. This is equivalent to GEOSCoordSeq_getZ_ with an additional context handle parameter.
@@ -4528,7 +4658,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f6b9f4c2e8a3b1f7c2a5d0e3c6a7d9f
  * @alias module:geos
  */
-  geos.GEOSConstrainedDelaunayTriangulation = Module.cwrap('GEOSConstrainedDelaunayTriangulation', 'number', ['number'])
+  geos.GEOSConstrainedDelaunayTriangulation = null
 
   /**
  * Computes the Constrained Delaunay Triangulation of a polygon.
@@ -4550,7 +4680,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a4f7a1f9d0c2b0c119e6f9e2f60b112a9
  * @alias module:geos
  */
-  geos.GEOSCoordSeq_copyFromArrays = Module.cwrap('GEOSCoordSeq_copyFromArrays', 'number', ['number', 'number', 'number', 'number'])
+  geos.GEOSCoordSeq_copyFromArrays = null
 
   /**
  * Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
@@ -4596,7 +4726,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4b9a6d0e2b7c8f6f9e5b1f6d0a5c
  * @alias module:geos
  */
-  geos.GEOSCoordSeq_copyToArrays = Module.cwrap('GEOSCoordSeq_copyToArrays', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_copyToArrays = null
 
   /**
  * Copies the coordinates of a coordinate sequence to two arrays of doubles.
@@ -4642,7 +4772,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f0b2f9f1a0c7e4b8a5f2d3c1a7e5c9b
  * @alias module:geos
  */
-  geos.GEOSDensify = Module.cwrap('GEOSDensify', 'number', ['number', 'number'])
+  geos.GEOSDensify = null
 
   /**
  * Densifies a geometry by adding points along the segments so that the distance between any two consecutive points is less than or equal to a given tolerance.
@@ -4664,7 +4794,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
  * @alias module:geos
  */
-  geos.GEOSDistanceWithin = Module.cwrap('GEOSDistanceWithin', 'number', ['number', 'number', 'number'])
+  geos.GEOSDistanceWithin = null
 
   /**
  * Checks if two geometries are within a given distance of each other.
@@ -4684,7 +4814,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6a9f3f0b6c7a4a1d1f5c0e2b2a8f9b4d
  * @alias module:geos
  */
-  geos.GEOSGeoJSONReader_create = Module.cwrap('GEOSGeoJSONReader_create', 'number', [])
+  geos.GEOSGeoJSONReader_create = null
 
   /**
  * Creates a GeoJSON reader object.
@@ -4702,7 +4832,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f7a9a6c0b4f1e5b7f2c3a1d3e4d8a9f
  * @alias module:geos
  */
-  geos.GEOSGeoJSONReader_destroy = Module.cwrap('GEOSGeoJSONReader_destroy', null, ['number'])
+  geos.GEOSGeoJSONReader_destroy = null
 
   /**
  * Destroys a GEOSGeoJSONReader object.
@@ -4722,7 +4852,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0f2a9b4a3b2b6d1c7f0a5e7f1c8f9d5a
  * @alias module:geos
  */
-  geos.GEOSGeoJSONReader_readGeometry = Module.cwrap('GEOSGeoJSONReader_readGeometry', 'number', ['number', 'string'])
+  geos.GEOSGeoJSONReader_readGeometry = null
 
   /**
 * Reads a geometry from a GeoJSON string.
@@ -4741,7 +4871,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see [GEOS C header file](https://libgeos.org/doxygen/geos__c_8h_source.html)
  * @alias module:geos
  */
-  geos.GEOSGeoJSONWriter_create = Module.cwrap('GEOSGeoJSONWriter_create', 'number', [])
+  geos.GEOSGeoJSONWriter_create = null
 
   /**
  * Creates a GeoJSON writer object.
@@ -4759,7 +4889,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a2f0a7c9f0a4a6b3e1f5d6d8c7a3e1b4c
  * @alias module:geos
  */
-  geos.GEOSGeoJSONWriter_destroy = Module.cwrap('GEOSGeoJSONWriter_destroy', null, ['number'])
+  geos.GEOSGeoJSONWriter_destroy = null
 
   /**
  * Destroys a GEOSGeoJSONWriter object and releases the memory associated with it.
@@ -4779,7 +4909,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a0a3f1f6b2a1f7d0b5a9c4d2c6b7e9e0a
  * @alias module:geos
  */
-  geos.GEOSGeoJSONWriter_writeGeometry = Module.cwrap('GEOSGeoJSONWriter_writeGeometry', 'string', ['number', 'number'])
+  geos.GEOSGeoJSONWriter_writeGeometry = null
 
   /**
  * Writes a geometry to a GeoJSON string.
@@ -4798,7 +4928,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a1f0e0b8a3f7d2b9c6f3f4d5a0b1c8e
  * @alias module:geos
  */
-  geos.GEOSMakeValidParams_create = Module.cwrap('GEOSMakeValidParams_create', 'number', [])
+  geos.GEOSMakeValidParams_create = null
 
   /**
  * Creates a GEOSMakeValidParams object, which can be used to control the behaviour of the GEOSMakeValid function.
@@ -4816,7 +4946,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see [12](https://github.com/libgeos/geos)
  * @alias module:geos
  */
-  geos.GEOSMakeValidParams_destroy = Module.cwrap('GEOSMakeValidParams_destroy', null, ['number'])
+  geos.GEOSMakeValidParams_destroy = null
 
   /**
  * Destroys a GEOSMakeValidParams object.
@@ -4847,7 +4977,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a0f4e0c3b6a9f9e1d5c7b9a1d6f0c4e
    * @alias module:geos
    */
-  geos.GEOSMakeValidParams_setMethod = Module.cwrap('GEOSMakeValidParams_setMethod', 'number', ['number', 'number'])
+  geos.GEOSMakeValidParams_setMethod = null
 
   /**
    * Sets the method to use for making a geometry valid.
@@ -4868,7 +4998,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @see https://libgeos.org/doxygen/geos__c_8h.html#a3a1c0b9f6a5f7a4e0b7c9e9b1f3d8f7c
    * @alias module:geos
    */
-  geos.GEOSMakeValidWithParams = Module.cwrap('GEOSMakeValidWithParams', 'number', ['number', 'number'])
+  geos.GEOSMakeValidWithParams = null
 
   /**
    * Attempts to make an invalid geometry valid without losing any of the input vertices.
@@ -4890,7 +5020,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f5a0b7f6f9e3a9c4b0b8a3c1a4d4e6d
    * @alias module:geos
    */
-  geos.GEOSPreparedDistanceWithin = Module.cwrap('GEOSPreparedDistanceWithin', 'number', ['number', 'number', 'number'])
+  geos.GEOSPreparedDistanceWithin = null
 
   /**
    * Computes the distance between a prepared geometry and another geometry, and checks if it is within a given tolerance.
@@ -4943,4 +5073,71 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @alias module:geos
    */
   geos.GEOSWKBWriter_setFlavor_r = Module.cwrap('GEOSWKBWriter_setFlavor_r', 'number', ['number', 'number', 'number'])
+
+  // Define a GEOS context handle
+  geos._ctx = geos.GEOS_init_r()
+
+  // Define a function to handle errors and notices
+  const errorHandlerPtr = geos.Module.addFunction((arg) => {
+    const message = geos.Module.UTF8ToString(arg)
+    if (errorHandler) errorHandler(message)
+    else console.error(message)
+  }, 'vii')
+
+  const noticeHandlerPtr = geos.Module.addFunction((arg) => {
+    const message = geos.Module.UTF8ToString(arg)
+    if (message) {
+      if (noticeHandler) noticeHandler(message)
+      else console.log(message)
+    }
+  }, 'vii')
+
+  geos.GEOSContext_setErrorMessageHandler_r(geos._ctx, errorHandlerPtr)
+  geos.GEOSContext_setNoticeMessageHandler_r(geos._ctx, noticeHandlerPtr)
+
+  // Define the initGEOS and finishGEOS functions for startup and cleanup
+  /**
+   * Cleans up GEOS and releases any allocated resources.
+   * @returns {void}
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a6f9f0b3a4c1a2e7c1d0e4e1b3a2c5d
+   * @alias module:geos
+   * @example
+   * import initGeosJs from 'geos-wasm'
+   * const geos = await initGeosJs()
+   * geos.finishGEOS()
+   * // GEOS is now cleaned up and cannot be used until initialized again
+   */
+  geos.finishGEOS = () => {
+    geos.GEOS_finish_r(geos._ctx)
+    geos._ctx = null
+  }
+
+  /**
+   * Initializes GEOS and allocates any required resources.
+   * @returns {void}
+   * @throws {Error} If GEOS has already been initialized.
+   * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a6f9f0b3a4c1a2e7c1d0e4e1b3a2c5d
+   * @alias module:geos
+   * @example
+   * import initGeosJs from 'geos-wasm'
+   * const geos = require('geos')
+   * geos.finishGEOS()
+   * // GEOS is now cleaned up and cannot be used until initialized again
+   * geos.initGEOS()
+   */
+  geos.initGEOS = () => {
+    if (geos._ctx === null) {
+      geos._ctx = geos.GEOS_init_r()
+    } else {
+      throw new Error('GEOS has already been initialized. Call finishGEOS before re-initializing.')
+    }
+  }
+
+  // Create non reentrant versions of the functions
+  Object.keys(geos).forEach(property => {
+    if (typeof geos[property] === 'function' && property.endsWith('_r')) {
+      const nonReFunctionName = property.slice(0, -2)
+      geos[nonReFunctionName] = (...args) => geos[property](geos._ctx, ...args)
+    }
+  })
 }
