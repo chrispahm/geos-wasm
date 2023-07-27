@@ -65,7 +65,7 @@ interface geos {
   Module: Module;
 }
 
-declare module 'geos' {
+declare module 'geos-wasm' {
   export default function initGeosJs(): Promise<geos>;
 }`
 
