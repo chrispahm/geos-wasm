@@ -146,7 +146,7 @@ onMounted(async () => {
       const radius = geos.Module.getValue(distancePtr, 'double')
       // now that we have the center and radius, we can create a
       // an actual circle using the center and radius
-      const bufferPtr = geos.GEOSBuffer(centerPtr, radius)
+      const bufferPtr = geos.GEOSBuffer(centerPtr, radius, 8)
       // convert the mic to wkb
       const micWkb = GEOSGeomToWKB(bufferPtr)
       // convert the wkb to a GeoJSON geometry
