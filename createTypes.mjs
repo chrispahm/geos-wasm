@@ -26,7 +26,7 @@ function createFunctionString (identifier, returnType, functionName, params) {
 // Create a TypeScript interface property for each function as a string, in the format
 // function(param1: string, param2: number): number;
 const allFunctionsTypes = templateData.map((identifier) => {
-  if (identifier.kind === 'member' && identifier.name.includes('GEOS')) {
+  if ((identifier.kind === 'member' || identifier.kind === 'function') && identifier.name.includes('GEOS')) {
     const params = identifier.params?.map((param) => {
       return `${param.name}: ${param.type.names[0]}`
     }) || []
@@ -65,8 +65,18 @@ interface geos {
   Module: Module;
 }
 
+interface Config {
+  /** 
+    * If initGEOS is true, the GEOS library will be initialized when the geos object is created.
+    * @default true
+  */ 
+  initGEOS?: boolean;
+  errorHandler?: (message: string) => void;
+  noticeHandler?: (message: string) => void;
+}
+
 declare module 'geos-wasm' {
-  export default function initGeosJs(): Promise<geos>;
+  export default function initGeosJs(config?: Config): Promise<geos>;
 }`
 
 fs.writeFileSync(`${outputDir}/geos.esm.d.ts`, output)
