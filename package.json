@@ -1,6 +1,6 @@
 {
   "name": "geos-wasm",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A WebAssembly build of GEOS",
   "type": "module",
   "main": "./build/package/geos.esm.js",
