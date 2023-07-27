@@ -16,6 +16,11 @@ test('Test custom message handlers', async (t) => {
   const reader = geos.GEOSWKTReader_create_r(ctx)
   const wkt = 'POLYGON((0 0,0 10,10 10,10 0,0 0)'
   const geomPtr = geos.GEOSWKTReader_read_r(ctx, reader, wkt)
-  t.equal(geomPtr, 0)
+  t.equal(geomPtr, 0, 'Line before should read: ParseException...')
+
+  // provoke the same error with the non-r variant
+  const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt)
+  t.equal(geomPtr2, 0, 'Line before should read: ParseException...')
+
   t.end()
 })
