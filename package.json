@@ -12,6 +12,7 @@
   },
   "files": [
     "build/package/geos.esm.js",
+    "build/package/geos.esm.d.ts",
     "src"
   ],
   "scripts": {
