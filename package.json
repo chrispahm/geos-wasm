@@ -19,6 +19,7 @@
     "build": "rollup -c && node createTypes.mjs",
     "build:dev": "rollup -c -w",
     "test": "tape test/tests/*.mjs",
+    "prepublish": "npm run build",
     "performance": "node test/performance.mjs",
     "docs:generate": "cd docs && rm -rf ./functions && node generate-md-from-jsdoc.mjs",
     "docs:dev": "vitepress dev docs",
