@@ -67,10 +67,10 @@ interface geos {
 
 interface Config {
   /** 
-    * If initGEOS is true, the GEOS library will be initialized when the geos object is created.
+    * If autoInit is true, the GEOS library will be initialized when the geos object is created.
     * @default true
   */ 
-  initGEOS?: boolean;
+  autoInit?: boolean;
   errorHandler?: (message: string) => void;
   noticeHandler?: (message: string) => void;
 }

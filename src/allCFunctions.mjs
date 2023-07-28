@@ -63,7 +63,7 @@ export const geos = {
 
 export function initCFunctions (config = {}) {
   const {
-    initGEOS = true,
+    autoInit = true,
     errorHandler = null,
     noticeHandler = null
   } = config
@@ -5074,9 +5074,6 @@ pointer  * @param {number} s - The coordinate sequence pointer
    */
   geos.GEOSWKBWriter_setFlavor_r = Module.cwrap('GEOSWKBWriter_setFlavor_r', 'number', ['number', 'number', 'number'])
 
-  // Define a GEOS context handle
-  geos._ctx = geos.GEOS_init_r()
-
   // Define a function to handle errors and notices
   const errorHandlerPtr = geos.Module.addFunction((arg) => {
     const message = geos.Module.UTF8ToString(arg)
@@ -5092,9 +5089,12 @@ pointer  * @param {number} s - The coordinate sequence pointer
     }
   }, 'vii')
 
-  geos.GEOSContext_setErrorMessageHandler_r(geos._ctx, errorHandlerPtr)
-  geos.GEOSContext_setNoticeMessageHandler_r(geos._ctx, noticeHandlerPtr)
-
+  // Define a GEOS context handle
+  if (autoInit) {
+    geos._ctx = geos.GEOS_init_r()
+    geos.GEOSContext_setErrorMessageHandler_r(geos._ctx, errorHandlerPtr)
+    geos.GEOSContext_setNoticeMessageHandler_r(geos._ctx, noticeHandlerPtr)
+  }
   // Define the initGEOS and finishGEOS functions for startup and cleanup
   /**
    * Cleans up GEOS and releases any allocated resources.
@@ -5128,6 +5128,8 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.initGEOS = () => {
     if (geos._ctx === null) {
       geos._ctx = geos.GEOS_init_r()
+      geos.GEOSContext_setErrorMessageHandler_r(geos._ctx, errorHandlerPtr)
+      geos.GEOSContext_setNoticeMessageHandler_r(geos._ctx, noticeHandlerPtr)
     } else {
       throw new Error('GEOS has already been initialized. Call finishGEOS before re-initializing.')
     }
