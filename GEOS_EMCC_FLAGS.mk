@@ -18,8 +18,8 @@ GEOS_EMCC_FLAGS += -s WASM=1 -s EXPORT_ES6=1 -s MODULARIZE=1 -s 'EXPORT_NAME="CM
 # export all functions
 # GEOS_EMCC_FLAGS += -s LINKABLE=1 -s EXPORT_ALL=1 
 GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
+  '_free',\
   '_malloc',\
-  '_initGEOS',\
 	'_GEOSContext_setNoticeHandler_r',\
   '_GEOSContext_setErrorHandler_r',\
   '_GEOSFree_r',\
@@ -264,8 +264,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSWKBWriter_getFlavor',\
   '_GEOSWKBWriter_getFlavor_r',\
   '_GEOSWKBWriter_setFlavor',\
-  '_GEOSWKBWriter_setFlavor_r',\
-  '_finishGEOS'\
+  '_GEOSWKBWriter_setFlavor_r'\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
