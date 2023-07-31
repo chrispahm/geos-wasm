@@ -70,6 +70,7 @@ export function initCFunctions (config = {}) {
 
   if (geos.initGEOS) return
   const Module = geos.Module
+  geos._ctx = null
 
   /**
  * Sets the notice handler for a GEOS context.
@@ -1050,7 +1051,7 @@ export function initCFunctions (config = {}) {
  * @returns {number} A pointer to the resulting geometry, or NULL if an exception was thrown.
  * @alias module:geos
   */
-  geos.GEOSBuffer = Module.cwrap('GEOSBuffer', 'number', ['number', 'number', 'number'])
+  geos.GEOSBuffer = null
 
   /**
  * Creates a buffer around a geometry with a specified width, number of segments per quadrant, end cap style, join style and mitre limit.
@@ -1110,7 +1111,7 @@ export function initCFunctions (config = {}) {
  * @returns {number} The single-sided buffered geometry pointer or NULL if an exception occurred.
  * @alias module:geos
   */
-  geos.GEOSSingleSidedBuffer = Module.cwrap('GEOSSingleSidedBuffer', 'number', ['number', 'number', 'number', 'number', 'number'])
+  geos.GEOSSingleSidedBuffer = null
 
   /**
  * Creates a single-sided buffer around a geometry with a specified width, number of segments per quadrant, side (left or right), end cap style and join style using a given context handle.
@@ -2455,7 +2456,7 @@ export function initCFunctions (config = {}) {
  * @return {number} The byte order (0 for XDR, 1 for NDR).
  * @alias module:geos
   */
-  geos.GEOS_getWKBByteOrder = Module.cwrap('GEOS_getWKBByteOrder', 'number', [])
+  geos.GEOS_getWKBByteOrder = null
 
   /**
  * Get the byte order used for WKB output.
@@ -2471,7 +2472,7 @@ export function initCFunctions (config = {}) {
  * @returns {number} 1 on success, 0 on error.
  * @alias module:geos
   */
-  geos.GEOS_setWKBByteOrder = Module.cwrap('GEOS_setWKBByteOrder', 'number', ['number'])
+  geos.GEOS_setWKBByteOrder = null
 
   /**
  * Set the byte order used for WKB output in a given context.
@@ -3537,7 +3538,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @return {number} The byte order (0 for big endian, 1 for little endian).
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_getByteOrder = Module.cwrap('GEOSWKBWriter_getByteOrder', 'number', ['number'])
+  geos.GEOSWKBWriter_getByteOrder = null
 
   /**
  * Returns the byte order used by the writer.
@@ -3554,7 +3555,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} byteOrder - The byte order to use (GEOS_WKB_XDR or GEOS_WKB_NDR).
  * @alias module:geos
   */
-  geos.GEOSWKBWriter_setByteOrder = Module.cwrap('GEOSWKBWriter_setByteOrder', null, ['number', 'number'])
+  geos.GEOSWKBWriter_setByteOrder = null
 
   /**
  * Sets the byte order for the writer with a context handle.
@@ -4703,7 +4704,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f4b0a3f8e9c7a9b5f3b2c1f0c3a1d6f
  * @alias module:geos
  */
-  geos.GEOSCoordSeq_copyFromBuffer = Module.cwrap('GEOSCoordSeq_copyFromBuffer', 'number', ['number', 'number'])
+  geos.GEOSCoordSeq_copyFromBuffer = null
 
   /**
  * Copies a coordinate sequence from a buffer of x,y,z values.
@@ -4749,7 +4750,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a6f2c8b0a3f4e4f2c9a7b1d5c2e9b7a
  * @alias module:geos
  */
-  geos.GEOSCoordSeq_copyToBuffer = Module.cwrap('GEOSCoordSeq_copyToBuffer', 'number', ['number', 'number', 'number'])
+  geos.GEOSCoordSeq_copyToBuffer = null
 
   /**
  * Copies the coordinates of a coordinate sequence to user-supplied buffers.
@@ -5041,7 +5042,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4c9b8b4f8e2f6d3a0e5c5b7b0a6f
    * @alias module:geos
    */
-  geos.GEOSWKBWriter_getFlavor = Module.cwrap('GEOSWKBWriter_getFlavor', 'number', ['number'])
+  geos.GEOSWKBWriter_getFlavor = null
 
   /**
    * Returns the output format of a WKB writer.
@@ -5061,7 +5062,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a0e1f9fa62b0d657c4b18e01a276a94
    * @alias module:geos
    */
-  geos.GEOSWKBWriter_setFlavor = Module.cwrap('GEOSWKBWriter_setFlavor', null, ['number', 'number'])
+  geos.GEOSWKBWriter_setFlavor = null
 
   /**
    * Sets the output format of a WKB writer to either WKB or EWKB.
@@ -5077,6 +5078,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
   // Define a function to handle errors and notices
   const errorHandlerPtr = geos.Module.addFunction((arg) => {
     const message = geos.Module.UTF8ToString(arg)
+
     if (errorHandler) errorHandler(message)
     else console.error(message)
   }, 'vii')
@@ -5089,12 +5091,6 @@ pointer  * @param {number} s - The coordinate sequence pointer
     }
   }, 'vii')
 
-  // Define a GEOS context handle
-  if (autoInit) {
-    geos._ctx = geos.GEOS_init_r()
-    geos.GEOSContext_setErrorMessageHandler_r(geos._ctx, errorHandlerPtr)
-    geos.GEOSContext_setNoticeMessageHandler_r(geos._ctx, noticeHandlerPtr)
-  }
   // Define the initGEOS and finishGEOS functions for startup and cleanup
   /**
    * Cleans up GEOS and releases any allocated resources.
@@ -5142,4 +5138,9 @@ pointer  * @param {number} s - The coordinate sequence pointer
       geos[nonReFunctionName] = (...args) => geos[property](geos._ctx, ...args)
     }
   })
+
+  // Define a GEOS context handle
+  if (autoInit) {
+    geos.initGEOS()
+  }
 }
