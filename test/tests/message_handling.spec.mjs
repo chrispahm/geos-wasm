@@ -22,5 +22,11 @@ test('Test custom message handlers', async (t) => {
   const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt)
   t.equal(geomPtr2, 0, 'Line before should read: ParseException...')
 
+  // free memory
+  geos.GEOSWKTReader_destroy_r(ctx, reader)
+  geos.GEOSGeom_destroy_r(ctx, geomPtr)
+  geos.GEOSGeom_destroy_r(ctx, geomPtr2)
+  geos.GEOS_finish_r(ctx)
+
   t.end()
 })
