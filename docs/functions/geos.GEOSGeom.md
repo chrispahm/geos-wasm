@@ -550,7 +550,7 @@ Creates a geometry collection of a specified type from an array of geometries us
 | --- | --- | --- |
 | handle | <code>number</code> | A pointer to a GEOS context handle. |
 | type | <code>number</code> | An integer representing the geometry type, such as 1 for POINT, 4 for MULTIPOINT, etc. |
-| geoms | <code>string</code> | A pointer to an array of pointers to GEOS geometry objects. |
+| geoms | <code>number</code> | A pointer to an array of pointers to GEOS geometry objects. |
 | ngeoms | <code>number</code> | The number of geometries in the array. |
 
 

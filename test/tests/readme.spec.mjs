@@ -13,7 +13,7 @@ test('README example: Calculate area of a polygon', async (t) => {
   geos.GEOSArea(geomPtr, areaPtr)
   const area = geos.Module.getValue(areaPtr, 'double')
 
-  t.equal(area, 1)
+  t.equal(area, 1, 'Area should be 1')
 
   geos.GEOSWKTReader_destroy(reader)
   geos.GEOSGeom_destroy(geomPtr)

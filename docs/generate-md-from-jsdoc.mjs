@@ -14,7 +14,7 @@ const templateData = jsdoc2md.getTemplateDataSync({ files: inputFile, configure:
 
 /* reduce templateData to an array of class names */
 const functionNames = templateData.reduce((functionNames, identifier) => {
-  if (identifier.kind === 'member') functionNames.push(identifier.name)
+  if (identifier.kind === 'member' || identifier.kind === 'function') functionNames.push(identifier.name)
   return functionNames
 }, [])
 
@@ -32,10 +32,11 @@ const similarNames = functionNames.reduce((similarNames, functionName) => {
   if (!functionBase.includes('geos.')) {
     functionBase = 'geos.Module'
   }
+
   if (functionName.startsWith('geos.GEOSGeom')) functionBase = 'geos.GEOSGeom'
   // skip if this function name has already been used
   if (similarNames.used && similarNames.used.includes(functionName)) return similarNames
-  let matches = functionNames.filter(name => name.includes(functionBase) && name !== functionName)
+  let matches = functionNames.filter(name => name.includes(functionBase))
   if (functionBase === 'geos.Module') {
     matches = functionNames.filter(name => !name.includes('geos.') && name !== functionName)
   }
