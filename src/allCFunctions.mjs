@@ -4639,7 +4639,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} 1 on success, 0 on exception.
  * @alias module:geos
   */
-  geos.GEOSCoordSeq_getZ_ = null
+  geos.GEOSCoordSeq_getZ = null
 
   /**
  * Gets the Z ordinate value for a given coordinate in a GEOSCoordSequence. This is equivalent to GEOSCoordSeq_getZ_ with an additional context handle parameter.
