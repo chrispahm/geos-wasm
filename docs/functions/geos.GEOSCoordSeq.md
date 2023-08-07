@@ -482,22 +482,6 @@ Get the Z ordinate value of a coordinate in a sequence.
 
 
 ---
-<a name="exp_module_geos--geos.GEOSCoordSeq_getZ_"></a>
-
-## geos.GEOSCoordSeq\_getZ\_ ⇒ <code>number</code> ⏏
-Gets the Z ordinate value for a given coordinate in a GEOSCoordSequence. This is an alias for GEOSCoordSeq_getZ_r without the context handle parameter.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 on success, 0 on exception.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| s | <code>number</code> | A pointer to the GEOSCoordSequence to query. |
-| idx | <code>number</code> | The coordinate index. |
-| val | <code>number</code> | A pointer to a double to store the Z ordinate value. |
-
-
----
 <a name="exp_module_geos--geos.GEOSCoordSeq_getZ_r"></a>
 
 ## geos.GEOSCoordSeq\_getZ\_r ⇒ <code>number</code> ⏏
