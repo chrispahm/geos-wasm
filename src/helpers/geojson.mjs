@@ -3,8 +3,9 @@ import { geos } from '../allCFunctions.mjs'
 export function jsonGeomToGeosGeom (geojson) {
   // assume only 2d (x, y) geometries
   switch (geojson.type) {
+    case 'Feature':
+      return jsonGeomToGeosGeom(geojson.geometry)
     case 'FeatureCollection':
-    case 'GeometryCollection':
       if (geojson.features.length === 0) {
         return geos.GEOSGeom_createEmptyCollection()
       } else {
@@ -12,6 +13,26 @@ export function jsonGeomToGeosGeom (geojson) {
         // iterate over each feature
         geojson.features.forEach((feature) => {
           geoms.push(jsonGeomToGeosGeom(feature.geometry))
+        })
+        const geomsPtr = geos.Module._malloc(geoms.length * 4)
+        const geomsArr = new Uint32Array(geoms)
+        geos.Module.HEAPU32.set(geomsArr, geomsPtr / 4)
+        const multiGeomsPtr = geos.GEOSGeom_createCollection(
+          7, // geos.GEOS_GEOMETRYCOLLECTION
+          geomsPtr,
+          geoms.length
+        )
+        geos.Module._free(geomsPtr)
+        return multiGeomsPtr
+      }
+    case 'GeometryCollection':
+      if (geojson.geometries.length === 0) {
+        return geos.GEOSGeom_createEmptyCollection(7) // geos.GEOS_GEOMETRYCOLLECTION
+      } else {
+        const geoms = []
+        // iterate over each feature
+        geojson.geometries.forEach((feature) => {
+          geoms.push(jsonGeomToGeosGeom(feature))
         })
         const geomsPtr = geos.Module._malloc(geoms.length * 4)
         const geomsArr = new Uint32Array(geoms)
@@ -35,7 +56,7 @@ export function jsonGeomToGeosGeom (geojson) {
         return geos.GEOSGeom_createEmptyLineString()
       } else {
         const seq = jsonCoordsToGeosCoordSeq(geojson.coordinates)
-        return geos.GEOSGeom_createLinsString(seq)
+        return geos.GEOSGeom_createLineString(seq)
       }
     case 'Polygon':
       if (geojson.coordinates.length === 0) {
@@ -64,7 +85,7 @@ export function jsonGeomToGeosGeom (geojson) {
       }
     case 'MultiPoint':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyMultiPoint()
+        return geos.GEOSGeom_createEmptyCollection(4) // geos.GEOS_MULTIPOINT
       } else {
         const points = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -83,7 +104,7 @@ export function jsonGeomToGeosGeom (geojson) {
       }
     case 'MultiLineString':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyMultiLineString()
+        return geos.GEOSGeom_createEmptyCollection(5) // geos.GEOS_MULTILINESTRING
       } else {
         const lines = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -103,7 +124,7 @@ export function jsonGeomToGeosGeom (geojson) {
       }
     case 'MultiPolygon':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyMultiPolygon()
+        return geos.GEOSGeom_createEmptyCollection(6) // geos.GEOS_MULTIPOLYGON
       } else {
         const polygons = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -153,16 +174,24 @@ export function geosGeomToJsonGeom (geomPtr) {
     case 0: // geos.GEOS_POINT
     {
       const seq = geos.GEOSGeom_getCoordSeq(geomPtr)
-      const xPtr = geos.Module._malloc(8)
-      const yPtr = geos.Module._malloc(8)
-      geos.GEOSCoordSeq_getXY(seq, 0, xPtr, yPtr)
-      const x = geos.Module.getValue(xPtr, 'double')
-      const y = geos.Module.getValue(yPtr, 'double')
-      geos.Module._free(xPtr)
-      geos.Module._free(yPtr)
+      const coords = []
+      const sizePtr = geos.Module._malloc(4)
+      geos.GEOSCoordSeq_getSize(seq, sizePtr)
+      const size = geos.Module.getValue(sizePtr, 'i32')
+      geos.Module._free(sizePtr)
+      if (size === 1) {
+        const xPtr = geos.Module._malloc(8)
+        const yPtr = geos.Module._malloc(8)
+        geos.GEOSCoordSeq_getXY(seq, 0, xPtr, yPtr)
+        const x = geos.Module.getValue(xPtr, 'double')
+        const y = geos.Module.getValue(yPtr, 'double')
+        geos.Module._free(xPtr)
+        geos.Module._free(yPtr)
+        coords.push(x, y)
+      }
       const pointJson = {
         type: 'Point',
-        coordinates: [x, y]
+        coordinates: coords
       }
       return pointJson
     }
@@ -181,13 +210,21 @@ export function geosGeomToJsonGeom (geomPtr) {
     {
       const coords = []
       const shell = geos.GEOSGetExteriorRing(geomPtr)
-      const shellSeq = geos.GEOSGeom_getCoordSeq(shell)
-      coords.push(geosCoordSeqToJsonCoords(shellSeq))
-      const numRings = geos.GEOSGetNumInteriorRings(geomPtr)
-      for (let i = 0; i < numRings; i++) {
-        const hole = geos.GEOSGetInteriorRingN(geomPtr, i)
-        const holeSeq = geos.GEOSGeom_getCoordSeq(hole)
-        coords.push(geosCoordSeqToJsonCoords(holeSeq))
+      if (shell !== 0) {
+        const shellSeq = geos.GEOSGeom_getCoordSeq(shell)
+        const sizePtr = geos.Module._malloc(4)
+        geos.GEOSCoordSeq_getSize(shellSeq, sizePtr)
+        const size = geos.Module.getValue(sizePtr, 'i32')
+        geos.Module._free(sizePtr)
+        if (size > 0) {
+          coords.push(geosCoordSeqToJsonCoords(shellSeq))
+          const numRings = geos.GEOSGetNumInteriorRings(geomPtr)
+          for (let i = 0; i < numRings; i++) {
+            const hole = geos.GEOSGetInteriorRingN(geomPtr, i)
+            const holeSeq = geos.GEOSGeom_getCoordSeq(hole)
+            coords.push(geosCoordSeqToJsonCoords(holeSeq))
+          }
+        }
       }
       const polyJson = {
         type: 'Polygon',
@@ -297,12 +334,15 @@ function geosCoordSeqToJsonCoords (seqPtr) {
   geos.GEOSCoordSeq_getSize(seqPtr, sizePtr)
   const size = geos.Module.getValue(sizePtr, 'i32')
   geos.Module._free(sizePtr)
+  if (size === 0) {
+    return []
+  }
   const coords = []
   const coordsPtr = geos.Module._malloc(size * 2 * 8)
   geos.GEOSCoordSeq_copyToBuffer(seqPtr, coordsPtr, false, false)
   const view = new Float64Array(geos.Module.HEAPF64.buffer, coordsPtr, size * 2)
-  for (let i = 0; i < size; i++) {
-    coords.push(view[i], view[i + 1])
+  for (let i = 0; i < size * 2; i = i + 2) {
+    coords.push([view[i], view[i + 1]])
   }
   geos.Module._free(coordsPtr)
   return coords
