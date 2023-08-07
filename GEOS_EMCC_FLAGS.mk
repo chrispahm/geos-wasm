@@ -109,6 +109,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSGetCentroid_r',\
   '_GEOSMinimumBoundingCircle_r',\
   '_GEOSGeom_createCollection_r',\
+  '_GEOSGeom_releaseCollection_r',\
   '_GEOSPolygonize_r',\
   '_GEOSPolygonize_valid_r',\
   '_GEOSPolygonizer_getCutEdges_r',\

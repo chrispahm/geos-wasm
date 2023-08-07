@@ -2077,6 +2077,35 @@ export function initCFunctions (config = {}) {
   geos.GEOSGeom_createCollection_r = Module.cwrap('GEOSGeom_createCollection_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
+  * Release the sub-geometries of a collection for management.
+  * by the caller. The input collection remains as an empty collection,
+  * that the caller is responsible for destroying. The output geometries
+  * are also the responsibility of the caller, as is the containing array,
+  * which must be freed with GEOSFree().
+  * @param {number} collection - A pointer to a GEOS geometry collection object.
+  * @param {number} ngeoms - A pointer to a variable that will be filled with the size of the output array.
+  * @returns {number} A newly allocated array of GEOSGeometry pointers.
+  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa
+  * @alias module:geos
+  */
+  geos.GEOSGeom_releaseCollection = null
+
+  /**
+  * Release the sub-geometries of a collection for management.
+  * by the caller. The input collection remains as an empty collection,
+  * that the caller is responsible for destroying. The output geometries
+  * are also the responsibility of the caller, as is the containing array,
+  * which must be freed with GEOSFree().
+  * @param {number} handle - A pointer to a GEOS context handle.
+  * @param {number} collection - A pointer to a GEOS geometry collection object.
+  * @param {number} ngeoms - A pointer to a variable that will be filled with the size of the output array.
+  * @returns {number} A newly allocated array of GEOSGeometry pointers.
+  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa
+  * @alias module:geos
+  */
+  geos.GEOSGeom_releaseCollection_r = Module.cwrap('GEOSGeom_releaseCollection_r', 'number', ['number', 'number', 'number'])
+
+  /**
  * Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
  *
  * All types of Geometry are accepted as input; the constituent linework is extracted as the edges to be polygonized.
@@ -4673,10 +4702,11 @@ pointer  * @param {number} s - The coordinate sequence pointer
 
   /**
  * Copies the coordinate values from the given arrays to a coordinate sequence.
+ * @param {number} x - A pointer to an array of x values.
+ * @param {number} y - A pointer to an array of y values.
+ * @param {number} z - A pointer to an array of z values, or NULL if not needed.
+ * @param {number} m - A pointer to an array of m values, or NULL if not needed.
  * @param {number} size - The number of coordinates in the arrays.
- * @param {number} xs - A pointer to an array of x values.
- * @param {number} ys - A pointer to an array of y values.
- * @param {number} zs - A pointer to an array of z values, or NULL if not needed.
  * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a4f7a1f9d0c2b0c119e6f9e2f60b112a9
  * @alias module:geos
@@ -4686,20 +4716,23 @@ pointer  * @param {number} s - The coordinate sequence pointer
   /**
  * Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
  * @param {number} ctx - A GEOS context handle.
- * @param {number} seq - A pointer to a GEOS coordinate sequence object.
  * @param {number} x - A pointer to an array of x values.
  * @param {number} y - A pointer to an array of y values.
- * @param {number} z - A pointer to an array of z values, or NULL if not present.
- * @returns {number} 1 on success, 0 on failure.
+ * @param {number} z - A pointer to an array of z values, or NULL if not needed.
+ * @param {number} m - A pointer to an array of m values, or NULL if not needed.
+ * @param {number} size - The number of coordinates in the arrays.
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9f4c6a5a7f2b9c0b1f6c0e1d0a1e4f5a
  * @alias module:geos
  */
   geos.GEOSCoordSeq_copyFromArrays_r = Module.cwrap('GEOSCoordSeq_copyFromArrays_r', 'number', ['number', 'number', 'number', 'number', 'number'])
 
   /**
- * Copies a coordinate sequence from a buffer of x, y values.
- * @param {number} size - The number of coordinates in the buffer.
+ * Copies a coordinate sequence from a buffer of x,y(,z) values.
  * @param {number} buf - A pointer to a buffer of double values, in x, y order.
+ * @param {number} size - The number of coordinates in the sequence.
+ * @param {number} hasZ - Does buffer have Z values?
+ * @param {number} hasM - Does buffer have M values?
  * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f4b0a3f8e9c7a9b5f3b2c1f0c3a1d6f
  * @alias module:geos
@@ -4707,12 +4740,13 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSCoordSeq_copyFromBuffer = null
 
   /**
- * Copies a coordinate sequence from a buffer of x,y,z values.
+ * Copies a coordinate sequence from a buffer of x,y(,z) values.
  * @param {number} ctx - A GEOS context handle.
- * @param {number} seq - A pointer to a GEOS coordinate sequence object.
- * @param {number} buf - A pointer to a buffer of double values.
- * @param {number} size - The number of coordinates in the buffer.
- * @returns {number} 1 on success, 0 on failure.
+ * @param {number} buf - A pointer to a buffer of double values, in x, y order.
+ * @param {number} size - The number of coordinates in the sequence.
+ * @param {number} hasZ - Does buffer have Z values?
+ * @param {number} hasM - Does buffer have M values?
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a9f0b9c5a4f3b8f1d6b2a0c6e8d7c7f
  * @alias module:geos
  */
@@ -4723,6 +4757,8 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} cs - A pointer to a GEOS coordinate sequence object.
  * @param {number} x - A pointer to an array of doubles to store the x-coordinates.
  * @param {number} y - A pointer to an array of doubles to store the y-coordinates.
+ * @param {number} z - A pointer to an array of doubles to store the z-coordinates, or NULL.
+ * @param {number} m - A pointer to an array of doubles to store the m-coordinates, or NULL.
  * @returns {number} 1 on success, 0 on failure.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4b9a6d0e2b7c8f6f9e5b1f6d0a5c
  * @alias module:geos
