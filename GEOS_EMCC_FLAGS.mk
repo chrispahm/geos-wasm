@@ -64,10 +64,8 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSEnvelope_r',\
   '_GEOSIntersection_r',\
   '_GEOSIntersectionPrec_r',\
-  '_GEOSBuffer',\
   '_GEOSBuffer_r',\
   '_GEOSBufferWithStyle_r',\
-  '_GEOSSingleSidedBuffer',\
   '_GEOSSingleSidedBuffer_r',\
   '_GEOSOffsetCurve_r',\
   '_GEOSConvexHull_r',\
@@ -126,9 +124,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSHasZ_r',\
   '_GEOS_getWKBOutputDims_r',\
   '_GEOS_setWKBOutputDims_r',\
-  '_GEOS_getWKBByteOrder',\
   '_GEOS_getWKBByteOrder_r',\
-  '_GEOS_setWKBByteOrder',\
   '_GEOS_setWKBByteOrder_r',\
   '_GEOSCoordSeq_create_r',\
   '_GEOSCoordSeq_setOrdinate_r',\
@@ -180,9 +176,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSWKBWriter_writeHEX_r',\
   '_GEOSWKBWriter_getOutputDimension_r',\
   '_GEOSWKBWriter_setOutputDimension_r',\
-  '_GEOSWKBWriter_getByteOrder',\
   '_GEOSWKBWriter_getByteOrder_r',\
-  '_GEOSWKBWriter_setByteOrder',\
   '_GEOSWKBWriter_setByteOrder_r',\
   '_GEOSWKBWriter_getIncludeSRID_r',\
   '_GEOSWKBWriter_setIncludeSRID_r',\
@@ -240,12 +234,11 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSCoordSeq_setZ_r',\
   '_GEOSCoordSeq_getX_r',\
   '_GEOSCoordSeq_getY_r',\
+  '_GEOSCoordSeq_getZ_r',\
   '_GEOSConstrainedDelaunayTriangulation_r',\
   '_GEOSCoordSeq_copyFromArrays_r',\
-  '_GEOSCoordSeq_copyFromBuffer',\
   '_GEOSCoordSeq_copyFromBuffer_r',\
   '_GEOSCoordSeq_copyToArrays_r',\
-  '_GEOSCoordSeq_copyToBuffer',\
   '_GEOSCoordSeq_copyToBuffer_r',\
   '_GEOSDensify_r',\
   '_GEOSDistanceWithin_r',\
@@ -261,9 +254,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSMakeValidParams_setMethod_r',\
   '_GEOSMakeValidWithParams_r',\
   '_GEOSPreparedDistanceWithin_r',\
-  '_GEOSWKBWriter_getFlavor',\
   '_GEOSWKBWriter_getFlavor_r',\
-  '_GEOSWKBWriter_setFlavor',\
   '_GEOSWKBWriter_setFlavor_r'\
 ]"
 
