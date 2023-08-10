@@ -3404,7 +3404,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {number} - The pointer to the geometry object, or null if an error occurred.
  * @alias module:geos
   */
-  geos.GEOSWKBReader_read_r = Module.cwrap('GEOSWKBReader_read_r', 'number', ['number', 'number', 'string', 'number'])
+  geos.GEOSWKBReader_read_r = Module.cwrap('GEOSWKBReader_read_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
  * Reads a geometry from a hexadecimal WKB representation.
