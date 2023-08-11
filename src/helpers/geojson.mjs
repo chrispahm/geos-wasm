@@ -1,10 +1,10 @@
 import { geos } from '../allCFunctions.mjs'
 
-export function jsonGeomToGeosGeom (geojson) {
+export function geojsonToGeosGeom (geojson) {
   // assume only 2d (x, y) geometries
   switch (geojson.type) {
     case 'Feature':
-      return jsonGeomToGeosGeom(geojson.geometry)
+      return geojsonToGeosGeom(geojson.geometry)
     case 'FeatureCollection':
       if (geojson.features.length === 0) {
         return geos.GEOSGeom_createEmptyCollection()
@@ -12,7 +12,7 @@ export function jsonGeomToGeosGeom (geojson) {
         const geoms = []
         // iterate over each feature
         geojson.features.forEach((feature) => {
-          geoms.push(jsonGeomToGeosGeom(feature.geometry))
+          geoms.push(geojsonToGeosGeom(feature.geometry))
         })
         const geomsPtr = geos.Module._malloc(geoms.length * 4)
         const geomsArr = new Uint32Array(geoms)
@@ -32,7 +32,7 @@ export function jsonGeomToGeosGeom (geojson) {
         const geoms = []
         // iterate over each feature
         geojson.geometries.forEach((feature) => {
-          geoms.push(jsonGeomToGeosGeom(feature))
+          geoms.push(geojsonToGeosGeom(feature))
         })
         const geomsPtr = geos.Module._malloc(geoms.length * 4)
         const geomsArr = new Uint32Array(geoms)
@@ -55,19 +55,19 @@ export function jsonGeomToGeosGeom (geojson) {
       if (geojson.coordinates.length === 0) {
         return geos.GEOSGeom_createEmptyLineString()
       } else {
-        const seq = jsonCoordsToGeosCoordSeq(geojson.coordinates)
+        const seq = geojsonCoordsToGeosCoordSeq(geojson.coordinates)
         return geos.GEOSGeom_createLineString(seq)
       }
     case 'Polygon':
       if (geojson.coordinates.length === 0) {
         return geos.GEOSGeom_createEmptyPolygon()
       } else {
-        const shellSeq = jsonCoordsToGeosCoordSeq(geojson.coordinates[0])
+        const shellSeq = geojsonCoordsToGeosCoordSeq(geojson.coordinates[0])
         const shell = geos.GEOSGeom_createLinearRing(shellSeq)
         const holes = []
         if (geojson.coordinates.length > 1) {
           for (let i = 1; i < geojson.coordinates.length; i++) {
-            const holeSeq = jsonCoordsToGeosCoordSeq(geojson.coordinates[i])
+            const holeSeq = geojsonCoordsToGeosCoordSeq(geojson.coordinates[i])
             holes.push(geos.GEOSGeom_createLinearRing(holeSeq))
           }
         }
@@ -108,7 +108,7 @@ export function jsonGeomToGeosGeom (geojson) {
       } else {
         const lines = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
-          const seq = jsonCoordsToGeosCoordSeq(geojson.coordinates[i])
+          const seq = geojsonCoordsToGeosCoordSeq(geojson.coordinates[i])
           lines.push(geos.GEOSGeom_createLineString(seq))
         }
         const linesPtr = geos.Module._malloc(lines.length * 4)
@@ -128,12 +128,12 @@ export function jsonGeomToGeosGeom (geojson) {
       } else {
         const polygons = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
-          const shellSeq = jsonCoordsToGeosCoordSeq(geojson.coordinates[i][0])
+          const shellSeq = geojsonCoordsToGeosCoordSeq(geojson.coordinates[i][0])
           const shell = geos.GEOSGeom_createLinearRing(shellSeq)
           const holes = []
           if (geojson.coordinates[i].length > 1) {
             for (let j = 1; j < geojson.coordinates[i].length; j++) {
-              const holeSeq = jsonCoordsToGeosCoordSeq(geojson.coordinates[i][j])
+              const holeSeq = geojsonCoordsToGeosCoordSeq(geojson.coordinates[i][j])
               holes.push(geos.GEOSGeom_createLinearRing(holeSeq))
             }
           }
@@ -165,7 +165,7 @@ export function jsonGeomToGeosGeom (geojson) {
   }
 }
 
-export function geosGeomToJsonGeom (geomPtr) {
+export function geosGeomToGeojson (geomPtr) {
   if (!geomPtr) {
     return null
   }
@@ -198,7 +198,7 @@ export function geosGeomToJsonGeom (geomPtr) {
     case 1: // geos.GEOS_LINESTRING
     {
       const seq = geos.GEOSGeom_getCoordSeq(geomPtr)
-      const coords = geosCoordSeqToJsonCoords(seq)
+      const coords = geosCoordSeqToGeojsonCoords(seq)
       const lineJson = {
         type: 'LineString',
         coordinates: coords
@@ -217,12 +217,12 @@ export function geosGeomToJsonGeom (geomPtr) {
         const size = geos.Module.getValue(sizePtr, 'i32')
         geos.Module._free(sizePtr)
         if (size > 0) {
-          coords.push(geosCoordSeqToJsonCoords(shellSeq))
+          coords.push(geosCoordSeqToGeojsonCoords(shellSeq))
           const numRings = geos.GEOSGetNumInteriorRings(geomPtr)
           for (let i = 0; i < numRings; i++) {
             const hole = geos.GEOSGetInteriorRingN(geomPtr, i)
             const holeSeq = geos.GEOSGeom_getCoordSeq(hole)
-            coords.push(geosCoordSeqToJsonCoords(holeSeq))
+            coords.push(geosCoordSeqToGeojsonCoords(holeSeq))
           }
         }
       }
@@ -261,7 +261,7 @@ export function geosGeomToJsonGeom (geomPtr) {
       for (let i = 0; i < numLines; i++) {
         const line = geos.GEOSGetGeometryN(geomPtr, i)
         const seq = geos.GEOSGeom_getCoordSeq(line)
-        coords.push(geosCoordSeqToJsonCoords(seq))
+        coords.push(geosCoordSeqToGeojsonCoords(seq))
       }
       const multiLineJson = {
         type: 'MultiLineString',
@@ -278,12 +278,12 @@ export function geosGeomToJsonGeom (geomPtr) {
         const polyCoords = []
         const shell = geos.GEOSGetExteriorRing(poly)
         const shellSeq = geos.GEOSGeom_getCoordSeq(shell)
-        polyCoords.push(geosCoordSeqToJsonCoords(shellSeq))
+        polyCoords.push(geosCoordSeqToGeojsonCoords(shellSeq))
         const numRings = geos.GEOSGetNumInteriorRings(poly)
         for (let j = 0; j < numRings; j++) {
           const hole = geos.GEOSGetInteriorRingN(poly, j)
           const holeSeq = geos.GEOSGeom_getCoordSeq(hole)
-          polyCoords.push(geosCoordSeqToJsonCoords(holeSeq))
+          polyCoords.push(geosCoordSeqToGeojsonCoords(holeSeq))
         }
         coords.push(polyCoords)
       }
@@ -299,7 +299,7 @@ export function geosGeomToJsonGeom (geomPtr) {
       const numGeoms = geos.GEOSGetNumGeometries(geomPtr)
       for (let i = 0; i < numGeoms; i++) {
         const geom = geos.GEOSGetGeometryN(geomPtr, i)
-        geoms.push(geosGeomToJsonGeom(geom))
+        geoms.push(geosGeomToGeojson(geom))
       }
       const geomCollJson = {
         type: 'GeometryCollection',
@@ -312,7 +312,7 @@ export function geosGeomToJsonGeom (geomPtr) {
   }
 }
 
-function jsonCoordsToGeosCoordSeq (coords) {
+function geojsonCoordsToGeosCoordSeq (coords) {
   if (!coords || coords.length === 0) {
     return null
   }
@@ -326,7 +326,7 @@ function jsonCoordsToGeosCoordSeq (coords) {
   return seqPtr
 }
 
-function geosCoordSeqToJsonCoords (seqPtr) {
+function geosCoordSeqToGeojsonCoords (seqPtr) {
   if (!seqPtr) {
     return null
   }

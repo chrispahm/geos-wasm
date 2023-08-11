@@ -35,7 +35,7 @@ import {
 } from '@turf/helpers'
 // import { Buffer } from 'buffer'
 // import { Geometry } from './wkx.js'
-import { jsonGeomToGeosGeom, geosGeomToJsonGeom } from '../../src/helpers/geojson.mjs'
+import { geojsonToGeosGeom, geosGeomToGeojson } from '../../src/helpers/geojson.mjs'
 let GEOSFunctions
 
 /*
@@ -242,7 +242,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
   // const geomPtr = GEOSGeomFromWKT(stringify(projected));
   // const wkb = Geometry.parseGeoJSON(projected).toWkb()
   // const geomPtr = GEOSGeomFromWKB(wkb)
-  const geomPtr = jsonGeomToGeosGeom(projected)
+  const geomPtr = geojsonToGeosGeom(projected)
   const distance = radiansToLength(lengthToRadians(radius, units), 'meters')
   let bufferPtr
   if (isBufferWithParams) {
@@ -257,7 +257,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
   // update the original GeoJSON with the new geometry
   // const bufferedWkb = GEOSGeomToWKB(bufferPtr)
   // const buffered = Geometry.parse(bufferedWkb).toGeoJSON()
-  const buffered = geosGeomToJsonGeom(bufferPtr)
+  const buffered = geosGeomToGeojson(bufferPtr)
   // destroy the GEOS objects
   GEOSFunctions.GEOSGeom_destroy(geomPtr)
   GEOSFunctions.GEOSGeom_destroy(bufferPtr)
