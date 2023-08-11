@@ -7,7 +7,7 @@ export function geojsonToGeosGeom (geojson) {
       return geojsonToGeosGeom(geojson.geometry)
     case 'FeatureCollection':
       if (geojson.features.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection()
+        return geos.GEOSGeom_createEmptyCollection(7) // geos.GEOS_GEOMETRYCOLLECTION
       } else {
         const geoms = []
         // iterate over each feature
