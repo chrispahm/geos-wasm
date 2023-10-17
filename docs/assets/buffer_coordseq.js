@@ -33,7 +33,8 @@ import {
   lengthToRadians,
   earthRadius
 } from '@turf/helpers'
-import { geojsonToGeosGeom, geosGeomToGeojson } from '../../src/helpers/geojson.mjs'
+import { geojsonToGeosGeom } from '../../src/helpers/geojsonToGeosGeom.mjs'
+import { geosGeomToGeojson } from '../../src/helpers/geosGeomToGeojson.mjs'
 let GEOSFunctions
 
 /**
@@ -201,7 +202,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
     }
   }
   // create a GEOS object from the GeoJSON
-  const geomPtr = geojsonToGeosGeom(projected)
+  const geomPtr = geojsonToGeosGeom(projected, GEOSFunctions)
   const distance = radiansToLength(lengthToRadians(radius, units), 'meters')
   let bufferPtr
   if (isBufferWithParams) {
@@ -214,7 +215,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr)
   }
   // update the original GeoJSON with the new geometry
-  const buffered = geosGeomToGeojson(bufferPtr)
+  const buffered = geosGeomToGeojson(bufferPtr, GEOSFunctions)
   // destroy the GEOS objects
   GEOSFunctions.GEOSGeom_destroy(geomPtr)
   GEOSFunctions.GEOSGeom_destroy(bufferPtr)
