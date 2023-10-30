@@ -39,10 +39,11 @@ Copies the coordinate values from the given arrays to a coordinate sequence.
 
 | Param | Type | Description |
 | --- | --- | --- |
+| x | <code>number</code> | A pointer to an array of x values. |
+| y | <code>number</code> | A pointer to an array of y values. |
+| z | <code>number</code> | A pointer to an array of z values, or NULL if not needed. |
+| m | <code>number</code> | A pointer to an array of m values, or NULL if not needed. |
 | size | <code>number</code> | The number of coordinates in the arrays. |
-| xs | <code>number</code> | A pointer to an array of x values. |
-| ys | <code>number</code> | A pointer to an array of y values. |
-| zs | <code>number</code> | A pointer to an array of z values, or NULL if not needed. |
 
 
 ---
@@ -52,23 +53,24 @@ Copies the coordinate values from the given arrays to a coordinate sequence.
 Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
 
 **Kind**: Exported member  
-**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**Returns**: <code>number</code> - A pointer to a GEOS coordinate sequence object, or NULL on error.  
 **See**: https://libgeos.org/doxygen/geos__c_8h.html#a9f4c6a5a7f2b9c0b1f6c0e1d0a1e4f5a  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | ctx | <code>number</code> | A GEOS context handle. |
-| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
 | x | <code>number</code> | A pointer to an array of x values. |
 | y | <code>number</code> | A pointer to an array of y values. |
-| z | <code>number</code> | A pointer to an array of z values, or NULL if not present. |
+| z | <code>number</code> | A pointer to an array of z values, or NULL if not needed. |
+| m | <code>number</code> | A pointer to an array of m values, or NULL if not needed. |
+| size | <code>number</code> | The number of coordinates in the arrays. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSCoordSeq_copyFromBuffer"></a>
 
 ## geos.GEOSCoordSeq\_copyFromBuffer ⇒ <code>number</code> ⏏
-Copies a coordinate sequence from a buffer of x, y values.
+Copies a coordinate sequence from a buffer of x,y(,z) values.
 
 **Kind**: Exported member  
 **Returns**: <code>number</code> - A pointer to a GEOS coordinate sequence object, or NULL on error.  
@@ -76,26 +78,29 @@ Copies a coordinate sequence from a buffer of x, y values.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| size | <code>number</code> | The number of coordinates in the buffer. |
 | buf | <code>number</code> | A pointer to a buffer of double values, in x, y order. |
+| size | <code>number</code> | The number of coordinates in the sequence. |
+| hasZ | <code>number</code> | Does buffer have Z values? |
+| hasM | <code>number</code> | Does buffer have M values? |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSCoordSeq_copyFromBuffer_r"></a>
 
 ## geos.GEOSCoordSeq\_copyFromBuffer\_r ⇒ <code>number</code> ⏏
-Copies a coordinate sequence from a buffer of x,y,z values.
+Copies a coordinate sequence from a buffer of x,y(,z) values.
 
 **Kind**: Exported member  
-**Returns**: <code>number</code> - 1 on success, 0 on failure.  
+**Returns**: <code>number</code> - A pointer to a GEOS coordinate sequence object, or NULL on error.  
 **See**: https://libgeos.org/doxygen/geos__c_8h.html#a7a9f0b9c5a4f3b8f1d6b2a0c6e8d7c7f  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | ctx | <code>number</code> | A GEOS context handle. |
-| seq | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
-| buf | <code>number</code> | A pointer to a buffer of double values. |
-| size | <code>number</code> | The number of coordinates in the buffer. |
+| buf | <code>number</code> | A pointer to a buffer of double values, in x, y order. |
+| size | <code>number</code> | The number of coordinates in the sequence. |
+| hasZ | <code>number</code> | Does buffer have Z values? |
+| hasM | <code>number</code> | Does buffer have M values? |
 
 
 ---
@@ -113,6 +118,8 @@ Copies the coordinates of a coordinate sequence to two arrays.
 | cs | <code>number</code> | A pointer to a GEOS coordinate sequence object. |
 | x | <code>number</code> | A pointer to an array of doubles to store the x-coordinates. |
 | y | <code>number</code> | A pointer to an array of doubles to store the y-coordinates. |
+| z | <code>number</code> | A pointer to an array of doubles to store the z-coordinates, or NULL. |
+| m | <code>number</code> | A pointer to an array of doubles to store the m-coordinates, or NULL. |
 
 
 ---
