@@ -1,3 +1,19 @@
+/**
+ * Convert GeoJSON object to GEOS geometry pointer.
+ * @param {Object} geojson - The GeoJSON object.
+ * @param {module:geos} geos - The GEOS module object.
+ * @returns {number} A pointer to GEOS geometry.
+ * @example
+ * import initGeosJs from 'geos-wasm'
+ * import { geojsonToGeosGeom } from 'geos-wasm/src/helpers/geojsonToGeosGeom.mjs'
+ * const geos = await initGeosJs()
+ * const json = JSON.parse('{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}')
+ * const geomPtr = geojsonToGeosGeom(json, geos)
+ * const writer = geos.GEOSWKTWriter_create()
+ * const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+ * console.log(wkt)
+ * // => POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))
+ */
 export function geojsonToGeosGeom (geojson, geos) {
   function geojsonCoordsToGeosCoordSeq (coords) {
     if (!coords || coords.length === 0) {

@@ -1,3 +1,19 @@
+/**
+ * Convert GEOS geometry pointer to GeoJSON object.
+ * @param {number} geomPtr - The GEOS geometry pointer.
+ * @param {module:geos} geos - The GEOS module object.
+ * @returns {Object} A GeoJSON object.
+ * @example
+ * import initGeosJs from 'geos-wasm'
+ * import { geosGeomToGeojson } from 'geos-wasm/src/helpers/geosGeomToGeojson.mjs'
+ * const geos = await initGeosJs()
+ * const reader = geos.GEOSWKTReader_create()
+ * const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
+ * const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+ * const json = geosGeomToGeojson(geomPtr, geos)
+ * console.log(JSON.stringify(json))
+ * // => {"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}
+ */
 export function geosGeomToGeojson (geomPtr, geos) {
   function geosCoordSeqToGeojsonCoords (seqPtr) {
     if (!seqPtr) {
