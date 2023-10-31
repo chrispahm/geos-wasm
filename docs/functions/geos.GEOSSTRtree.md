@@ -1,3 +1,34 @@
+<a name="exp_module_geos--geos.GEOSSTRtree_build"></a>
+
+## geos.GEOSSTRtree\_build ⇒ <code>number</code> ⏏
+Construct an STRtree from items that have been inserted. Once constructed,
+no more items may be inserted into the tree. Functions that require a
+constructed tree will build it automatically, so there is no need to call
+`GEOSSTRtree_build` unless it is desired to explicity construct the tree
+in a certain section of code or using a certain thread.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on error  
+
+---
+<a name="exp_module_geos--geos.GEOSSTRtree_build_r"></a>
+
+## geos.GEOSSTRtree\_build\_r ⇒ <code>number</code> ⏏
+Construct an STRtree from items that have been inserted. Once constructed,
+no more items may be inserted into the tree. Functions that require a
+constructed tree will build it automatically, so there is no need to call
+`GEOSSTRtree_build` unless it is desired to explicity construct the tree
+in a certain section of code or using a certain thread.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on error  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | The context handle to use for error reporting and memory management. |
+
+
+---
 <a name="exp_module_geos--geos.GEOSSTRtree_create"></a>
 
 ## geos.GEOSSTRtree\_create ⇒ <code>number</code> ⏏

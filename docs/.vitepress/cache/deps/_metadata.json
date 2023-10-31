@@ -1,89 +1,35 @@
 {
-  "hash": "080e1c5f",
-  "browserHash": "50da582a",
+  "hash": "92c8c030",
+  "browserHash": "0c016c0c",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "808e22ff",
+      "fileHash": "4bc15ac0",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "2d1c7b85",
+      "fileHash": "8d4fdb71",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "3368bed3",
+      "fileHash": "8f4802c7",
       "needsInterop": false
     },
     "@theme/index": {
       "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
       "file": "@theme_index.js",
-      "fileHash": "27f2c1b5",
+      "fileHash": "1452ac6d",
       "needsInterop": false
-    },
-    "maplibre-gl": {
-      "src": "../../../../node_modules/maplibre-gl/dist/maplibre-gl.js",
-      "file": "maplibre-gl.js",
-      "fileHash": "4186f51c",
-      "needsInterop": true
-    },
-    "@turf/bbox": {
-      "src": "../../../../node_modules/@turf/bbox/dist/es/index.js",
-      "file": "@turf_bbox.js",
-      "fileHash": "5b98e5f1",
-      "needsInterop": false
-    },
-    "@turf/center": {
-      "src": "../../../../node_modules/@turf/center/dist/es/index.js",
-      "file": "@turf_center.js",
-      "fileHash": "edcbc434",
-      "needsInterop": false
-    },
-    "@turf/meta": {
-      "src": "../../../../node_modules/@turf/meta/dist/es/index.js",
-      "file": "@turf_meta.js",
-      "fileHash": "bbfcafa3",
-      "needsInterop": false
-    },
-    "d3-geo": {
-      "src": "../../../../node_modules/d3-geo/src/index.js",
-      "file": "d3-geo.js",
-      "fileHash": "4d13dd65",
-      "needsInterop": false
-    },
-    "@turf/helpers": {
-      "src": "../../../../node_modules/@turf/helpers/dist/es/index.js",
-      "file": "@turf_helpers.js",
-      "fileHash": "a0092461",
-      "needsInterop": false
-    },
-    "buffer": {
-      "src": "../../../../node_modules/buffer/index.js",
-      "file": "buffer.js",
-      "fileHash": "05d13e5c",
-      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-MMVC6BQJ": {
-      "file": "chunk-MMVC6BQJ.js"
-    },
-    "chunk-VQFI4SDW": {
-      "file": "chunk-VQFI4SDW.js"
-    },
-    "chunk-HE4C34TC": {
-      "file": "chunk-HE4C34TC.js"
-    },
     "chunk-V634PGSD": {
       "file": "chunk-V634PGSD.js"
-    },
-    "chunk-76J2PTFD": {
-      "file": "chunk-76J2PTFD.js"
     }
   }
 }

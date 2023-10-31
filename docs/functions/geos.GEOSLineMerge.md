@@ -13,6 +13,43 @@ Merges a collection of linear components into maximal-length linestrings.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSLineMergeDirected"></a>
+
+## geos.GEOSLineMergeDirected ⇒ <code>number</code> ⏏
+Sews together a set of fully noded LineStrings
+removing any cardinality 2 nodes in the linework
+only if possible without changing order of points.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - The merged linework
+Caller is responsible for freeing with GEOSGeom_destroy().  
+**See**: geos::operation::linemerge::LineMerger  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| g | <code>number</code> | The input linework |
+
+
+---
+<a name="exp_module_geos--geos.GEOSLineMergeDirected_r"></a>
+
+## geos.GEOSLineMergeDirected\_r ⇒ <code>number</code> ⏏
+Sews together a set of fully noded LineStrings
+removing any cardinality 2 nodes in the linework
+only if possible without changing order of points.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - The merged linework
+Caller is responsible for freeing with GEOSGeom_destroy().  
+**See**: geos::operation::linemerge::LineMerger  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | The GEOS context pointer handle. |
+| g | <code>number</code> | The input linework |
+
+
+---
 <a name="exp_module_geos--geos.GEOSLineMerge_r"></a>
 
 ## geos.GEOSLineMerge\_r ⇒ <code>number</code> ⏏

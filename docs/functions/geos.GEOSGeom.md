@@ -152,6 +152,39 @@ Computes the length of a geometry.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSGeomGetM"></a>
+
+## geos.GEOSGeomGetM ⇒ <code>number</code> ⏏
+Returns the M coordinate, for a Point input, or an
+exception otherwise.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| g | <code>number</code> | [in] Input Point geometry |
+| m | <code>number</code> | [out] Pointer to hold return value |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeomGetM_r"></a>
+
+## geos.GEOSGeomGetM\_r ⇒ <code>number</code> ⏏
+Returns the M coordinate, for a Point input, or an
+exception otherwise.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A GEOS context handle created by GEOS_init_r(). |
+| g | <code>number</code> | [in] Input Point geometry |
+| m | <code>number</code> | [out] Pointer to hold return value |
+
+
+---
 <a name="exp_module_geos--geos.GEOSGeomGetNumPoints"></a>
 
 ## geos.GEOSGeomGetNumPoints ⇒ <code>number</code> ⏏
@@ -820,6 +853,44 @@ Creates a polygon geometry from an outer ring and an optional array of inner rin
 
 
 ---
+<a name="exp_module_geos--geos.GEOSGeom_createRectangle"></a>
+
+## geos.GEOSGeom\_createRectangle ⇒ <code>number</code> ⏏
+/**
+Create a rectangular polygon from bounding coordinates.
+Will return a point geometry if width and height are 0.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - The pointer to the created geometry or NULL on exception.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| xmin | <code>number</code> | Left bound of envelope |
+| ymin | <code>number</code> | Lower bound of envelope |
+| xmax | <code>number</code> | Right bound of envelope |
+| ymax | <code>number</code> | Upper bound of envelope |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeom_createRectangle_r"></a>
+
+## geos.GEOSGeom\_createRectangle\_r ⇒ <code>number</code> ⏏
+Create a rectangular polygon from bounding coordinates.
+Will return a point geometry if width and height are 0.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - The pointer to the created geometry or NULL on exception.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | The handle to the GEOS context. |
+| xmin | <code>number</code> | Left bound of envelope |
+| ymin | <code>number</code> | Lower bound of envelope |
+| xmax | <code>number</code> | Right bound of envelope |
+| ymax | <code>number</code> | Upper bound of envelope |
+
+
+---
 <a name="exp_module_geos--geos.GEOSGeom_destroy"></a>
 
 ## geos.GEOSGeom\_destroy ⏏
@@ -966,6 +1037,25 @@ Get the inherent dimension of a geometry object, which must be less than or equa
 | --- | --- | --- |
 | handle | <code>number</code> | A pointer to the GEOS context handle. |
 | g | <code>number</code> | The GEOS geometry pointer. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeom_getExtent"></a>
+
+## geos.GEOSGeom\_getExtent ⇒ <code>number</code> ⏏
+Finds the extent (minimum and maximum X and Y value) of the geometry.
+Raises an exception for empty geometry input.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on success, 0 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [in] | <code>number</code> | g Input geometry |
+| [out] | <code>number</code> | xmin Pointer to place result for minimum X value |
+| [out] | <code>number</code> | ymin Pointer to place result for minimum Y value |
+| [out] | <code>number</code> | xmax Pointer to place result for maximum X value |
+| [out] | <code>number</code> | ymax Pointer to place result for maximum Y value |
 
 
 ---
@@ -1222,6 +1312,45 @@ The user is responsible for freeing the memory of the user data pointer.
 | handle | <code>number</code> | A pointer to the GEOS context handle. |
 | g | <code>number</code> | The GEOS geometry object. |
 | userData | <code>string</code> | The user data pointer to be set. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeom_transformXY"></a>
+
+## geos.GEOSGeom\_transformXY ⇒ <code>number</code> ⏏
+Apply XY coordinate transform callback to all coordinates in a copy of
+input geometry.  If the callback returns an error, returned geometry will be
+NULL.  Z values, if present, are not modified by this function.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - a copy of the input geometry with transformed coordinates.
+Caller must free with GEOSGeom_destroy().  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| g | <code>number</code> | [in] Input geometry |
+| callback | <code>number</code> | [in] a function to be executed for each coordinate in the               geometry.  The callback takes 3 parameters: x and y coordinate               values to be updated and a void userdata pointer. |
+| userdata | <code>number</code> | an optional pointer to pe passed to 'callback' as an argument |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeom_transformXY_r"></a>
+
+## geos.GEOSGeom\_transformXY\_r ⇒ <code>number</code> ⏏
+Apply XY coordinate transform callback to all coordinates in a copy of
+input geometry.  If the callback returns an error, returned geometry will be
+NULL.  Z values, if present, are not modified by this function.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - a copy of the input geometry with transformed coordinates.
+Caller must free with GEOSGeom_destroy().  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| g | <code>number</code> | [in] Input geometry |
+| callback | <code>number</code> | [in] a function to be executed for each coordinate in the                 geometry.  The callback takes 3 parameters: x and y coordinate                 values to be updated and a void userdata pointer. |
+| userdata | <code>number</code> | an optional pointer to pe passed to 'callback' as an argument |
 
 
 ---

@@ -73,6 +73,43 @@ Tests whether a prepared geometry properly contains another geometry. Proper con
 
 
 ---
+<a name="exp_module_geos--geos.GEOSPreparedContainsXY"></a>
+
+## geos.GEOSPreparedContainsXY ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance
+calculation of whether the provided point is contained.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+**See**: GEOSContains  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | <code>number</code> | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedContainsXY_r"></a>
+
+## geos.GEOSPreparedContainsXY\_r ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance
+calculation of whether the provided point is contained.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+**See**: GEOSContains  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| pg1 | <code>number</code> | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
+
+
+---
 <a name="exp_module_geos--geos.GEOSPreparedContains_r"></a>
 
 ## geos.GEOSPreparedContains\_r ⇒ <code>number</code> ⏏
@@ -320,6 +357,43 @@ Computes whether the given geometries intersect.
 | --- | --- | --- |
 | pg1 | <code>number</code> | The first prepared geometry. |
 | g2 | <code>number</code> | The second geometry. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedIntersectsXY"></a>
+
+## geos.GEOSPreparedIntersectsXY ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance
+calculation of whether the provided point intersects.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+**See**: GEOSIntersects  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | <code>number</code> | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedIntersectsXY_r"></a>
+
+## geos.GEOSPreparedIntersectsXY\_r ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance
+calculation of whether the provided point intersects.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+**See**: GEOSIntersects  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| pg1 | <code>number</code> | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
 
 
 ---

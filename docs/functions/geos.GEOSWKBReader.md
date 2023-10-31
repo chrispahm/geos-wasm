@@ -115,3 +115,34 @@ Reads a geometry from a WKB byte buffer using a context handle.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSWKBReader_setFixStructure"></a>
+
+## geos.GEOSWKBReader\_setFixStructure ⏏
+Set the reader to automatically repair structural errors
+in the input (currently just unclosed rings) while reading.
+
+**Kind**: Exported member  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reader | <code>number</code> | A WKB reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBReader_setFixStructure_r"></a>
+
+## geos.GEOSWKBReader\_setFixStructure\_r ⏏
+Set the reader to automatically repair structural errors
+in the input (currently just unclosed rings) while reading.
+
+**Kind**: Exported member  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | The GEOS context pointer handle. |
+| reader | <code>number</code> | A WKB reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---
