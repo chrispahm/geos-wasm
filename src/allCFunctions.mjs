@@ -491,6 +491,31 @@ export function initCFunctions (config = {}) {
   geos.GEOSEqualsExact_r = Module.cwrap('GEOSEqualsExact_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
+ * Determine pointwise equivalence of two geometries by checking
+ * that the structure, ordering, and values of all vertices are
+ * identical in all dimensions. NaN values are considered to be
+ * equal to other NaN values.
+ *
+* @param {number} g1 Input geometry
+* @param {number} g2 Input geometry
+* @returns {number} 1 on true, 0 on false, 2 on exception
+*/
+  geos.GEOSEqualsIdentical = null
+
+  /**
+* Determine pointwise equivalence of two geometries by checking
+* that the structure, ordering, and values of all vertices are
+* identical in all dimensions. NaN values are considered to be
+* equal to other NaN values.
+*
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} g1 Input geometry
+* @param {number} g2 Input geometry
+* @returns {number} 1 on true, 0 on false, 2 on exception
+*/
+  geos.GEOSEqualsIdentical_r = Module.cwrap('GEOSEqualsIdentical_r', 'number', ['number', 'number', 'number'])
+
+  /**
  * Computes the distance between the closest points of two geometries.
  * @param {number} g1 - The first geometry to measure from.
  * @param {number} g2 - The second geometry to measure to.
@@ -1369,6 +1394,41 @@ export function initCFunctions (config = {}) {
   geos.GEOSMinimumClearanceLine_r = Module.cwrap('GEOSMinimumClearanceLine_r', 'number', ['number', 'number'])
 
   /**
+ * Works from start of each coordinate sequence in the
+ * geometry, retaining points that are further away from the
+ * previous retained point than the tolerance value.
+ *
+ * Removing repeated points with a non-zero tolerance may
+ * result in an invalid geometry being returned. Be sure
+ * to check and repair validity.
+ *
+ * @returns {number} A geometry with all points within the tolerance of each other removed.
+ * @param {number} g The geometry to filter
+ * @param {number} tolerance Remove all points within this distance of each other. Use 0.0 to remove only exactly repeated points.
+ *
+ * @see GEOSMakeValidWithParams*
+ */
+  geos.GEOSRemoveRepeatedPoints = null
+
+  /**
+* Works from start of each coordinate sequence in the
+* geometry, retaining points that are further away from the
+* previous retained point than the tolerance value.
+*
+* Removing repeated points with a non-zero tolerance may
+* result in an invalid geometry being returned. Be sure
+* to check and repair validity.
+*
+* @returns {number} A geometry with all points within the tolerance of each other removed.
+* @param {number} handle The context handle pointer to use for error reporting.
+* @param {number} g The geometry to filter
+* @param {number} tolerance Remove all points within this distance of each other. Use 0.0 to remove only exactly repeated points.
+*
+* @see GEOSMakeValidWithParams*
+*/
+  geos.GEOSRemoveRepeatedPoints_r = Module.cwrap('GEOSRemoveRepeatedPoints_r', 'number', ['number', 'number', 'number'])
+
+  /**
  * Computes the minimum clearance distance of a geometry.
  * The minimum clearance distance is the smallest distance between any pair of points in the geometry.
  * @param {number} g - The input geometry pointer.
@@ -1585,6 +1645,27 @@ export function initCFunctions (config = {}) {
   geos.GEOSUnaryUnionPrec_r = Module.cwrap('GEOSUnaryUnionPrec_r', 'number', ['number', 'number', 'number'])
 
   /**
+* Optimized union algorithm for inputs that can be divided into subsets
+* that do not intersect. If there is only one such subset, performance
+* can be expected to be worse than GEOSUnionaryUnion.
+* @param {number} handle - A pointer to a GEOS context handle.
+* @param {number} g The input geometry
+* @return {number} A newly allocated geometry of the union, or NULL on exception.
+* Caller is responsible for freeing with GEOSGeom_destroy().
+*/
+  geos.GEOSDisjointSubsetUnion_r = Module.cwrap('GEOSDisjointSubsetUnion_r', 'number', ['number', 'number'])
+
+  /**
+* Optimized union algorithm for inputs that can be divided into subsets
+* that do not intersect. If there is only one such subset, performance
+* can be expected to be worse than GEOSUnionaryUnion.
+* @param {number} g The input geometry
+* @return {number} A newly allocated geometry of the union, or NULL on exception.
+* Caller is responsible for freeing with GEOSGeom_destroy().
+*/
+  geos.GEOSDisjointSubsetUnion = null
+
+  /**
  * Computes the union of all the input geometries using an optimized algorithm for coverages (collections of polygons that do not overlap).
  * @param {number} geom - A pointer to a GEOS geometry.
  * @returns {number} A pointer to a new GEOS geometry representing the union, or NULL on exception.
@@ -1602,6 +1683,104 @@ export function initCFunctions (config = {}) {
  * @alias module:geos
   */
   geos.GEOSCoverageUnion_r = Module.cwrap('GEOSCoverageUnion_r', 'number', ['number', 'number'])
+
+  /**
+* Analyze a coverage (represented as a collection of polygonal geometry
+* with exactly matching edge geometry) to find places where the
+* assumption of exactly matching edges is not met.
+*
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} input The polygonal coverage to access,
+*        stored in a geometry collection. All members must be POLYGON
+*        or MULTIPOLYGON.
+* @param {number} gapWidth The maximum width of gaps to detect.
+* @param {number} invalidEdges When there are invalidities in the coverage,
+*        this pointer
+*        will be set with a geometry collection of the same length as
+*        the input, with a MULTILINESTRING of the error edges for each
+*        invalid polygon, or an EMPTY where the polygon is a valid
+*        participant in the coverage. Pass NULL if you do not want
+*        the invalid edges returned.
+* @return {number} A value of 1 for a valid coverage, 0 for invalid and 2 for
+*         an exception or error. Invalidity includes polygons that overlap,
+*         that have gaps smaller than the gapWidth, or non-polygonal
+*         entries in the input collection.
+*/
+  geos.GEOSCoverageIsValid_r = Module.cwrap('GEOSCoverageIsValid_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Analyze a coverage (represented as a collection of polygonal geometry
+* with exactly matching edge geometry) to find places where the
+* assumption of exactly matching edges is not met.
+*
+* @param {number} input The polygonal coverage to access,
+*        stored in a geometry collection. All members must be POLYGON
+*        or MULTIPOLYGON.
+* @param {number} gapWidth The maximum width of gaps to detect.
+* @param {number} invalidEdges When there are invalidities in the coverage,
+*        this pointer
+*        will be set with a geometry collection of the same length as
+*        the input, with a MULTILINESTRING of the error edges for each
+*        invalid polygon, or an EMPTY where the polygon is a valid
+*        participant in the coverage. Pass NULL if you do not want
+*        the invalid edges returned.
+* @return {number} A value of 1 for a valid coverage, 0 for invalid and 2 for
+*         an exception or error. Invalidity includes polygons that overlap,
+*         that have gaps smaller than the gapWidth, or non-polygonal
+*         entries in the input collection.
+*/
+  geos.GEOSCoverageIsValid = null
+
+  /**
+* Operates on a coverage (represented as a list of polygonal geometry
+* with exactly matching edge geometry) to apply a Visvalingam–Whyatt
+* simplification to the edges, reducing complexity in proportion with
+* the provided tolerance, while retaining a valid coverage (no edges
+* will cross or touch after the simplification).
+* Geometries never disappear, but they may be simplified down to just
+* a triangle. Also, some invalid geoms (such as Polygons which have too
+* few non-repeated points) will be returned unchanged.
+* If the input dataset is not a valid coverage due to overlaps,
+* it will still be simplified, but invalid topology such as crossing
+* edges will still be invalid.
+*
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} input The polygonal coverage to access,
+*        stored in a geometry collection. All members must be POLYGON
+*        or MULTIPOLYGON.
+* @param {number} tolerance A tolerance parameter in linear units.
+* @param {number} preserveBoundary Use 1 to preserve the outside edges
+*        of the coverage without simplification,
+*        0 to allow them to be simplified.
+* @return {number} A collection containing the simplified geometries, or null
+*         on error.
+*/
+  geos.GEOSCoverageSimplifyVW_r = Module.cwrap('GEOSCoverageSimplifyVW_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Operates on a coverage (represented as a list of polygonal geometry
+* with exactly matching edge geometry) to apply a Visvalingam–Whyatt
+* simplification to the edges, reducing complexity in proportion with
+* the provided tolerance, while retaining a valid coverage (no edges
+* will cross or touch after the simplification).
+* Geometries never disappear, but they may be simplified down to just
+* a triangle. Also, some invalid geoms (such as Polygons which have too
+* few non-repeated points) will be returned unchanged.
+* If the input dataset is not a valid coverage due to overlaps,
+* it will still be simplified, but invalid topology such as crossing
+* edges will still be invalid.
+*
+* @param {number} input The polygonal coverage to access,
+*        stored in a geometry collection. All members must be POLYGON
+*        or MULTIPOLYGON.
+* @param {number} tolerance A tolerance parameter in linear units.
+* @param {number} preserveBoundary Use 1 to preserve the outside edges
+*        of the coverage without simplification,
+*        0 to allow them to be simplified.
+* @return {number} A collection containing the simplified geometries, or null
+*         on error.
+*/
+  geos.GEOSCoverageSimplifyVW = null
 
   /**
  * Computes a geometric shape that represents the points shared by two or more geometries.
@@ -1972,6 +2151,25 @@ export function initCFunctions (config = {}) {
   geos.GEOSGeomGetZ_r = Module.cwrap('GEOSGeomGetZ_r', 'number', ['number', 'number', 'number'])
 
   /**
+* Returns the M coordinate, for a Point input, or an
+* exception otherwise.
+* @param {number} handle - A GEOS context handle created by GEOS_init_r().
+* @param {number} g [in] Input Point geometry
+* @param {number} m [out] Pointer to hold return value
+* \returns 1 on success, 0 on exception
+*/
+  geos.GEOSGeomGetM_r = Module.cwrap('GEOSGeomGetM_r', 'number', ['number', 'number', 'number'])
+
+  /**
+* Returns the M coordinate, for a Point input, or an
+* exception otherwise.
+* @param {number} g [in] Input Point geometry
+* @param {number} m [out] Pointer to hold return value
+* \returns 1 on success, 0 on exception
+*/
+  geos.GEOSGeomGetM = null
+
+  /**
  * Returns the exterior ring of a polygon geometry as a linear ring.
  * @param {number} g - A pointer to a GEOSGeometry object of type Polygon.
  * @returns {number} A pointer to a newly allocated GEOSGeometry object of type LinearRing, or NULL on exception. The caller is responsible for destroying it with GEOSGeom_destroy().
@@ -2242,6 +2440,88 @@ export function initCFunctions (config = {}) {
   geos.GEOSPolygonize_full_r = Module.cwrap('GEOSPolygonize_full_r', 'number', ['number', 'number', 'number', 'number', 'number'])
 
   /**
+* Computes a boundary-respecting hull of a polygonal geometry,
+* with hull shape determined by a target parameter
+* specifying the fraction of the input vertices retained in the result.
+* Larger values produce less concave results.
+* A value of 1 produces the convex hull; a value of 0 produces the original geometry.
+* An outer hull is computed if the parameter is positive,
+* an inner hull is computed if it is negative.
+*
+* @param {number} g the polygonal geometry to process
+* @param {number} isOuter indicates whether to compute an outer or inner hull (1 for outer hull, 0 for inner)
+* @param {number} vertexNumFraction the target fraction of the count of input vertices to retain in result
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+*
+* Caller is responsible for freeing with GEOSGeom_destroy().
+* @see geos::simplify::PolygonHullSimplifier
+*/
+  geos.GEOSPolygonHullSimplify = null
+
+  /**
+* Computes a boundary-respecting hull of a polygonal geometry,
+* with hull shape determined by a target parameter
+* specifying the fraction of the input vertices retained in the result.
+* Larger values produce less concave results.
+* A value of 1 produces the convex hull; a value of 0 produces the original geometry.
+* An outer hull is computed if the parameter is positive,
+* an inner hull is computed if it is negative.
+*
+* @param {number} handle - a pointer to an opaque GEOS context handle object
+* @param {number} g the polygonal geometry to process
+* @param {number} isOuter indicates whether to compute an outer or inner hull (1 for outer hull, 0 for inner)
+* @param {number} vertexNumFraction the target fraction of the count of input vertices to retain in result
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+*
+* Caller is responsible for freeing with GEOSGeom_destroy().
+* @see geos::simplify::PolygonHullSimplifier
+*/
+  geos.GEOSPolygonHullSimplify_r = Module.cwrap('GEOSPolygonHullSimplify_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Computes a topology-preserving simplified hull of a polygonal geometry,
+* with hull shape determined by the parameter, controlled by a parameter
+* mode, which is one defined in \ref GEOSPolygonHullParameterModes.
+* Larger values compute less concave results and a value of 0
+* produces the original geometry.
+* Either outer or inner hulls can be computed.
+*
+* @param {number} g the polygonal geometry to process
+* @param {number} isOuter indicates whether to compute an outer or inner hull (1 for outer hull, 0 for inner)
+* @param {number} parameterMode the interpretation to apply to the parameter argument; see \ref GEOSPolygonHullParameterModes
+* @param {number} parameter the target ratio of area difference to original area
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+*
+* Caller is responsible for freeing with GEOSGeom_destroy().
+* @see geos::simplify::PolygonHullSimplifier
+* @see GEOSPolygonHullParameterModes
+* @see GEOSPolygonHullSimplify
+*/
+  geos.GEOSPolygonHullSimplifyMode = null
+
+  /**
+* Computes a topology-preserving simplified hull of a polygonal geometry,
+* with hull shape determined by the parameter, controlled by a parameter
+* mode, which is one defined in \ref GEOSPolygonHullParameterModes.
+* Larger values compute less concave results and a value of 0
+* produces the original geometry.
+* Either outer or inner hulls can be computed.
+*
+* @param {number} handle - a pointer to an opaque GEOS context handle object
+* @param {number} g the polygonal geometry to process
+* @param {number} isOuter indicates whether to compute an outer or inner hull (1 for outer hull, 0 for inner)
+* @param {number} parameterMode the interpretation to apply to the parameter argument; see \ref GEOSPolygonHullParameterModes
+* @param {number} parameter the target ratio of area difference to original area
+* @returns {number} A newly allocated geometry of the concave hull. NULL on exception.
+*
+* Caller is responsible for freeing with GEOSGeom_destroy().
+* @see geos::simplify::PolygonHullSimplifier
+* @see GEOSPolygonHullParameterModes
+* @see GEOSPolygonHullSimplify
+*/
+  geos.GEOSPolygonHullSimplifyMode_r = Module.cwrap('GEOSPolygonHullSimplifyMode_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
  * Creates an areal geometry formed by constituent linework of given geometry.
  *
  * Returns null on exception or empty result.
@@ -2310,6 +2590,54 @@ export function initCFunctions (config = {}) {
  * @alias module:geos
   */
   geos.GEOSLineMerge_r = Module.cwrap('GEOSLineMerge_r', 'number', ['number', 'number'])
+
+  /**
+ * Sews together a set of fully noded LineStrings
+ * removing any cardinality 2 nodes in the linework
+ * only if possible without changing order of points.
+ * @param {number} handle - The GEOS context pointer handle.
+ * @param {number} g The input linework
+ * @returns {number} The merged linework
+ * Caller is responsible for freeing with GEOSGeom_destroy().
+ * @see geos::operation::linemerge::LineMerger
+ */
+
+  geos.GEOSLineMergeDirected_r = Module.cwrap('GEOSLineMergeDirected_r', 'number', ['number', 'number'])
+
+  /**
+* Sews together a set of fully noded LineStrings
+* removing any cardinality 2 nodes in the linework
+* only if possible without changing order of points.
+* @param {number} g The input linework
+* @returns {number} The merged linework
+* Caller is responsible for freeing with GEOSGeom_destroy().
+* @see geos::operation::linemerge::LineMerger
+*/
+
+  geos.GEOSLineMergeDirected = null
+
+  /**
+ *  Computes the line which is the section of the input LineString starting and
+ *  ending at the given length fractions.
+ *  @param {number} handle - The GEOS context pointer handle.
+ *  @param {number} g The input LineString
+ *  @param {number} start_fraction start fraction (0-1) along the length of g
+ *  @param {number} end_fraction end fraction (0-1) along the length of g
+ *  @return {number} selected substring.
+ *  Caller is responsible for freeing with GEOSGeom_destroy()
+ */
+  geos.GEOSLineSubstring_r = Module.cwrap('GEOSLineSubstring_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+*  Computes the line which is the section of the input LineString starting and
+*  ending at the given length fractions.
+*  @param {number} g The input LineString
+*  @param {number} start_fraction start fraction (0-1) along the length of g
+*  @param {number} end_fraction end fraction (0-1) along the length of g
+*  @return {number} selected substring.
+*  Caller is responsible for freeing with GEOSGeom_destroy()
+*/
+  geos.GEOSLineSubstring = null
 
   /**
  * Reverses the order of the coordinates in a geometry.
@@ -2419,6 +2747,20 @@ export function initCFunctions (config = {}) {
   */
   geos.GEOSHasZ_r = Module.cwrap('GEOSHasZ_r', 'number', ['number', 'number'])
 
+  /**
+* Tests whether the input geometry has M coordinates.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} g The geometry to test
+* @return {number} 1 on true, 0 on false, 2 on exception
+*/
+  geos.GEOSHasM_r = Module.cwrap('GEOSHasM_r', 'number', ['number', 'number'])
+
+  /**
+* Tests whether the input geometry has M coordinates.
+* @param {number} g The geometry to test
+* @return {number} 1 on true, 0 on false, 2 on exception
+*/
+  geos.GEOSHasM = null
   /**
  * Get the output dimension of WKB geometries.
  * @return {number} The output dimension (2 or 3).
@@ -2920,6 +3262,33 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSGeom_createPolygon_r = Module.cwrap('GEOSGeom_createPolygon_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
+
+  /**
+ * Create a rectangular polygon from bounding coordinates.
+ * Will return a point geometry if width and height are 0.
+ * @param {number} xmin Left bound of envelope
+ * @param {number} ymin Lower bound of envelope
+ * @param {number} xmax Right bound of envelope
+ * @param {number} ymax Upper bound of envelope
+ * @returns {number} The pointer to the created geometry or NULL on exception.
+ * @alias module:geos
+  */
+  geos.GEOSGeom_createRectangle = null
+
+  /**
+ * Create a rectangular polygon from bounding coordinates.
+ * Will return a point geometry if width and height are 0.
+ * @param {number} handle - The handle to the GEOS context.
+ * @param {number} xmin Left bound of envelope
+ * @param {number} ymin Lower bound of envelope
+ * @param {number} xmax Right bound of envelope
+ * @param {number} ymax Upper bound of envelope
+ * @returns {number} The pointer to the created geometry or NULL on exception.
+ * @alias module:geos
+  */
+  geos.GEOSGeom_createRectangle_r = Module.cwrap('GEOSGeom_createRectangle_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
  * Clone a geometry object.
  * @param {number} handle - A pointer to the GEOS context handle.
  * @param {number} g - The pointer to the geometry object to clone.
@@ -3098,6 +3467,33 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSGeom_getYMax_r = Module.cwrap('GEOSGeom_getYMax_r', 'number', ['number', 'number', 'number'])
 
   /**
+ * Finds the extent (minimum and maximum X and Y value) of the geometry.
+ * Raises an exception for empty geometry input.
+ *
+ * @param {number}[in] g Input geometry
+ * @param {number}[out] xmin Pointer to place result for minimum X value
+ * @param {number}[out] ymin Pointer to place result for minimum Y value
+ * @param {number}[out] xmax Pointer to place result for maximum X value
+ * @param {number}[out] ymax Pointer to place result for maximum Y value
+ * \return 1 on success, 0 on exception
+ */
+  geos.GEOSGeom_getExtent = null
+
+  /**
+ * Finds the extent (minimum and maximum X and Y value) of the geometry.
+ * Raises an exception for empty geometry input.
+ *
+ * @param {number} handle - The GEOS context pointer handle.
+ * @param {number}[in] g Input geometry
+ * @param {number}[out] xmin Pointer to place result for minimum X value
+ * @param {number}[out] ymin Pointer to place result for minimum Y value
+ * @param {number}[out] xmax Pointer to place result for maximum X value
+ * @param {number}[out] ymax Pointer to place result for maximum Y value
+ * \return 1 on success, 0 on exception
+ */
+  geos.GEOSGeom_getExtent = Module.cwrap('GEOSGeom_getExtent_r', 'number', ['number', 'number', 'number', 'number', 'number', 'number'])
+
+  /**
  * Simplifies a Geometry using the standard Douglas-Peucker algorithm.
  * @param {number} g - The input geometry pointer.
  * @param {number} tolerance - The distance tolerance for the simplification.
@@ -3198,6 +3594,23 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @alias module:geos
   */
   geos.GEOSWKTReader_read_r = Module.cwrap('GEOSWKTReader_read_r', 'number', ['number', 'number', 'string'])
+
+  /**
+* Set the reader to automatically repair structural errors
+* in the input (currently just unclosed rings) while reading.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} reader A WKT reader object, caller retains ownership
+* @param {number} doFix Set to 1 to repair, 0 for no repair (default).
+*/
+  geos.GEOSWKTReader_setFixStructure_r = Module.cwrap('GEOSWKTReader_setFixStructure_r', null, ['number', 'number', 'number'])
+
+  /**
+* Set the reader to automatically repair structural errors
+* in the input (currently just unclosed rings) while reading.
+* @param {number} reader A WKT reader object, caller retains ownership
+* @param {number} doFix Set to 1 to repair, 0 for no repair (default).
+*/
+  geos.GEOSWKTReader_setFixStructure = null
 
   /**
  * Creates a GEOSWKTWriter object.
@@ -3384,6 +3797,23 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @alias module:geos
   */
   geos.GEOSWKBReader_destroy_r = Module.cwrap('GEOSWKBReader_destroy_r', null, ['number', 'number'])
+
+  /**
+* Set the reader to automatically repair structural errors
+* in the input (currently just unclosed rings) while reading.
+* @param {number} handle - The GEOS context pointer handle.
+* @param {number} reader A WKB reader object, caller retains ownership
+* @param {number} doFix Set to 1 to repair, 0 for no repair (default).
+*/
+  geos.GEOSWKBReader_setFixStructure_r = Module.cwrap('GEOSWKBReader_setFixStructure_r', null, ['number', 'number', 'number'])
+
+  /**
+* Set the reader to automatically repair structural errors
+* in the input (currently just unclosed rings) while reading.
+* @param {number} reader A WKB reader object, caller retains ownership
+* @param {number} doFix Set to 1 to repair, 0 for no repair (default).
+*/
+  geos.GEOSWKBReader_setFixStructure = null
 
   /**
  * Reads a geometry from a WKB byte buffer.
@@ -3652,6 +4082,29 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSPreparedContains = null
 
   /**
+* Use a @ref GEOSPreparedGeometry do a high performance
+* calculation of whether the provided point is contained.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} pg1 The prepared geometry
+* @param {number} x x coordinate of point to test
+* @param {number} y y coordinate of point to test
+* @returns {number} 1 on true, 0 on false, 2 on exception
+* @see GEOSContains
+*/
+  geos.GEOSPreparedContainsXY_r = Module.cwrap('GEOSPreparedContainsXY_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Use a @ref GEOSPreparedGeometry do a high performance
+* calculation of whether the provided point is contained.
+* @param {number} pg1 The prepared geometry
+* @param {number} x x coordinate of point to test
+* @param {number} y y coordinate of point to test
+* @returns {number} 1 on true, 0 on false, 2 on exception
+* @see GEOSContains
+*/
+  geos.GEOSPreparedContainsXY = null
+
+  /**
  * Tests whether a prepared geometry properly contains another geometry. Proper containment means that the test geometry is contained in the interior of the target geometry, and does not intersect its boundary.
  * @param {number} handle - A pointer to the GEOS context handle.
  * @param {number} prepGeom1 - The pointer to the prepared geometry object that is the potential container.
@@ -3766,6 +4219,29 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSPreparedIntersects_r = Module.cwrap('GEOSPreparedIntersects_r', 'number', ['number', 'number', 'number'])
 
   /**
+* Use a @ref GEOSPreparedGeometry do a high performance
+* calculation of whether the provided point intersects.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} pg1 The prepared geometry
+* @param {number} x x coordinate of point to test
+* @param {number} y y coordinate of point to test
+* @returns {number} 1 on true, 0 on false, 2 on exception
+* @see GEOSIntersects
+*/
+  geos.GEOSPreparedIntersectsXY_r = Module.cwrap('GEOSPreparedIntersectsXY_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Use a @ref GEOSPreparedGeometry do a high performance
+* calculation of whether the provided point intersects.
+* @param {number} pg1 The prepared geometry
+* @param {number} x x coordinate of point to test
+* @param {number} y y coordinate of point to test
+* @returns {number} 1 on true, 0 on false, 2 on exception
+* @see GEOSIntersects
+*/
+  geos.GEOSPreparedIntersectsXY = null
+
+  /**
  * Tests whether two geometries overlap.
  * @param {number} pg1 - A pointer to the first prepared geometry.
  * @param {number} g2 - A pointer to the second geometry.
@@ -3878,6 +4354,29 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @alias module:geos
   */
   geos.GEOSSTRtree_create_r = Module.cwrap('GEOSSTRtree_create_r', 'number', ['number', 'number'])
+
+  /**
+  * Construct an STRtree from items that have been inserted. Once constructed,
+  * no more items may be inserted into the tree. Functions that require a
+  * constructed tree will build it automatically, so there is no need to call
+  * `GEOSSTRtree_build` unless it is desired to explicity construct the tree
+  * in a certain section of code or using a certain thread.
+  *
+  * @param {number} handle - The context handle to use for error reporting and memory management.
+  * @return {number} 1 on success, 0 on error
+  */
+  geos.GEOSSTRtree_build_r = Module.cwrap('GEOSSTRtree_build_r', 'number', ['number'])
+
+  /**
+* Construct an STRtree from items that have been inserted. Once constructed,
+* no more items may be inserted into the tree. Functions that require a
+* constructed tree will build it automatically, so there is no need to call
+* `GEOSSTRtree_build` unless it is desired to explicity construct the tree
+* in a certain section of code or using a certain thread.
+*
+* @return {number} 1 on success, 0 on error
+*/
+  geos.GEOSSTRtree_build = null
 
   /**
  * Inserts a geometry into a GEOS STRTree, along with an associated item that can be retrieved later.
@@ -4127,6 +4626,67 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @alias module:geos
   */
   geos.GEOSGeom_extractUniquePoints_r = Module.cwrap('GEOSGeom_extractUniquePoints_r', 'number', ['number', 'number'])
+
+  /**
+* Calculate the
+* [Hilbert code](https://en.wikipedia.org/wiki/Hilbert_curve)
+* of the centroid of a geometry relative to an extent.
+* This allows sorting geometries in a deterministic way, such that similar Hilbert codes are
+* likely to be near each other in two-dimensional space.
+* The caller must ensure that the geometry is contained within the extent.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} geom [in] Input geometry, must be non-empty
+* @param {number} extent [in] Extent within which to calculate the Hilbert code for geom
+* @param {number} level [in] The level of precision of the Hilbert curve, up to 16
+* @param {number} code [out] Pointer to be filled in with Hilbert code result
+* @return 1 on success, 0 on exception.
+*/
+  geos.GEOSHilbertCode_r = Module.cwrap('GEOSHilbertCode_r', 'number', ['number', 'number', 'number', 'number', 'number'])
+
+  /**
+* Calculate the
+* [Hilbert code](https://en.wikipedia.org/wiki/Hilbert_curve)
+* of the centroid of a geometry relative to an extent.
+* This allows sorting geometries in a deterministic way, such that similar Hilbert codes are
+* likely to be near each other in two-dimensional space.
+* The caller must ensure that the geometry is contained within the extent.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} geom [in] Input geometry, must be non-empty
+* @param {number} extent [in] Extent within which to calculate the Hilbert code for geom
+* @param {number} level [in] The level of precision of the Hilbert curve, up to 16
+* @param {number} code [out] Pointer to be filled in with Hilbert code result
+* @return 1 on success, 0 on exception.
+*/
+  geos.GEOSHilbertCode = null
+
+  /**
+* Apply XY coordinate transform callback to all coordinates in a copy of
+* input geometry.  If the callback returns an error, returned geometry will be
+* NULL.  Z values, if present, are not modified by this function.
+* @param {number} handle - A pointer to the GEOS context handle.
+* @param {number} g [in] Input geometry
+* @param {number} callback [in] a function to be executed for each coordinate in the
+                geometry.  The callback takes 3 parameters: x and y coordinate
+                values to be updated and a void userdata pointer.
+* @param {number} userdata an optional pointer to pe passed to 'callback' as an argument
+* @return {number} a copy of the input geometry with transformed coordinates.
+* Caller must free with GEOSGeom_destroy().
+*/
+  geos.GEOSGeom_transformXY_r = Module.cwrap('GEOSGeom_transformXY_r', 'number', ['number', 'number', 'number', 'number'])
+
+  /**
+* Apply XY coordinate transform callback to all coordinates in a copy of
+* input geometry.  If the callback returns an error, returned geometry will be
+* NULL.  Z values, if present, are not modified by this function.
+* @param {number} g [in] Input geometry
+* @param {number} callback [in] a function to be executed for each coordinate in the
+              geometry.  The callback takes 3 parameters: x and y coordinate
+              values to be updated and a void userdata pointer.
+* @param {number} userdata an optional pointer to pe passed to 'callback' as an argument
+* @return {number} a copy of the input geometry with transformed coordinates.
+* Caller must free with GEOSGeom_destroy().
+*/
+  geos.GEOSGeom_transformXY = null
 
   /**
  * Creates an empty geometry collection of a given type.
