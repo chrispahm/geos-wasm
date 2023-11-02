@@ -9,12 +9,12 @@ Convert GeoJSON object to GEOS geometry pointer.
 | Param | Type | Description |
 | --- | --- | --- |
 | geojson | <code>Object</code> | The GeoJSON object. |
-| geos | [<code>geos</code>](#module_geos) | The GEOS module object. |
+| geos | <code>geos</code> | The GEOS module object. |
 
 **Example**  
 ```js
 import initGeosJs from 'geos-wasm'
-import { geojsonToGeosGeom } from 'geos-wasm/src/helpers/geojsonToGeosGeom.mjs'
+import { geojsonToGeosGeom } from 'geos-wasm/helpers'
 const geos = await initGeosJs()
 const json = JSON.parse('{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}')
 const geomPtr = geojsonToGeosGeom(json, geos)

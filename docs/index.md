@@ -66,7 +66,7 @@ geos.GEOSFree(areaPtr)
 
 TLDR; Use [WKB](https://libgeos.org/specifications/wkb/) or the helper methods ([geojsonToGeosGeom](./functions/geojsonToGeosGeom.html) and [geojsonToGeosGeom](./functions/geosGeomToGeojson.html)). See the examples ([Buffer](./examples/buffer.html) and [Maximum-Inscribed-Circle](./examples/maximum-inscribed-circle.html)) for implementation details.
 
-Transferring data between JavaScript and WASM can be costly, especially [if serialization is involved](https://kylebarron.dev/blog/geos-wasm#serialization-is-costly). Both WKT and GeoJSON (in GEOS CAPI) are text-based formats, which means that they need to be parsed and serialized in order to transfer them. This is *very* slow and can partially be avoided by using a binary format like WKB. Keep in mind that WKB is not human-readable, so you might want to use WKT or GeoJSON for debugging purposes.
+Transferring data between JavaScript and WASM can be costly, especially [if serialization is involved](https://kylebarron.dev/blog/geos-wasm#serialization-is-costly). Both WKT and GeoJSON (in GEOS CAPI) are text-based formats, which means that they need to be parsed and serialized in order to transfer them. This is *very* slow and can partially be avoided by using a binary format like WKB or by using the GeoJSON helper functions. Keep in mind that WKB is not human-readable, so you might want to use WKT or GeoJSON for debugging purposes.
 
 ### How can I define a callback function (e.g. for `GEOSSTRtree_query`)?
 

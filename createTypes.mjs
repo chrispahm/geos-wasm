@@ -4,7 +4,7 @@ import fs from 'fs'
 /* input and output paths */
 const inputFile = './src/allCFunctions.mjs'
 const outputDir = './build/package'
-
+const helpersDir = './build/package/helpers'
 /* create output directory if it doesn't exist */
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 
@@ -80,3 +80,31 @@ declare module 'geos-wasm' {
 }`
 
 fs.writeFileSync(`${outputDir}/geos.esm.d.ts`, output)
+
+// and for the helper module
+const helperTemplateData = jsdoc2md.getTemplateDataSync({ files: './src/helpers/*.mjs', configure: './jsdoc.conf' })
+
+const helperFunctions = helperTemplateData.map((identifier) => {
+  if (identifier.kind === 'function') {
+    const params = identifier.params?.map((param) => {
+      return `${param.name}: ${param.type.names[0]}`
+    }) || []
+
+    const returnType = identifier.returns?.[0]?.type?.names[0] || 'void'
+    const functionName = 'export function ' + identifier.name
+    const functionString = createFunctionString(identifier, returnType, functionName, params)
+    return functionString
+  }
+  return ''
+}).filter(Boolean)
+
+const helperOutput = `// <reference types="geojson">
+${helperFunctions.join('\n ')}
+
+export default {
+  geojsonToGeosGeom,
+  geosGeomToGeojson
+}
+`
+
+fs.writeFileSync(`${helpersDir}/geos.helpers.esm.d.ts`, helperOutput)

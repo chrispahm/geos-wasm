@@ -33,8 +33,7 @@ import {
   lengthToRadians,
   earthRadius
 } from '@turf/helpers'
-import { geojsonToGeosGeom } from '../../src/helpers/geojsonToGeosGeom.mjs'
-import { geosGeomToGeojson } from '../../src/helpers/geosGeomToGeojson.mjs'
+import { geojsonToGeosGeom, geosGeomToGeojson } from './geos.helpers.esm.js'
 let GEOSFunctions
 
 /**

@@ -3,9 +3,8 @@ import { shallowRef, onMounted, onUnmounted } from 'vue';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import initGeosJs from '../assets/geos.esm.js';
+import { geojsonToGeosGeom, geosGeomToGeojson } from '../assets/geos.helpers.esm.js';
 import bbox from '@turf/bbox';
-import { Buffer } from 'buffer'
-import { Geometry } from '../assets/wkx.js'
 
 
 const mapContainer = shallowRef(null);
@@ -90,38 +89,6 @@ onMounted(async () => {
     "filter": ["==", "$type", "Polygon"]
   };
 
-  function GEOSGeomFromWKB(wkb) {
-    const wkbPtr = geos.Module._malloc(wkb.length)
-    geos.Module.HEAPU8.set(wkb, wkbPtr)
-    const geomPtr = geos.GEOSGeomFromWKB_buf(wkbPtr, wkb.length)
-    geos.GEOSFree(wkbPtr)
-    return geomPtr
-  }
-
-  function GEOSGeomToWKB(geomPtr) {
-    // create a pointer that stores the GEOSGeomToWKB_buf length
-    const wkbPtrLength = geos.Module._malloc(4)
-    // set it to 0
-    geos.Module.setValue(wkbPtrLength, 0, 'i32')
-    // get the wkbPtr and store its length in wkbPtrLength
-    const wkbPtr = geos.GEOSGeomToWKB_buf(geomPtr, wkbPtrLength)
-    // get the actual length from wkbPtrLength
-    const size = geos.Module.getValue(wkbPtrLength, 'i32')
-    // create a Uint8Array from the wkbPtr and the size
-    const wkbView = new Uint8Array(
-      geos.Module.HEAPU8.buffer,
-      wkbPtr,
-      size
-    )
-    const wkb = new Uint8Array(wkbView)
-
-    // free the memory
-    geos.GEOSFree(wkbPtr)
-    geos.GEOSFree(wkbPtrLength)
-    const buffer = Buffer.from(wkb)
-    return buffer
-  }
-
   map.value.on('load', function () {
     map.value.addLayer(fcLayerPolygons);
 
@@ -129,10 +96,8 @@ onMounted(async () => {
 
     function updateMIC() {
       const tolerance = parseFloat(toleranceInput.value);
-      // convert the feature to wkb
-      const wkb = Geometry.parseGeoJSON(fc).toWkb()
-      // convert the wkb to a GEOSGeom
-      const geomPtr = GEOSGeomFromWKB(wkb)
+      // convert the Geojson feature to a GEOSGeom
+      const geomPtr = geojsonToGeosGeom(fc, geos);
       // set the SRID to 4326
       geos.GEOSSetSRID(geomPtr, 4326)
       // create the maximum inscribed circle (mic)
@@ -148,9 +113,7 @@ onMounted(async () => {
       // an actual circle using the center and radius
       const bufferPtr = geos.GEOSBuffer(centerPtr, radius, 8)
       // convert the mic to wkb
-      const micWkb = GEOSGeomToWKB(bufferPtr)
-      // convert the wkb to a GeoJSON geometry
-      const micFC = Geometry.parse(micWkb).toGeoJSON()
+      const micFC = geosGeomToGeojson(bufferPtr, geos)
       // free the memory
       geos.GEOSGeom_destroy(micPtr)
       geos.GEOSGeom_destroy(geomPtr)
@@ -201,7 +164,7 @@ onUnmounted(() => {
     <div id="mic-options">
       <div>
         <label for="tolerance-input">Tolerance:</label>
-        <input type="range" id="tolerance-input" value="0.0" min="0.0" max="1" step="0.001">
+        <input type="range" id="tolerance-input" value="0.0" min="0.0" max="0.002" step="0.0001">
       </div>
     </div>
   </div>

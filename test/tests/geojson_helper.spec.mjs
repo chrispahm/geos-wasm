@@ -1,10 +1,8 @@
 // This test is using the following GEOS C++ API test GeoJSON examples:
 // https://github.com/libgeos/geos/blob/3.12.0/tests/unit/io/GeoJSONReaderTest.cpp
 import test from 'tape'
-// import initGeosJs from '../../build/package/geos.esm.js'
-import initGeosJs from '../../src/index.mjs'
-import { geojsonToGeosGeom } from '../../src/helpers/geojsonToGeosGeom.mjs'
-import { geosGeomToGeojson } from '../../src/helpers/geosGeomToGeojson.mjs'
+import initGeosJs from '../../build/package/geos.esm.js'
+import { geojsonToGeosGeom, geosGeomToGeojson } from '../../build/package/helpers/geos.helpers.esm.js'
 
 const geos = await initGeosJs()
 

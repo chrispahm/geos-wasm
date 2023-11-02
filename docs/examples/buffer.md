@@ -23,42 +23,8 @@ import {
   lengthToRadians,
   earthRadius
 } from '@turf/helpers'
-import { Buffer } from 'buffer'
-import { Geometry } from './wkx.js'
+import { geojsonToGeosGeom, geosGeomToGeojson } from 'geos-wasm/helpers'
 let GEOSFunctions
-
-function GEOSGeomFromWKB (wkb) {
-  const wkbPtr = GEOSFunctions.Module._malloc(wkb.length)
-  GEOSFunctions.Module.HEAPU8.set(wkb, wkbPtr)
-  const geomPtr = GEOSFunctions.GEOSGeomFromWKB_buf(wkbPtr, wkb.length)
-  GEOSFunctions.GEOSFree(wkbPtr)
-  // GEOSFunctions.Module._free(wkbPtr);
-  return geomPtr
-}
-
-function GEOSGeomToWKB (geomPtr) {
-  // create a pointer that stores the GEOSGeomToWKB_buf length
-  const wkbPtrLength = GEOSFunctions.Module._malloc(4)
-  // set it to 0
-  GEOSFunctions.Module.setValue(wkbPtrLength, 0, 'i32')
-  // get the wkbPtr and store its length in wkbPtrLength
-  const wkbPtr = GEOSFunctions.GEOSGeomToWKB_buf(geomPtr, wkbPtrLength)
-  // get the actual length from wkbPtrLength
-  const size = GEOSFunctions.Module.getValue(wkbPtrLength, 'i32')
-  // create a Uint8Array from the wkbPtr and the size
-  const wkbView = new Uint8Array(
-    GEOSFunctions.Module.HEAPU8.buffer,
-    wkbPtr,
-    size
-  )
-  const wkb = new Uint8Array(wkbView)
-
-  // free the memory
-  GEOSFunctions.GEOSFree(wkbPtr)
-  GEOSFunctions.GEOSFree(wkbPtrLength)
-  const buffer = Buffer.from(wkb)
-  return buffer
-}
 
 /**
  * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
@@ -225,10 +191,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
     }
   }
   // create a GEOS object from the GeoJSON
-  // geojsonToPointers always returns an array of pointers
-  // const geomPtr = GEOSGeomFromWKT(stringify(projected));
-  const wkb = Geometry.parseGeoJSON(projected).toWkb()
-  const geomPtr = GEOSGeomFromWKB(wkb)
+  const geomPtr = geojsonToGeosGeom(projected, GEOSFunctions)
   const distance = radiansToLength(lengthToRadians(radius, units), 'meters')
   let bufferPtr
   if (isBufferWithParams) {
@@ -241,8 +204,7 @@ function bufferFeature (geojson, radius, units, steps, endCapStyle, joinStyle, m
     GEOSFunctions.GEOSBufferParams_destroy(bufferParamsPtr)
   }
   // update the original GeoJSON with the new geometry
-  const bufferedWkb = GEOSGeomToWKB(bufferPtr)
-  const buffered = Geometry.parse(bufferedWkb).toGeoJSON()
+  const buffered = geosGeomToGeojson(bufferPtr, GEOSFunctions)
   // destroy the GEOS objects
   GEOSFunctions.GEOSGeom_destroy(geomPtr)
   GEOSFunctions.GEOSGeom_destroy(bufferPtr)
@@ -315,5 +277,4 @@ function defineProjection (geojson) {
 }
 
 export default buffer
-
 ```

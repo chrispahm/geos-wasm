@@ -1,11 +1,13 @@
 /**
  * Convert GeoJSON object to GEOS geometry pointer.
- * @param {Object} geojson - The GeoJSON object.
- * @param {module:geos} geos - The GEOS module object.
+ * @name geojsonToGeosGeom
+ * @kind function
+ * @param {GeoJSON} geojson - The GeoJSON object.
+ * @param {geos} geos - The GEOS module object.
  * @returns {number} A pointer to GEOS geometry.
  * @example
  * import initGeosJs from 'geos-wasm'
- * import { geojsonToGeosGeom } from 'geos-wasm/src/helpers/geojsonToGeosGeom.mjs'
+ * import { geojsonToGeosGeom } from 'geos-wasm/helpers'
  * const geos = await initGeosJs()
  * const json = JSON.parse('{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}')
  * const geomPtr = geojsonToGeosGeom(json, geos)
@@ -13,8 +15,16 @@
  * const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
  * console.log(wkt)
  * // => POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))
+ * @alias module:geos-helpers
  */
-export function geojsonToGeosGeom (geojson, geos) {
+export default function geojsonToGeosGeom (geojson, geos) {
+  if (!geojson) {
+    throw new Error('No GeoJSON object provided')
+  }
+  if (!geos) {
+    throw new Error('No GEOS module object provided')
+  }
+
   function geojsonCoordsToGeosCoordSeq (coords) {
     if (!coords || coords.length === 0) {
       return null
