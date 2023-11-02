@@ -724,9 +724,9 @@ export function initCFunctions (config = {}) {
 
   /**
  * Compute the nearest points between two geometries.
- * @param {string} g1 - A JSON string representing a GEOSGeometry object
- * @param {string} g2 - A JSON string representing a GEOSGeometry object
- * @returns {string} A JSON string representing a GEOSGeometry object containing two points, or null on exception
+ * @param {number} g1 - A pointer to a GEOSGeometry object.
+ * @param {number} g2 - A pointer to a GEOSGeometry object.
+ * @returns {number} A pointer to a GEOSCoordSequence object containing two points, or null on exception.
  * @alias module:geos
   */
   geos.GEOSNearestPoints = null
@@ -734,12 +734,12 @@ export function initCFunctions (config = {}) {
   /**
  * Returns a GEOSCoordSequence of the nearest points between two geometries.
  * @param {number} handle - A pointer to the GEOS context handle.
- * @param {string} g1 - The first geometry as a WKT string.
- * @param {string} g2 - The second geometry as a WKT string.
- * @returns {string} A WKT string representing the GEOSCoordSequence of the nearest points.
+ * @param {number} g1 - A pointer to a GEOSGeometry object.
+ * @param {number} g2 - A pointer to a GEOSGeometry object.
+ * @returns {number} A pointer to a GEOSCoordSequence object containing two points, or null on exception.
  * @alias module:geos
   */
-  geos.GEOSNearestPoints_r = Module.cwrap('GEOSNearestPoints_r', 'string', ['number', 'string', 'string'])
+  geos.GEOSNearestPoints_r = Module.cwrap('GEOSNearestPoints_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Returns a GEOSGeometry from a Well-Known Text (WKT) representation.
