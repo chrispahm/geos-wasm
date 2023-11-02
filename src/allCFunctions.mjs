@@ -2181,21 +2181,21 @@ export function initCFunctions (config = {}) {
  * and will report them as errors.
  *
  * @param {number} handle - A pointer to the GEOS context handle.
- * @param {string} geoms - An array of valid Geometrys containing the linework to polygonize.
+ * @param {number} geoms - An array of valid Geometrys containing the linework to polygonize.
  * @param {number} ngeoms - The number of valid Geometrys in the array.
- * @returns {string} A GeometryCollection containing the polygons formed by the polygonization.
+ * @returns {number} A GeometryCollection containing the polygons formed by the polygonization.
  * @alias module:geos
   */
-  geos.GEOSPolygonize_valid_r = Module.cwrap('GEOSPolygonize_valid_r', 'string', ['number', 'string', 'number'])
+  geos.GEOSPolygonize_valid_r = Module.cwrap('GEOSPolygonize_valid_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Gets the list of line segments forming the boundary between
  * inside and outside portions of a set of Geometrys which contain linework that
  * represents the edges of a planar graph.
  *
- * @param {string} geoms - An array of Geometrys containing the linework to process.
+ * @param {number} geoms - An array of Geometrys containing the linework to process.
  * @param {number} ngeoms - The number of Geometrys in the array.
- * @returns {string} A MultiLineString containing the boundary segments.
+ * @returns {number} A MultiLineString containing the boundary segments.
  * @alias module:geos
   */
   geos.GEOSPolygonizer_getCutEdges = null
@@ -2206,12 +2206,12 @@ export function initCFunctions (config = {}) {
  * represents the edges of a planar graph, using a GEOS context handle.
  *
  * @param {number} handle - A pointer to the GEOS context handle.
- * @param {string} geoms - An array of Geometrys containing the linework to process.
+ * @param {number} geoms - An array of Geometrys containing the linework to process.
  * @param {number} ngeoms - The number of Geometrys in the array.
- * @returns {string} A MultiLineString containing the boundary segments.
+ * @returns {number} A MultiLineString containing the boundary segments.
  * @alias module:geos
   */
-  geos.GEOSPolygonizer_getCutEdges_r = Module.cwrap('GEOSPolygonizer_getCutEdges_r', 'string', ['number', 'string', 'number'])
+  geos.GEOSPolygonizer_getCutEdges_r = Module.cwrap('GEOSPolygonizer_getCutEdges_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Polygonizes a set of Geometrys which contain linework that
