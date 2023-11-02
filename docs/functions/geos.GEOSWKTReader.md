@@ -91,3 +91,34 @@ Reads a WKT string and returns a GEOSGeometry object.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSWKTReader_setFixStructure"></a>
+
+## geos.GEOSWKTReader\_setFixStructure ⏏
+Set the reader to automatically repair structural errors
+in the input (currently just unclosed rings) while reading.
+
+**Kind**: Exported member  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reader | <code>number</code> | A WKT reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKTReader_setFixStructure_r"></a>
+
+## geos.GEOSWKTReader\_setFixStructure\_r ⏏
+Set the reader to automatically repair structural errors
+in the input (currently just unclosed rings) while reading.
+
+**Kind**: Exported member  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| reader | <code>number</code> | A WKT reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---

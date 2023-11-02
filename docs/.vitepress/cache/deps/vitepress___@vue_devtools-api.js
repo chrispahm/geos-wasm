@@ -1,5 +1,3 @@
-import "./chunk-76J2PTFD.js";
-
 // node_modules/@vue/devtools-api/lib/esm/env.js
 function getDevtoolsGlobalHook() {
   return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;

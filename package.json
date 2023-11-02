@@ -16,7 +16,7 @@
     "src"
   ],
   "scripts": {
-    "make": "rm -f build/package/* && make && npm run build",
+    "make": "rm -f -r build/package/* && make && npm run build",
     "build": "rollup -c && node createTypes.mjs",
     "build:dev": "rollup -c -w",
     "test": "tape test/tests/*.mjs",

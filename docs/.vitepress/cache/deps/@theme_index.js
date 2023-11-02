@@ -10,7 +10,6 @@ import {
   toRef,
   watchEffect
 } from "./chunk-V634PGSD.js";
-import "./chunk-76J2PTFD.js";
 
 // node_modules/vitepress/dist/client/theme-default/index.js
 import "/Users/pahmeyer/Documents/GitHub/geos-wasm/node_modules/vitepress/dist/client/theme-default/styles/fonts.css";

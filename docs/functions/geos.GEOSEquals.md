@@ -47,6 +47,43 @@ Tests whether two geometries are exactly equal, up to a specified tolerance.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSEqualsIdentical"></a>
+
+## geos.GEOSEqualsIdentical ⇒ <code>number</code> ⏏
+Determine pointwise equivalence of two geometries by checking
+that the structure, ordering, and values of all vertices are
+identical in all dimensions. NaN values are considered to be
+equal to other NaN values.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| g1 | <code>number</code> | Input geometry |
+| g2 | <code>number</code> | Input geometry |
+
+
+---
+<a name="exp_module_geos--geos.GEOSEqualsIdentical_r"></a>
+
+## geos.GEOSEqualsIdentical\_r ⇒ <code>number</code> ⏏
+Determine pointwise equivalence of two geometries by checking
+that the structure, ordering, and values of all vertices are
+identical in all dimensions. NaN values are considered to be
+equal to other NaN values.
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| g1 | <code>number</code> | Input geometry |
+| g2 | <code>number</code> | Input geometry |
+
+
+---
 <a name="exp_module_geos--geos.GEOSEquals_r"></a>
 
 ## geos.GEOSEquals\_r ⇒ <code>number</code> ⏏

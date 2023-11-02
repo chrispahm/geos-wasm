@@ -258,7 +258,27 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSMakeValidWithParams_r',\
   '_GEOSPreparedDistanceWithin_r',\
   '_GEOSWKBWriter_getFlavor_r',\
-  '_GEOSWKBWriter_setFlavor_r'\
+  '_GEOSWKBWriter_setFlavor_r',\
+  '_GEOSGeom_createRectangle_r',\
+  '_GEOSGeom_getExtent_r',\
+  '_GEOSRemoveRepeatedPoints_r',\
+  '_GEOSPolygonHullSimplify_r',\
+  '_GEOSPolygonHullSimplifyMode_r',\
+  '_GEOSLineMergeDirected_r',\
+  '_GEOSHilbertCode_r',\
+  '_GEOSGeom_transformXY_r',\
+  '_GEOSWKTReader_setFixStructure_r',\
+  '_GEOSWKBReader_setFixStructure_r',\
+  '_GEOSGeomGetM_r',\
+  '_GEOSHasM_r',\
+  '_GEOSDisjointSubsetUnion_r',\
+  '_GEOSCoverageIsValid_r',\
+  '_GEOSCoverageSimplifyVW_r',\
+  '_GEOSLineSubstring_r',\
+  '_GEOSEqualsIdentical_r',\
+  '_GEOSPreparedContainsXY_r',\
+  '_GEOSPreparedIntersectsXY_r',\
+  '_GEOSSTRtree_build_r'\
 ]"
 
 GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
