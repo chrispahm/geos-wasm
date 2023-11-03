@@ -36,5 +36,21 @@ export default [
       }),
       terser()
     ]
+  },
+  {
+    input: 'src/helpers/index.mjs',
+    output: [
+      {
+        file: 'build/package/helpers/geos.helpers.esm.js',
+        format: 'es'
+      },
+      {
+        file: 'docs/assets/geos.helpers.esm.js',
+        format: 'es'
+      }
+    ],
+    plugins: [
+      terser()
+    ]
   }
 ]

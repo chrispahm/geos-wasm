@@ -1160,6 +1160,47 @@ Finds the minimum Y value in the geometry (thread-safe version).
 
 
 ---
+<a name="exp_module_geos--geos.GEOSGeom_releaseCollection"></a>
+
+## geos.GEOSGeom\_releaseCollection ⇒ <code>number</code> ⏏
+Release the sub-geometries of a collection for management.
+by the caller. The input collection remains as an empty collection,
+that the caller is responsible for destroying. The output geometries
+are also the responsibility of the caller, as is the containing array,
+which must be freed with GEOSFree().
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - A newly allocated array of GEOSGeometry pointers.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| collection | <code>number</code> | A pointer to a GEOS geometry collection object. |
+| ngeoms | <code>number</code> | A pointer to a variable that will be filled with the size of the output array. |
+
+
+---
+<a name="exp_module_geos--geos.GEOSGeom_releaseCollection_r"></a>
+
+## geos.GEOSGeom\_releaseCollection\_r ⇒ <code>number</code> ⏏
+Release the sub-geometries of a collection for management.
+by the caller. The input collection remains as an empty collection,
+that the caller is responsible for destroying. The output geometries
+are also the responsibility of the caller, as is the containing array,
+which must be freed with GEOSFree().
+
+**Kind**: Exported member  
+**Returns**: <code>number</code> - A newly allocated array of GEOSGeometry pointers.  
+**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | <code>number</code> | A pointer to a GEOS context handle. |
+| collection | <code>number</code> | A pointer to a GEOS geometry collection object. |
+| ngeoms | <code>number</code> | A pointer to a variable that will be filled with the size of the output array. |
+
+
+---
 <a name="exp_module_geos--geos.GEOSGeom_setPrecision"></a>
 
 ## geos.GEOSGeom\_setPrecision ⇒ <code>number</code> ⏏

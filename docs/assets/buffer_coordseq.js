@@ -1,18 +1,28 @@
-<script setup>
-import Buffer from '../components/buffer.vue'
-</script>
+/*
+Most of the code in this file is copied from Turf.js,
+with some modifications to make it work with GEOS instead of JSTS.
 
-# Buffer
+The MIT License (MIT)
 
-This is an example of a buffer function recreating the [@turf/buffer](https://turfjs.org/docs/#buffer) API.
-It uses WKB to pass geometries to the GEOS C++ library and then parses the result back to GeoJSON.
-Most of the code is taken from the original [@turf/buffer](https://github.com/Turfjs/turf/blob/master/packages/turf-buffer/index.js) implementation.
+Copyright (c) 2017 TurfJS
 
-<Buffer />
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-### Source code
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-```js
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
 import center from '@turf/center'
 import { geomEach, featureEach } from '@turf/meta'
 import { geoAzimuthalEquidistant } from 'd3-geo'
@@ -23,7 +33,7 @@ import {
   lengthToRadians,
   earthRadius
 } from '@turf/helpers'
-import { geojsonToGeosGeom, geosGeomToGeojson } from 'geos-wasm/helpers'
+import { geojsonToGeosGeom, geosGeomToGeojson } from './geos.helpers.esm.js'
 let GEOSFunctions
 
 /**
@@ -277,4 +287,3 @@ function defineProjection (geojson) {
 }
 
 export default buffer
-```
