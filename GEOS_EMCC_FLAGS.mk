@@ -68,6 +68,9 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSBufferWithStyle_r',\
   '_GEOSSingleSidedBuffer_r',\
   '_GEOSOffsetCurve_r',\
+  '_GEOSConcaveHull_r',\
+  '_GEOSConcaveHullByLength_r',\
+  '_GEOSConcaveHullOfPolygons_r',\
   '_GEOSConvexHull_r',\
   '_GEOSMinimumRotatedRectangle_r',\
   '_GEOSMaximumInscribedCircle_r',\
