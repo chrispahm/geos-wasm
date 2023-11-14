@@ -491,6 +491,31 @@ Returns the name of a geometry's type.
 
 
 ---
+<a name="exp_module_geos--geos.GEOSGeomTypes"></a>
+
+## geos.GEOSGeomTypes ⏏
+Geometry type number, used by functions returning or
+consuming geometry types.
+
+| Name             | Value     |
+| :--------------- | :----------  |
+| GEOS_POINT   | 0         |
+| GEOS_LINESTRING   | 1         |
+| GEOS_LINEARRING   | 2         |
+| GEOS_POLYGON   | 3         |
+| GEOS_MULTIPOINT   | 4         |
+| GEOS_MULTILINESTRING   | 5         |
+| GEOS_MULTIPOLYGON   | 6         |
+| GEOS_GEOMETRYCOLLECTION   | 7         |
+
+**Kind**: Exported member  
+**See**
+
+- GEOSGeomType
+- GEOSGeomTypeId
+
+
+---
 <a name="exp_module_geos--geos.GEOSGeom_clone"></a>
 
 ## geos.GEOSGeom\_clone ⇒ <code>number</code> ⏏

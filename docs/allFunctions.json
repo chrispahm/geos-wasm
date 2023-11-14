@@ -12,6 +12,14 @@
     "link": "/functions/geos.GEOSBoundary.md"
   },
   {
+    "text": "GEOSBufCapStyles",
+    "link": "/functions/geos.GEOSBufCapStyles.md"
+  },
+  {
+    "text": "GEOSBufJoinStyles",
+    "link": "/functions/geos.GEOSBufJoinStyles.md"
+  },
+  {
     "text": "GEOSBuffer",
     "link": "/functions/geos.GEOSBuffer.md"
   },
@@ -228,8 +236,16 @@
     "link": "/functions/geos.GEOSPointOnSurface.md"
   },
   {
+    "text": "GEOSPolygonHullParameterModes",
+    "link": "/functions/geos.GEOSPolygonHullParameterModes.md"
+  },
+  {
     "text": "GEOSPolygonize",
     "link": "/functions/geos.GEOSPolygonize.md"
+  },
+  {
+    "text": "GEOSPrecisionRules",
+    "link": "/functions/geos.GEOSPrecisionRules.md"
   },
   {
     "text": "GEOSPrepare",
@@ -296,8 +312,24 @@
     "link": "/functions/geos.GEOSUnion.md"
   },
   {
+    "text": "GEOSValidFlags",
+    "link": "/functions/geos.GEOSValidFlags.md"
+  },
+  {
     "text": "GEOSVoronoiDiagram",
     "link": "/functions/geos.GEOSVoronoiDiagram.md"
+  },
+  {
+    "text": "GEOSVoronoiFlags",
+    "link": "/functions/geos.GEOSVoronoiFlags.md"
+  },
+  {
+    "text": "GEOSWKBByteOrders",
+    "link": "/functions/geos.GEOSWKBByteOrders.md"
+  },
+  {
+    "text": "GEOSWKBFlavors",
+    "link": "/functions/geos.GEOSWKBFlavors.md"
   },
   {
     "text": "GEOSWKBReader",

@@ -8,7 +8,7 @@ Convert GeoJSON object to GEOS geometry pointer.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geojson | <code>Object</code> | The GeoJSON object. |
+| geojson | <code>GeoJSON</code> | The GeoJSON object. |
 | geos | <code>geos</code> | The GEOS module object. |
 
 **Example**  

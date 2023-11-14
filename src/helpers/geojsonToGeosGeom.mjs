@@ -45,7 +45,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
       return geojsonToGeosGeom(geojson.geometry, geos)
     case 'FeatureCollection':
       if (geojson.features.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection(7) // geos.GEOS_GEOMETRYCOLLECTION
+        return geos.GEOSGeom_createEmptyCollection(geos.GEOS_GEOMETRYCOLLECTION)
       } else {
         const geoms = []
         // iterate over each feature
@@ -65,7 +65,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
       }
     case 'GeometryCollection':
       if (geojson.geometries.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection(7) // geos.GEOS_GEOMETRYCOLLECTION
+        return geos.GEOSGeom_createEmptyCollection(geos.GEOS_GEOMETRYCOLLECTION)
       } else {
         const geoms = []
         // iterate over each feature
@@ -76,7 +76,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
         const geomsArr = new Uint32Array(geoms)
         geos.Module.HEAPU32.set(geomsArr, geomsPtr / 4)
         const multiGeomsPtr = geos.GEOSGeom_createCollection(
-          7, // geos.GEOS_GEOMETRYCOLLECTION
+          geos.GEOS_GEOMETRYCOLLECTION,
           geomsPtr,
           geoms.length
         )
@@ -130,7 +130,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
       }
     case 'MultiPoint':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection(4) // geos.GEOS_MULTIPOINT
+        return geos.GEOSGeom_createEmptyCollection(geos.GEOS_MULTIPOINT)
       } else {
         const points = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -154,7 +154,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
       }
     case 'MultiLineString':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection(5) // geos.GEOS_MULTILINESTRING
+        return geos.GEOSGeom_createEmptyCollection(geos.GEOS_MULTILINESTRING)
       } else {
         const lines = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -174,7 +174,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
       }
     case 'MultiPolygon':
       if (geojson.coordinates.length === 0) {
-        return geos.GEOSGeom_createEmptyCollection(6) // geos.GEOS_MULTIPOLYGON
+        return geos.GEOSGeom_createEmptyCollection(geos.GEOS_MULTIPOLYGON)
       } else {
         const polygons = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
@@ -211,7 +211,7 @@ export default function geojsonToGeosGeom (geojson, geos) {
         const polygonsArr = new Uint32Array(polygons)
         geos.Module.HEAPU32.set(polygonsArr, polygonsPtr / 4)
         const multiPolyPtr = geos.GEOSGeom_createCollection(
-          6, // geos.GEOS_MULTIPOLYGON
+          geos.GEOS_MULTIPOLYGON,
           polygonsPtr,
           polygons.length
         )

@@ -50,6 +50,23 @@ Computes the DE-9IM intersection matrix for two geometries using a specified Bou
 
 
 ---
+<a name="exp_module_geos--geos.GEOSRelateBoundaryNodeRules"></a>
+
+## geos.GEOSRelateBoundaryNodeRules ⏏
+Controls the behavior of the result of GEOSRelate when returning
+DE9IM results for two geometries.
+
+| Name             | Value     |
+| :--------------- | :----------  |
+| GEOSRELATE_BNR_MOD2   | 1         |
+| GEOSRELATE_BNR_OGC   | 1         |
+| GEOSRELATE_BNR_ENDPOINT   | 2         |
+| GEOSRELATE_BNR_MULTIVALENT_ENDPOINT   | 3         |
+| GEOSRELATE_BNR_MONOVALENT_ENDPOINT   | 4         |
+
+**Kind**: Exported member  
+
+---
 <a name="exp_module_geos--geos.GEOSRelatePattern"></a>
 
 ## geos.GEOSRelatePattern ⇒ <code>number</code> ⏏

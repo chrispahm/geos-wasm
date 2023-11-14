@@ -15,12 +15,12 @@ const getArea = (geomPtr) => {
 }
 
 // Define some constants for the buffer styles
-const GEOSBUF_CAP_ROUND = 1
-const GEOSBUF_CAP_FLAT = 2
-const GEOSBUF_CAP_SQUARE = 3
-const GEOSBUF_JOIN_ROUND = 1
-const GEOSBUF_JOIN_MITRE = 2
-const GEOSBUF_JOIN_BEVEL = 3
+const GEOSBUF_CAP_ROUND = geos.GEOSBufCapStyles.GEOSBUF_CAP_ROUND
+const GEOSBUF_CAP_FLAT = geos.GEOSBufCapStyles.GEOSBUF_CAP_FLAT
+const GEOSBUF_CAP_SQUARE = geos.GEOSBufCapStyles.GEOSBUF_CAP_SQUARE
+const GEOSBUF_JOIN_ROUND = geos.GEOSBufJoinStyles.GEOSBUF_JOIN_ROUND
+const GEOSBUF_JOIN_MITRE = geos.GEOSBufJoinStyles.GEOSBUF_JOIN_MITRE
+const GEOSBUF_JOIN_BEVEL = geos.GEOSBufJoinStyles.GEOSBUF_JOIN_BEVEL
 
 // Define a test case for the GEOSBufferWithStyle function
 tape('GEOSBufferWithStyle', (t) => {

@@ -5111,6 +5111,201 @@ pointer  * @param {number} s - The coordinate sequence pointer
    */
   geos.GEOSWKBWriter_setFlavor_r = Module.cwrap('GEOSWKBWriter_setFlavor_r', 'number', ['number', 'number', 'number'])
 
+  // Enums
+  geos.GEOS_POINT = 0
+  geos.GEOS_LINESTRING = 1
+  geos.GEOS_LINEARRING = 2
+  geos.GEOS_POLYGON = 3
+  geos.GEOS_MULTIPOINT = 4
+  geos.GEOS_MULTILINESTRING = 5
+  geos.GEOS_MULTIPOLYGON = 6
+  geos.GEOS_GEOMETRYCOLLECTION = 7
+
+  /**
+* Geometry type number, used by functions returning or
+* consuming geometry types.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_POINT   | 0         |
+* | GEOS_LINESTRING   | 1         |
+* | GEOS_LINEARRING   | 2         |
+* | GEOS_POLYGON   | 3         |
+* | GEOS_MULTIPOINT   | 4         |
+* | GEOS_MULTILINESTRING   | 5         |
+* | GEOS_MULTIPOLYGON   | 6         |
+* | GEOS_GEOMETRYCOLLECTION   | 7         |
+*
+* @see GEOSGeomType
+* @see GEOSGeomTypeId
+* @alias module:geos
+*/
+  geos.GEOSGeomTypes = {
+    GEOS_POINT: geos.GEOS_POINT,
+    GEOS_LINESTRING: geos.GEOS_LINESTRING,
+    GEOS_LINEARRING: geos.GEOS_LINEARRING,
+    GEOS_POLYGON: geos.GEOS_POLYGON,
+    GEOS_MULTIPOINT: geos.GEOS_MULTIPOINT,
+    GEOS_MULTILINESTRING: geos.GEOS_MULTILINESTRING,
+    GEOS_MULTIPOLYGON: geos.GEOS_MULTIPOLYGON,
+    GEOS_GEOMETRYCOLLECTION: geos.GEOS_GEOMETRYCOLLECTION
+  }
+
+  /**
+* Well-known binary byte orders used when
+* writing to WKB.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_WKB_XDR   | 0         |
+* | GEOS_WKB_NDR   | 1         |
+*
+* @alias module:geos
+* @see GEOSWKBWriter_setByteOrder
+*/
+  geos.GEOSWKBByteOrders = {
+    GEOS_WKB_XDR: 0,
+    GEOS_WKB_NDR: 1
+  }
+
+  /**
+* Well-known binary flavors to use
+* when writing to WKB. ISO flavour is
+* more standard. Extended flavour supports
+* 3D and SRID embedding. GEOS reads both
+* transparently.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_WKB_ISO   | 1         |
+* | GEOS_WKB_EXTENDED   | 2         |
+*
+* @see GEOSWKBWriter_setFlavor
+* @alias module:geos
+*/
+  geos.GEOSWKBFlavors = {
+    GEOS_WKB_EXTENDED: 1,
+    GEOS_WKB_ISO: 2
+  }
+
+  /**
+* Cap styles control the ends of buffered lines.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSBUF_CAP_ROUND   | 1         |
+* | GEOSBUF_CAP_FLAT   | 2         |
+* | GEOSBUF_CAP_SQUARE   | 3         |
+*
+* @see GEOSBuffer
+* @alias module:geos
+*/
+  geos.GEOSBufCapStyles = {
+    GEOSBUF_CAP_ROUND: 1,
+    GEOSBUF_CAP_FLAT: 2,
+    GEOSBUF_CAP_SQUARE: 3
+  }
+
+  /**
+* Join styles control the buffer shape at bends in a line.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSBUF_JOIN_ROUND   | 1         |
+* | GEOSBUF_JOIN_MITRE   | 2         |
+* | GEOSBUF_JOIN_BEVEL   | 3         |
+*
+* @see GEOSBuffer
+* @alias module:geos
+*/
+  geos.GEOSBufJoinStyles = {
+    GEOSBUF_JOIN_ROUND: 1,
+    GEOSBUF_JOIN_MITRE: 2,
+    GEOSBUF_JOIN_BEVEL: 3
+  }
+
+  /**
+* Controls the behavior of the result of GEOSRelate when returning
+* DE9IM results for two geometries.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSRELATE_BNR_MOD2   | 1         |
+* | GEOSRELATE_BNR_OGC   | 1         |
+* | GEOSRELATE_BNR_ENDPOINT   | 2         |
+* | GEOSRELATE_BNR_MULTIVALENT_ENDPOINT   | 3         |
+* | GEOSRELATE_BNR_MONOVALENT_ENDPOINT   | 4         |
+*
+* @alias module:geos
+*/
+  geos.GEOSRelateBoundaryNodeRules = {
+    GEOSRELATE_BNR_MOD2: 1,
+    GEOSRELATE_BNR_OGC: 1,
+    GEOSRELATE_BNR_ENDPOINT: 2,
+    GEOSRELATE_BNR_MULTIVALENT_ENDPOINT: 3,
+    GEOSRELATE_BNR_MONOVALENT_ENDPOINT: 4
+  }
+
+  /**
+  * Change behaviour of validity testing in \ref GEOSisValidDetail
+  *
+  * | Name             | Value     |
+  * | :--------------- | :----------  |
+  * | GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE   | 1         |
+  * @alias module:geos
+  */
+  geos.GEOSValidFlags = {
+    GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE: 1
+  }
+
+  /**
+* Controls the behavior of GEOSGeom_setPrecision()
+* when altering the precision of a geometry.
+*
+* | Name             | Value     | Description |
+* | :--------------- | :----------  | :----------  |
+* | GEOS_PREC_VALID_OUTPUT   | 0         | The output is always valid. Collapsed geometry elements (including both polygons and lines) are removed.|
+* | GEOS_PREC_NO_TOPO   | 1         | Precision reduction is performed pointwise. Output geometry may be invalid due to collapse or self-intersection. (This might be better called "GEOS_PREC_POINTWISE" - the current name is historical.) |
+* | GEOS_PREC_KEEP_COLLAPSED   | 2         | Like the default mode, except that collapsed linear geometry elements are preserved. Collapsed polygonal input elements are removed. |
+*
+* @alias module:geos
+*/
+  geos.GEOSPrecisionRules = {
+    GEOS_PREC_VALID_OUTPUT: 0,
+    GEOS_PREC_NO_TOPO: 1,
+    GEOS_PREC_KEEP_COLLAPSED: 2
+  }
+
+  /**
+* Controls the behavior of the GEOSPolygonHullSimplify parameter.
+*
+* | Name             | Value     | Description |
+* | :--------------- | :----------  | :----------  |
+* | GEOSHULL_PARAM_VERTEX_RATIO   | 1         | Fraction of input vertices retained |
+* | GEOSHULL_PARAM_AREA_RATIO   | 2         | Ratio of simplified hull area to input area |
+*
+* @alias module:geos
+*/
+  geos.GEOSPolygonHullParameterModes = {
+    GEOSHULL_PARAM_VERTEX_RATIO: 1,
+    GEOSHULL_PARAM_AREA_RATIO: 2
+  }
+
+  /**
+  * Change behaviour of @ref GEOSVoronoiDiagram
+  *
+  * | Name             | Value     | Description |
+  * | :--------------- | :----------  | :----------  |
+  * | GEOS_VORONOI_ONLY_EDGES   | 1         | Return only edges of the Voronoi cells, as a MultiLineString |
+  * | GEOS_VORONOI_PRESERVE_ORDER   | 2         | Preserve order of inputs, such that the nth cell in the result corresponds to the nth vertex in the input. If this cannot be done, such as for inputs that contain repeated points, @ref GEOSVoronoiDiagram will return NULL. |
+  *
+  * @alias module:geos
+  */
+  geos.GEOSVoronoiFlags = {
+    GEOS_VORONOI_ONLY_EDGES: 1,
+    GEOS_VORONOI_PRESERVE_ORDER: 2
+  }
+
   // Define a function to handle errors and notices
   const errorHandlerPtr = geos.Module.addFunction((arg) => {
     const message = geos.Module.UTF8ToString(arg)
