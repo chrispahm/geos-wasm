@@ -2287,6 +2287,35 @@ export function initCFunctions (config = {}) {
   geos.GEOSGeom_createCollection_r = Module.cwrap('GEOSGeom_createCollection_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
+  * Release the sub-geometries of a collection for management.
+  * by the caller. The input collection remains as an empty collection,
+  * that the caller is responsible for destroying. The output geometries
+  * are also the responsibility of the caller, as is the containing array,
+  * which must be freed with GEOSFree().
+  * @param {number} collection - A pointer to a GEOS geometry collection object.
+  * @param {number} ngeoms - A pointer to a variable that will be filled with the size of the output array.
+  * @returns {number} A newly allocated array of GEOSGeometry pointers.
+  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa
+  * @alias module:geos
+  */
+  geos.GEOSGeom_releaseCollection = null
+
+  /**
+  * Release the sub-geometries of a collection for management.
+  * by the caller. The input collection remains as an empty collection,
+  * that the caller is responsible for destroying. The output geometries
+  * are also the responsibility of the caller, as is the containing array,
+  * which must be freed with GEOSFree().
+  * @param {number} handle - A pointer to a GEOS context handle.
+  * @param {number} collection - A pointer to a GEOS geometry collection object.
+  * @param {number} ngeoms - A pointer to a variable that will be filled with the size of the output array.
+  * @returns {number} A newly allocated array of GEOSGeometry pointers.
+  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9a7624d6406f501856cfb1e60a30f4fa
+  * @alias module:geos
+  */
+  geos.GEOSGeom_releaseCollection_r = Module.cwrap('GEOSGeom_releaseCollection_r', 'number', ['number', 'number', 'number'])
+
+  /**
  * Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
  *
  * All types of Geometry are accepted as input; the constituent linework is extracted as the edges to be polygonized.
@@ -5271,10 +5300,11 @@ pointer  * @param {number} s - The coordinate sequence pointer
 
   /**
  * Copies the coordinate values from the given arrays to a coordinate sequence.
+ * @param {number} x - A pointer to an array of x values.
+ * @param {number} y - A pointer to an array of y values.
+ * @param {number} z - A pointer to an array of z values, or NULL if not needed.
+ * @param {number} m - A pointer to an array of m values, or NULL if not needed.
  * @param {number} size - The number of coordinates in the arrays.
- * @param {number} xs - A pointer to an array of x values.
- * @param {number} ys - A pointer to an array of y values.
- * @param {number} zs - A pointer to an array of z values, or NULL if not needed.
  * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a4f7a1f9d0c2b0c119e6f9e2f60b112a9
  * @alias module:geos
@@ -5284,20 +5314,23 @@ pointer  * @param {number} s - The coordinate sequence pointer
   /**
  * Copies the ordinates of a coordinate sequence from arrays of x, y and optionally z values.
  * @param {number} ctx - A GEOS context handle.
- * @param {number} seq - A pointer to a GEOS coordinate sequence object.
  * @param {number} x - A pointer to an array of x values.
  * @param {number} y - A pointer to an array of y values.
- * @param {number} z - A pointer to an array of z values, or NULL if not present.
- * @returns {number} 1 on success, 0 on failure.
+ * @param {number} z - A pointer to an array of z values, or NULL if not needed.
+ * @param {number} m - A pointer to an array of m values, or NULL if not needed.
+ * @param {number} size - The number of coordinates in the arrays.
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a9f4c6a5a7f2b9c0b1f6c0e1d0a1e4f5a
  * @alias module:geos
  */
   geos.GEOSCoordSeq_copyFromArrays_r = Module.cwrap('GEOSCoordSeq_copyFromArrays_r', 'number', ['number', 'number', 'number', 'number', 'number'])
 
   /**
- * Copies a coordinate sequence from a buffer of x, y values.
- * @param {number} size - The number of coordinates in the buffer.
+ * Copies a coordinate sequence from a buffer of x,y(,z) values.
  * @param {number} buf - A pointer to a buffer of double values, in x, y order.
+ * @param {number} size - The number of coordinates in the sequence.
+ * @param {number} hasZ - Does buffer have Z values?
+ * @param {number} hasM - Does buffer have M values?
  * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a6f4b0a3f8e9c7a9b5f3b2c1f0c3a1d6f
  * @alias module:geos
@@ -5305,12 +5338,13 @@ pointer  * @param {number} s - The coordinate sequence pointer
   geos.GEOSCoordSeq_copyFromBuffer = null
 
   /**
- * Copies a coordinate sequence from a buffer of x,y,z values.
+ * Copies a coordinate sequence from a buffer of x,y(,z) values.
  * @param {number} ctx - A GEOS context handle.
- * @param {number} seq - A pointer to a GEOS coordinate sequence object.
- * @param {number} buf - A pointer to a buffer of double values.
- * @param {number} size - The number of coordinates in the buffer.
- * @returns {number} 1 on success, 0 on failure.
+ * @param {number} buf - A pointer to a buffer of double values, in x, y order.
+ * @param {number} size - The number of coordinates in the sequence.
+ * @param {number} hasZ - Does buffer have Z values?
+ * @param {number} hasM - Does buffer have M values?
+ * @returns {number} A pointer to a GEOS coordinate sequence object, or NULL on error.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a7a9f0b9c5a4f3b8f1d6b2a0c6e8d7c7f
  * @alias module:geos
  */
@@ -5321,6 +5355,8 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @param {number} cs - A pointer to a GEOS coordinate sequence object.
  * @param {number} x - A pointer to an array of doubles to store the x-coordinates.
  * @param {number} y - A pointer to an array of doubles to store the y-coordinates.
+ * @param {number} z - A pointer to an array of doubles to store the z-coordinates, or NULL.
+ * @param {number} m - A pointer to an array of doubles to store the m-coordinates, or NULL.
  * @returns {number} 1 on success, 0 on failure.
  * @see https://libgeos.org/doxygen/geos__c_8h.html#a3f7a4b9a6d0e2b7c8f6f9e5b1f6d0a5c
  * @alias module:geos
@@ -5672,6 +5708,201 @@ pointer  * @param {number} s - The coordinate sequence pointer
    * @alias module:geos
    */
   geos.GEOSWKBWriter_setFlavor_r = Module.cwrap('GEOSWKBWriter_setFlavor_r', 'number', ['number', 'number', 'number'])
+
+  // Enums
+  geos.GEOS_POINT = 0
+  geos.GEOS_LINESTRING = 1
+  geos.GEOS_LINEARRING = 2
+  geos.GEOS_POLYGON = 3
+  geos.GEOS_MULTIPOINT = 4
+  geos.GEOS_MULTILINESTRING = 5
+  geos.GEOS_MULTIPOLYGON = 6
+  geos.GEOS_GEOMETRYCOLLECTION = 7
+
+  /**
+* Geometry type number, used by functions returning or
+* consuming geometry types.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_POINT   | 0         |
+* | GEOS_LINESTRING   | 1         |
+* | GEOS_LINEARRING   | 2         |
+* | GEOS_POLYGON   | 3         |
+* | GEOS_MULTIPOINT   | 4         |
+* | GEOS_MULTILINESTRING   | 5         |
+* | GEOS_MULTIPOLYGON   | 6         |
+* | GEOS_GEOMETRYCOLLECTION   | 7         |
+*
+* @see GEOSGeomType
+* @see GEOSGeomTypeId
+* @alias module:geos
+*/
+  geos.GEOSGeomTypes = {
+    GEOS_POINT: geos.GEOS_POINT,
+    GEOS_LINESTRING: geos.GEOS_LINESTRING,
+    GEOS_LINEARRING: geos.GEOS_LINEARRING,
+    GEOS_POLYGON: geos.GEOS_POLYGON,
+    GEOS_MULTIPOINT: geos.GEOS_MULTIPOINT,
+    GEOS_MULTILINESTRING: geos.GEOS_MULTILINESTRING,
+    GEOS_MULTIPOLYGON: geos.GEOS_MULTIPOLYGON,
+    GEOS_GEOMETRYCOLLECTION: geos.GEOS_GEOMETRYCOLLECTION
+  }
+
+  /**
+* Well-known binary byte orders used when
+* writing to WKB.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_WKB_XDR   | 0         |
+* | GEOS_WKB_NDR   | 1         |
+*
+* @alias module:geos
+* @see GEOSWKBWriter_setByteOrder
+*/
+  geos.GEOSWKBByteOrders = {
+    GEOS_WKB_XDR: 0,
+    GEOS_WKB_NDR: 1
+  }
+
+  /**
+* Well-known binary flavors to use
+* when writing to WKB. ISO flavour is
+* more standard. Extended flavour supports
+* 3D and SRID embedding. GEOS reads both
+* transparently.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOS_WKB_ISO   | 1         |
+* | GEOS_WKB_EXTENDED   | 2         |
+*
+* @see GEOSWKBWriter_setFlavor
+* @alias module:geos
+*/
+  geos.GEOSWKBFlavors = {
+    GEOS_WKB_EXTENDED: 1,
+    GEOS_WKB_ISO: 2
+  }
+
+  /**
+* Cap styles control the ends of buffered lines.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSBUF_CAP_ROUND   | 1         |
+* | GEOSBUF_CAP_FLAT   | 2         |
+* | GEOSBUF_CAP_SQUARE   | 3         |
+*
+* @see GEOSBuffer
+* @alias module:geos
+*/
+  geos.GEOSBufCapStyles = {
+    GEOSBUF_CAP_ROUND: 1,
+    GEOSBUF_CAP_FLAT: 2,
+    GEOSBUF_CAP_SQUARE: 3
+  }
+
+  /**
+* Join styles control the buffer shape at bends in a line.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSBUF_JOIN_ROUND   | 1         |
+* | GEOSBUF_JOIN_MITRE   | 2         |
+* | GEOSBUF_JOIN_BEVEL   | 3         |
+*
+* @see GEOSBuffer
+* @alias module:geos
+*/
+  geos.GEOSBufJoinStyles = {
+    GEOSBUF_JOIN_ROUND: 1,
+    GEOSBUF_JOIN_MITRE: 2,
+    GEOSBUF_JOIN_BEVEL: 3
+  }
+
+  /**
+* Controls the behavior of the result of GEOSRelate when returning
+* DE9IM results for two geometries.
+*
+* | Name             | Value     |
+* | :--------------- | :----------  |
+* | GEOSRELATE_BNR_MOD2   | 1         |
+* | GEOSRELATE_BNR_OGC   | 1         |
+* | GEOSRELATE_BNR_ENDPOINT   | 2         |
+* | GEOSRELATE_BNR_MULTIVALENT_ENDPOINT   | 3         |
+* | GEOSRELATE_BNR_MONOVALENT_ENDPOINT   | 4         |
+*
+* @alias module:geos
+*/
+  geos.GEOSRelateBoundaryNodeRules = {
+    GEOSRELATE_BNR_MOD2: 1,
+    GEOSRELATE_BNR_OGC: 1,
+    GEOSRELATE_BNR_ENDPOINT: 2,
+    GEOSRELATE_BNR_MULTIVALENT_ENDPOINT: 3,
+    GEOSRELATE_BNR_MONOVALENT_ENDPOINT: 4
+  }
+
+  /**
+  * Change behaviour of validity testing in \ref GEOSisValidDetail
+  *
+  * | Name             | Value     |
+  * | :--------------- | :----------  |
+  * | GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE   | 1         |
+  * @alias module:geos
+  */
+  geos.GEOSValidFlags = {
+    GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE: 1
+  }
+
+  /**
+* Controls the behavior of GEOSGeom_setPrecision()
+* when altering the precision of a geometry.
+*
+* | Name             | Value     | Description |
+* | :--------------- | :----------  | :----------  |
+* | GEOS_PREC_VALID_OUTPUT   | 0         | The output is always valid. Collapsed geometry elements (including both polygons and lines) are removed.|
+* | GEOS_PREC_NO_TOPO   | 1         | Precision reduction is performed pointwise. Output geometry may be invalid due to collapse or self-intersection. (This might be better called "GEOS_PREC_POINTWISE" - the current name is historical.) |
+* | GEOS_PREC_KEEP_COLLAPSED   | 2         | Like the default mode, except that collapsed linear geometry elements are preserved. Collapsed polygonal input elements are removed. |
+*
+* @alias module:geos
+*/
+  geos.GEOSPrecisionRules = {
+    GEOS_PREC_VALID_OUTPUT: 0,
+    GEOS_PREC_NO_TOPO: 1,
+    GEOS_PREC_KEEP_COLLAPSED: 2
+  }
+
+  /**
+* Controls the behavior of the GEOSPolygonHullSimplify parameter.
+*
+* | Name             | Value     | Description |
+* | :--------------- | :----------  | :----------  |
+* | GEOSHULL_PARAM_VERTEX_RATIO   | 1         | Fraction of input vertices retained |
+* | GEOSHULL_PARAM_AREA_RATIO   | 2         | Ratio of simplified hull area to input area |
+*
+* @alias module:geos
+*/
+  geos.GEOSPolygonHullParameterModes = {
+    GEOSHULL_PARAM_VERTEX_RATIO: 1,
+    GEOSHULL_PARAM_AREA_RATIO: 2
+  }
+
+  /**
+  * Change behaviour of @ref GEOSVoronoiDiagram
+  *
+  * | Name             | Value     | Description |
+  * | :--------------- | :----------  | :----------  |
+  * | GEOS_VORONOI_ONLY_EDGES   | 1         | Return only edges of the Voronoi cells, as a MultiLineString |
+  * | GEOS_VORONOI_PRESERVE_ORDER   | 2         | Preserve order of inputs, such that the nth cell in the result corresponds to the nth vertex in the input. If this cannot be done, such as for inputs that contain repeated points, @ref GEOSVoronoiDiagram will return NULL. |
+  *
+  * @alias module:geos
+  */
+  geos.GEOSVoronoiFlags = {
+    GEOS_VORONOI_ONLY_EDGES: 1,
+    GEOS_VORONOI_PRESERVE_ORDER: 2
+  }
 
   // Define a function to handle errors and notices
   const errorHandlerPtr = geos.Module.addFunction((arg) => {

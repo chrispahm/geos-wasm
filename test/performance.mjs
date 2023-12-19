@@ -2,7 +2,8 @@ import { performance } from 'perf_hooks'
 import * as turf from '@turf/turf'
 import { readFileSync } from 'fs'
 import initGeosJs from '../src/index.mjs'
-import geosBuffer from '../docs/assets/buffer.js'
+import geosBuffer from '../docs/assets/buffer_wkb.js'
+// import geosBuffer from '../docs/assets/buffer_coordseq.js'
 
 const geos = await initGeosJs()
 

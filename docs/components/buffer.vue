@@ -3,7 +3,8 @@ import { shallowRef, onMounted, onUnmounted } from 'vue';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import initGeosJs from '../assets/geos.esm.js';
-import buffer from '../assets/buffer.js';
+// import buffer from '../assets/buffer_wkb.js';
+import buffer from '../assets/buffer_coordseq.js';
 import bbox from '@turf/bbox';
 
 const mapContainer = shallowRef(null);

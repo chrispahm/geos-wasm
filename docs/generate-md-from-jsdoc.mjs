@@ -3,23 +3,37 @@ import fs from 'fs'
 import path from 'path'
 
 /* input and output paths */
-const inputFile = '../src/allCFunctions.mjs'
+const inputFiles = [
+  '../src/allCFunctions.mjs',
+  '../src/helpers/geojsonToGeosGeom.mjs',
+  '../src/helpers/geosGeomToGeojson.mjs'
+]
 const outputDir = './functions/'
 
 /* create output directory if it doesn't exist */
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 
 /* get template data */
-const templateData = jsdoc2md.getTemplateDataSync({ files: inputFile, configure: '../jsdoc.conf' })
+const templateData = jsdoc2md.getTemplateDataSync({ files: inputFiles, configure: '../jsdoc.conf' })
 
 /* reduce templateData to an array of class names */
 const functionNames = templateData.reduce((functionNames, identifier) => {
-  if (identifier.kind === 'member' || identifier.kind === 'function') functionNames.push(identifier.name)
+  if (identifier.scope !== 'global' &&
+    (identifier.kind === 'member' || identifier.kind === 'function')) {
+    functionNames.push(identifier.name)
+  }
   return functionNames
+}, [])
+const globalFunctionNames = templateData.reduce((globalFunctionNames, identifier) => {
+  if (identifier.scope === 'global' && identifier.kind === 'function') {
+    globalFunctionNames.push(identifier.name)
+  }
+  return globalFunctionNames
 }, [])
 
 // sort function names alphabetically
 functionNames.sort()
+globalFunctionNames.sort()
 
 // group functions by similar name
 // e.g. GeosBuffer -> GEOSBufferParams_setEndCapStyle, GEOSBufferParams_setJoinStyle, GEOSBufferParams_setMitreLimit etc.
@@ -53,6 +67,11 @@ const similarNames = functionNames.reduce((similarNames, functionName) => {
 // remove used from similarNames
 delete similarNames.used
 
+// add global functions to similarNames
+globalFunctionNames.forEach(globalFunctionName => {
+  if (!similarNames[globalFunctionName]) similarNames[globalFunctionName] = [globalFunctionName]
+})
+
 for (const functionName of Object.keys(similarNames)) {
   // create a single documentation file for each group of similar names
   let output = ''
@@ -69,4 +88,4 @@ for (const functionName of Object.keys(similarNames)) {
 fs.writeFileSync('allFunctions.json', JSON.stringify(Object.keys(similarNames).map(functionName => ({
   text: functionName.replace('geos.', ''),
   link: `${outputDir.substring(1)}${functionName}.md`
-}))))
+})), null, 2))

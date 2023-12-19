@@ -1,18 +1,37 @@
 {
   "name": "geos-wasm",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "A WebAssembly build of GEOS",
   "type": "module",
   "main": "./build/package/geos.esm.js",
-  "typings": "./build/package/geos.esm.d.ts",
+  "types": "./build/package/geos.esm.d.ts",
   "browser": "./build/package/geos.esm.js",
   "module": "./build/package/geos.esm.js",
+  "exports": {
+    ".": {
+      "types": "./build/package/geos.esm.d.ts",
+      "default": "./build/package/geos.esm.js"
+    },
+    "./helpers": {
+      "types": "./build/package/helpers/geos.helpers.esm.d.ts",
+      "default": "./build/package/helpers/geos.helpers.esm.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "helpers": [
+        "./build/package/helpers/geos.helpers.esm.d.ts"
+      ]
+    }
+  },
   "directories": {
     "test": "test"
   },
   "files": [
     "build/package/geos.esm.js",
     "build/package/geos.esm.d.ts",
+    "build/package/helpers/geos.helpers.esm.js",
+    "build/package/helpers/geos.helpers.esm.d.ts",
     "src"
   ],
   "scripts": {
