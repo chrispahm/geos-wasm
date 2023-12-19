@@ -56,7 +56,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
   }
   const geomType = geos.GEOSGeomTypeId(geomPtr)
   switch (geomType) {
-    case 0: { // geos.GEOS_POINT
+    case geos.GEOS_POINT: {
       const seq = geos.GEOSGeom_getCoordSeq(geomPtr)
       const coords = []
       const sizePtr = geos.Module._malloc(4)
@@ -79,7 +79,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return pointJson
     }
-    case 1: { // geos.GEOS_LINESTRING
+    case geos.GEOS_LINESTRING: {
       const seq = geos.GEOSGeom_getCoordSeq(geomPtr)
       const coords = geosCoordSeqToGeojsonCoords(seq)
       const lineJson = {
@@ -88,8 +88,8 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return lineJson
     }
-    // case 2: // geos.GEOS_LINEARRING ... should not happen
-    case 3: { // geos.GEOS_POLYGON
+    // case geos.GEOS_LINEARRING : // ... should not happen
+    case geos.GEOS_POLYGON: {
       const coords = []
       const shell = geos.GEOSGetExteriorRing(geomPtr)
       if (shell !== 0) {
@@ -114,7 +114,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return polyJson
     }
-    case 4: { // geos.GEOS_MULTIPOINT
+    case geos.GEOS_MULTIPOINT: {
       const coords = []
       const numPoints = geos.GEOSGetNumGeometries(geomPtr)
       for (let i = 0; i < numPoints; i++) {
@@ -135,7 +135,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return multiPointJson
     }
-    case 5: { // geos.GEOS_MULTILINESTRING
+    case geos.GEOS_MULTILINESTRING: {
       const coords = []
       const numLines = geos.GEOSGetNumGeometries(geomPtr)
       for (let i = 0; i < numLines; i++) {
@@ -149,7 +149,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return multiLineJson
     }
-    case 6: { // geos.GEOS_MULTIPOLYGON
+    case geos.GEOS_MULTIPOLYGON: {
       const coords = []
       const numPolys = geos.GEOSGetNumGeometries(geomPtr)
       for (let i = 0; i < numPolys; i++) {
@@ -172,7 +172,7 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       }
       return multiPolyJson
     }
-    case 7: { // geos.GEOS_GEOMETRYCOLLECTION
+    case geos.GEOS_GEOMETRYCOLLECTION: {
       const geoms = []
       const numGeoms = geos.GEOSGetNumGeometries(geomPtr)
       for (let i = 0; i < numGeoms; i++) {

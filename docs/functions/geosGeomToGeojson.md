@@ -1,10 +1,10 @@
 <a name="geosGeomToGeojson"></a>
 
-## geosGeomToGeojson(geomPtr, geos) ⇒ <code>Object</code>
+## geosGeomToGeojson(geomPtr, geos) ⇒ <code>GeoJSON</code>
 Convert GEOS geometry pointer to GeoJSON object.
 
 **Kind**: global function  
-**Returns**: <code>Object</code> - A GeoJSON object.  
+**Returns**: <code>GeoJSON</code> - A GeoJSON object.  
 
 | Param | Type | Description |
 | --- | --- | --- |
