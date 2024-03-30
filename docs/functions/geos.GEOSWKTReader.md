@@ -66,6 +66,7 @@ Reads a WKT string and returns a GEOSGeometry object.
 
 | Param | Type | Description |
 | --- | --- | --- |
+| reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
 | wkt | <code>string</code> | The WKT string to read. |
 
 

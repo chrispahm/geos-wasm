@@ -3208,6 +3208,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
 
   /**
  * Reads a WKT string and returns a GEOSGeometry object.
+ * @param {number} reader - The pointer to the GEOSWKTReader object.
  * @param {string} wkt - The WKT string to read.
  * @returns {number} The pointer to the GEOSGeometry object or null if an error occurred.
  * @throws {ParseError} If the WKT string is invalid or cannot be parsed.
