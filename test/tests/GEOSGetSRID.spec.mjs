@@ -25,7 +25,11 @@ test('GEOSGetSRID', t => {
 
   for (let i = 0; i < wktStrings.length; i++) {
     // Read the WKT string and get a geometry pointer
-    const geomPtr = geos.GEOSWKTReader_read(reader, wktStrings[i])
+    const size = wktStrings[i].length + 1
+    const wktPtr = geos.Module._malloc(size)
+    geos.Module.stringToUTF8(wktStrings[i], wktPtr, size)
+    const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+    geos.Module._free(wktPtr)
     // Set the SRID of the geometry
     geos.GEOSSetSRID(geomPtr, expectedSRIDs[i])
 

@@ -44,7 +44,11 @@ const geos = await initGeosJs()
 const reader = geos.GEOSWKTReader_create()
 const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 // read the WKT string into a GEOS geometry -> returns a pointer
+const size = wkt.length + 1
+const wktPtr = geos.Module._malloc(size)
+geos.Module.stringToUTF8(wkt, wktPtr, size)
 const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+geos.Module._free(wktPtr)
 // create a pointer where the area will be written to
 const areaPtr = geos.Module._malloc(8)
 // calculate the area of the geometry

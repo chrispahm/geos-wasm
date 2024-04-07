@@ -5,6 +5,16 @@ import test from 'tape'
 import initGeosJs from '../../build/package/geos.esm.js'
 const geos = await initGeosJs()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (reader, wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Test the GEOSCoveredBy function
 test('GEOSCoveredBy', function (t) {
   // Define some WKT strings for testing
@@ -18,10 +28,10 @@ test('GEOSCoveredBy', function (t) {
   const writer = geos.GEOSWKTWriter_create()
 
   // Convert WKT strings to GEOS geometries
-  const geomPtr1 = geos.GEOSWKTReader_read(reader, wkt1)
-  const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt2)
-  const geomPtr3 = geos.GEOSWKTReader_read(reader, wkt3)
-  const geomPtr4 = geos.GEOSWKTReader_read(reader, wkt4)
+  const geomPtr1 = wktToGeom(reader, wkt1)
+  const geomPtr2 = wktToGeom(reader, wkt2)
+  const geomPtr3 = wktToGeom(reader, wkt3)
+  const geomPtr4 = wktToGeom(reader, wkt4)
 
   // Check if geomPtr1 is covered by geomPtr2
   const result1 = geos.GEOSCoveredBy(geomPtr1, geomPtr2)

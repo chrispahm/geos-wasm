@@ -26,7 +26,11 @@ test('GEOSisSimple', (t) => {
   // Loop through the test cases
   for (const testCase of testCases) {
     // Convert the WKT string to a GEOS geometry pointer
-    const geomPtr = geos.GEOSWKTReader_read(reader, testCase.wkt)
+    const size = testCase.wkt.length + 1
+    const wktPtr = geos.Module._malloc(size)
+    geos.Module.stringToUTF8(testCase.wkt, wktPtr, size)
+    const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+    geos.Module._free(wktPtr)
 
     // Call the GEOSisSimple function with the geometry pointer
     const result = geos.GEOSisSimple(geomPtr)

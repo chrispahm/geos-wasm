@@ -33,7 +33,11 @@ const wktToGeom = (geos, wkt) => {
     throw new Error('Failed to create WKT reader')
   }
   // Read the WKT string using GEOSWKTReader_read
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   // Check if reading was successful
   if (geomPtr === null) {
     throw new Error('Failed to read WKT string')

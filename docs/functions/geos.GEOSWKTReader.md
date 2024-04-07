@@ -67,7 +67,7 @@ Reads a WKT string and returns a GEOSGeometry object.
 | Param | Type | Description |
 | --- | --- | --- |
 | reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
-| wkt | <code>string</code> | The WKT string to read. |
+| wkt | <code>number</code> | The WKT string pointer to read. |
 
 
 ---
@@ -88,7 +88,7 @@ Reads a WKT string and returns a GEOSGeometry object.
 | --- | --- | --- |
 | handle | <code>number</code> | A pointer to the GEOS context handle. |
 | reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
-| wkt | <code>string</code> | The WKT string to read. |
+| wkt | <code>number</code> | The WKT string pointer to read. |
 
 
 ---

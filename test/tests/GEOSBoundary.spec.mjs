@@ -17,13 +17,20 @@ test('GEOSBoundary', async (t) => {
 
   // Create a polygon geometry from WKT
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Get the boundary of the polygon
   const boundaryPtr = geos.GEOSBoundary(geomPtr)
 
   // Convert the boundary to WKT
-  const boundaryWkt = geos.GEOSWKTWriter_write(writer, boundaryPtr)
+  const boundaryWktPtr = geos.GEOSWKTWriter_write(writer, boundaryPtr)
+  const boundaryWkt = geos.Module.UTF8ToString(boundaryWktPtr)
+  geos.GEOSFree(boundaryWktPtr)
+
   // Expect the boundary to be a linestring
   t.equal(boundaryWkt, 'LINESTRING (0 0, 1 0, 1 1, 0 1, 0 0)', 'boundary is correct')
 

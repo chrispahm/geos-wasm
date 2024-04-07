@@ -33,7 +33,11 @@ test('GEOSGetNumCoordinates', async (t) => {
 
   for (const testCase of testCases) {
     // Convert the WKT string to a GEOS geometry
-    const geomPtr = geos.GEOSWKTReader_read(reader, testCase.wkt)
+    const size = testCase.wkt.length + 1
+    const wktPtr = geos.Module._malloc(size)
+    geos.Module.stringToUTF8(testCase.wkt, wktPtr, size)
+    const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+    geos.Module._free(wktPtr)
 
     // Call the GEOSGetNumCoordinates function
     const actual = geos.GEOSGetNumCoordinates(geomPtr)

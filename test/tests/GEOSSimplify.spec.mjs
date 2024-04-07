@@ -18,13 +18,19 @@ initGeosJs().then(geos => {
   }
 
   // Convert the WKT string to a GEOS geometry pointer
-  const geomPtr = geos.GEOSWKTReader_read(reader, testCase.wkt)
+  const size = testCase.wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(testCase.wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Simplify the geometry using the GEOSSimplify function and the tolerance value
   const simplifiedPtr = geos.GEOSSimplify(geomPtr, testCase.tolerance)
 
   // Convert the simplified geometry pointer to a WKT string
-  const simplifiedWkt = geos.GEOSWKTWriter_write(writer, simplifiedPtr)
+  const simplifiedWktPtr = geos.GEOSWKTWriter_write(writer, simplifiedPtr)
+  const simplifiedWkt = geos.Module.UTF8ToString(simplifiedWktPtr)
+  geos.GEOSFree(simplifiedWktPtr)
 
   // Define the expected WKT string after simplification
   const expectedWkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0 0, 0 1, 1 1, 1 0, 0 0))'

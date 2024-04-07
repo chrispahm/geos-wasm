@@ -14,10 +14,20 @@ const wkt3 = 'POLYGON ((2 2, 3 2, 3 3, 2 3, 2 2))'
 const reader = geos.GEOSWKTReader_create()
 const writer = geos.GEOSWKTWriter_create()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Convert the WKT strings to GEOS geometries
-const geom1 = geos.GEOSWKTReader_read(reader, wkt1)
-const geom2 = geos.GEOSWKTReader_read(reader, wkt2)
-const geom3 = geos.GEOSWKTReader_read(reader, wkt3)
+const geom1 = wktToGeom(wkt1)
+const geom2 = wktToGeom(wkt2)
+const geom3 = wktToGeom(wkt3)
 
 // Test the GEOSOverlaps function
 test('GEOSOverlaps', t => {

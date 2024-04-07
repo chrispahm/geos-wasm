@@ -15,9 +15,16 @@ Computes the boundary of a geometry.
 ```js
 const reader = geos.GEOSWKTReader_create()
 const writer = geos.GEOSWKTWriter_create()
-const geom = geos.GEOSWKTReader_read(reader, 'POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))')
+const wkt = 'POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))'
+const size = wkt.length + 1
+const wktPtr = geos.Module._malloc(size)
+geos.Module.stringToUTF8(wkt, wktPtr, size)
+const geom = geos.GEOSWKTReader_read(reader, wktPtr)
+geos.Module._free(wktPtr)
 const boundary = geos.GEOSBoundary(geom)
-const wkt = geos.GEOSWKTWriter_write(writer, boundary)
+const wktPtr = geos.GEOSWKTWriter_write(writer, boundary)
+const wkt = geos.Module.UTF8ToString(wktPtr)
+geos.GEOSFree(wktPtr)
 console.log(wkt) // 'LINESTRING (0 0, 0 1, 1 1, 1 0, 0 0)'
 ```
 

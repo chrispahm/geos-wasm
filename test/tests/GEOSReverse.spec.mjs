@@ -20,7 +20,11 @@ const testCase = {
 // Create a test with tape
 test('GEOSReverse should reverse the order of coordinates in a geometry', (t) => {
   // Convert the WKT string to a GEOS geometry using the reader
-  const geomPtr = geos.GEOSWKTReader_read(reader, testCase.wkt)
+  const size = testCase.wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(testCase.wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Apply the GEOSReverse function to the geometry and get a new geometry pointer
   const reversedGeomPtr = geos.GEOSReverse(geomPtr)
@@ -28,7 +32,9 @@ test('GEOSReverse should reverse the order of coordinates in a geometry', (t) =>
   // Convert the reversed geometry to a WKT string using the writer
   // Set output precision to 0
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
-  const reversedWkt = geos.GEOSWKTWriter_write(writer, reversedGeomPtr)
+  const reversedWktPtr = geos.GEOSWKTWriter_write(writer, reversedGeomPtr)
+  const reversedWkt = geos.Module.UTF8ToString(reversedWktPtr)
+  geos.GEOSFree(reversedWktPtr)
 
   // Compare the reversed WKT string with the expected one using tape assertions
   t.equal(reversedWkt, testCase.reversedWkt, 'The reversed WKT string should match the expected one')

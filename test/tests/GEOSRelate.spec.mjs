@@ -8,7 +8,11 @@ const geos = await initGeosJs()
 // A helper function to convert a WKT string to a GEOS geometry
 const wktToGeom = (wkt) => {
   const reader = geos.GEOSWKTReader_create()
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   geos.GEOSWKTReader_destroy(reader)
   return geomPtr
 }

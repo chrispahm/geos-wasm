@@ -9,7 +9,9 @@ const geomToWkt = (geomPtr) => {
   const writer = geos.GEOSWKTWriter_create()
   // Set output precision to 0
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
-  const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt = geos.Module.UTF8ToString(wktPtr)
+  geos.GEOSFree(wktPtr)
   geos.GEOSWKTWriter_destroy(writer)
   return wkt
 }

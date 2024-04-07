@@ -3227,7 +3227,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @see {@link https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e|GEOSWKTReader_read_r}
  * @alias module:geos
   */
-  geos.GEOSWKTReader_read_r = Module.cwrap('GEOSWKTReader_read_r', 'number', ['number', 'number', 'string'])
+  geos.GEOSWKTReader_read_r = Module.cwrap('GEOSWKTReader_read_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Creates a GEOSWKTWriter object.
@@ -3278,7 +3278,7 @@ pointer  * @param {number} s - The coordinate sequence pointer
  * @returns {string} The WKT representation of the geometry, or null on error.
  * @alias module:geos
   */
-  geos.GEOSWKTWriter_write_r = Module.cwrap('GEOSWKTWriter_write_r', 'string', ['number', 'number', 'number'])
+  geos.GEOSWKTWriter_write_r = Module.cwrap('GEOSWKTWriter_write_r', 'number', ['number', 'number', 'number'])
 
   /**
  * Sets whether the output WKT string should be trimmed of unnecessary spaces.

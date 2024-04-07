@@ -34,7 +34,11 @@ test('GEOSWKBReader', async (t) => {
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
   // Convert the WKT string to a GEOS geometry
-  const geomPtr = geos.GEOSWKTReader_read(wktReader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(wktReader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Set the SRID of the geometry
   geos.GEOSSetSRID(geomPtr, 4326)

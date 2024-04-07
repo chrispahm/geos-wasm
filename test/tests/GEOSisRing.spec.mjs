@@ -5,6 +5,16 @@ import initGeosJs from '../../build/package/geos.esm.js'
 import test from 'tape'
 const geos = await initGeosJs()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (reader, wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Define some WKT strings to test
 const ringWkt = 'LINEARRING (0 0, 1 0, 1 1, 0 1, 0 0)' // A valid ring
 const nonRingWkt = 'LINESTRING (0 0, 1 0, 1 1, 0 1)' // Not a valid ring
@@ -17,9 +27,9 @@ const writer = geos.GEOSWKTWriter_create()
 // Test the GEOSisRing function
 test('GEOSisRing', function (t) {
   // Convert the WKT strings to GEOS geometries
-  const ringGeom = geos.GEOSWKTReader_read(reader, ringWkt)
-  const nonRingGeom = geos.GEOSWKTReader_read(reader, nonRingWkt)
-  const emptyGeom = geos.GEOSWKTReader_read(reader, emptyWkt)
+  const ringGeom = wktToGeom(reader, ringWkt)
+  const nonRingGeom = wktToGeom(reader, nonRingWkt)
+  const emptyGeom = wktToGeom(reader, emptyWkt)
 
   // Check if the geometries are rings
   const ringResult = geos.GEOSisRing(ringGeom)

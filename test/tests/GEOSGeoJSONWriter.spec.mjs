@@ -57,7 +57,11 @@ test('GEOSGeoJSONReader', async (t) => {
 
   const reader = geos.GEOSWKTReader_create()
   const writer = geos.GEOSGeoJSONWriter_create()
-  const geom = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geom = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   const geometry = JSON.parse(geos.GEOSGeoJSONWriter_writeGeometry(writer, geom))
   t.deepEqual(geometry, expectedGeometry, 'should return the expected geometry')
   t.end()

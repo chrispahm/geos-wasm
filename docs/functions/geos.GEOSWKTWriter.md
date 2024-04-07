@@ -220,7 +220,7 @@ padded with 0's out to the rounding precision.
 Converts a GEOSGeometry object to a WKT string.
 
 **Kind**: Exported member  
-**Returns**: <code>string</code> - The WKT representation of the geometry, or null on error.  
+**Returns**: <code>number</code> - The WKT representation pointer of the geometry, or null on error.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -235,7 +235,7 @@ Converts a GEOSGeometry object to a WKT string.
 Converts a GEOSGeometry object to a WKT string using a context handle.
 
 **Kind**: Exported member  
-**Returns**: <code>string</code> - The WKT representation of the geometry, or null on error.  
+**Returns**: <code>number</code> - The WKT representation pointer of the geometry, or null on error.  
 
 | Param | Type | Description |
 | --- | --- | --- |

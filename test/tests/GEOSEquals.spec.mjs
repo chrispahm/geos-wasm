@@ -13,7 +13,11 @@ const wkt3 = 'POLYGON ((0 0, 1 0, 1 1, 0.5 1.5, 0 1, 0 0))'
 const createGeom = async (wkt) => {
   const geos = await initGeosJs()
   const reader = geos.GEOSWKTReader_create()
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   geos.GEOSWKTReader_destroy(reader)
   return { geos, geomPtr }
 }

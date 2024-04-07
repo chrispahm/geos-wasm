@@ -10,7 +10,11 @@ const wktToGeom = (wkt) => {
   // Create a reader
   const reader = geos.GEOSWKTReader_create()
   // Read the WKT string and get a pointer to the geometry
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   // Destroy the reader
   geos.GEOSWKTReader_destroy(reader)
   // Return the pointer

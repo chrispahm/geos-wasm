@@ -19,7 +19,11 @@ test('GEOSInterpolate', async (t) => {
   const wkt = 'LINESTRING (10 0, 10 10)'
 
   // Convert the WKT string to a GEOS geometry pointer
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Distance from start of line to created point
   const distance = 2.5
@@ -28,7 +32,9 @@ test('GEOSInterpolate', async (t) => {
   const resultPtr = geos.GEOSInterpolate(geomPtr, distance)
 
   // Convert the result pointer to a WKT string
-  const resultWkt = geos.GEOSWKTWriter_write(writer, resultPtr)
+  const resultWktPtr = geos.GEOSWKTWriter_write(writer, resultPtr)
+  const resultWkt = geos.Module.UTF8ToString(resultWktPtr)
+  geos.GEOSFree(resultWktPtr)
 
   // Check if the result is correct
   t.equal(resultWkt, 'POINT (10 2.5)', 'The interpolated point is correct')
