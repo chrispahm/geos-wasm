@@ -14,13 +14,20 @@ test('GEOSClipByRect', (t) => {
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
 
   // Create a polygon geometry from a WKT string
-  const polygon = geos.GEOSWKTReader_read(reader, 'POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))')
+  const wkt = 'POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))'
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const polygon = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Clip the polygon by a rectangle with xmin = 2, ymin = 2, xmax = 8, ymax = 8
   const clipped = geos.GEOSClipByRect(polygon, 2, 2, 8, 8)
 
   // Convert the clipped geometry to a WKT string
-  const clippedWkt = geos.GEOSWKTWriter_write(writer, clipped)
+  const clippedWktPtr = geos.GEOSWKTWriter_write(writer, clipped)
+  const clippedWkt = geos.Module.UTF8ToString(clippedWktPtr)
+  geos.GEOSFree(clippedWktPtr)
 
   // Assert that the clipped geometry is equal to the expected WKT string
   t.equal(clippedWkt, 'POLYGON ((2 2, 2 8, 8 8, 8 2, 2 2))')

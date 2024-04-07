@@ -22,7 +22,11 @@ geos.GEOSWKBWriter_setIncludeSRID(wkbWriter, 1) // Include SRID
 const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
 // Read the WKT string into a GEOS geometry
-const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+const size = wkt.length + 1
+const wktPtr = geos.Module._malloc(size)
+geos.Module.stringToUTF8(wkt, wktPtr, size)
+const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+geos.Module._free(wktPtr)
 
 // Write the GEOS geometry into a WKB buffer
 const wkbSizePtr = geos.Module._malloc(4) // Allocate memory for the size of the buffer

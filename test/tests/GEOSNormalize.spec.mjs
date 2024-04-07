@@ -16,7 +16,11 @@ test('GEOSNormalize', (t) => {
   const wkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))'
 
   // Convert the WKT string to a GEOS geometry
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Normalize the geometry in place
   const result = geos.GEOSNormalize(geomPtr)
@@ -25,7 +29,9 @@ test('GEOSNormalize', (t) => {
   t.equal(result, 0, 'GEOSNormalize should return 0 on success')
 
   // Convert the normalized geometry to a WKT string
-  const normalizedWkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const normalizedWktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const normalizedWkt = geos.Module.UTF8ToString(normalizedWktPtr)
+  geos.GEOSFree(normalizedWktPtr)
 
   // Check if the normalized WKT string is correct
   t.equal(normalizedWkt, 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))', 'GEOSNormalize should correct the orientation of the polygon')

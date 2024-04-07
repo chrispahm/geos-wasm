@@ -16,7 +16,11 @@ test('GEOSOffsetCurve', (t) => {
   const wkt = 'LINESTRING (0 0, 0 1, 1 1, 1 0, 0 0)'
 
   // Convert the WKT string to a GEOS geometry pointer
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Define the parameters for the offset curve function
   const width = 1 // The offset distance
@@ -28,7 +32,10 @@ test('GEOSOffsetCurve', (t) => {
   const offsetPtr = geos.GEOSOffsetCurve(geomPtr, width, quadsegs, joinStyle, mitreLimit)
 
   // Convert the result geometry pointer to a WKT string
-  const offsetWkt = geos.GEOSWKTWriter_write(writer, offsetPtr)
+  const offsetWktPtr = geos.GEOSWKTWriter_write(writer, offsetPtr)
+  const offsetWkt = geos.Module.UTF8ToString(offsetWktPtr)
+  geos.GEOSFree(offsetWktPtr)
+
   // The expected WKT string for the offset curve
   const expectedWkt = 'LINESTRING (-1 2, 2 2, 2 -1)'
 

@@ -9,6 +9,16 @@ const geos = await initGeosJs()
 const reader = geos.GEOSWKTReader_create()
 const writer = geos.GEOSWKTWriter_create()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Define some test cases with WKT strings and expected distances
 const testCases = [
   {
@@ -33,8 +43,8 @@ tape('GEOSDistance', (t) => {
   // Loop over the test cases
   for (const { wkt1, wkt2, distance } of testCases) {
     // Convert the WKT strings to GEOS geometries
-    const geomPtr1 = geos.GEOSWKTReader_read(reader, wkt1)
-    const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt2)
+    const geomPtr1 = wktToGeom(wkt1)
+    const geomPtr2 = wktToGeom(wkt2)
 
     // Create a pointer for the distance result
     const distPtr = geos.Module._malloc(8) // double is 8 bytes

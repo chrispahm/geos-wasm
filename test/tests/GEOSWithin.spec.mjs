@@ -7,13 +7,23 @@ const geos = await initGeosJs()
 const reader = geos.GEOSWKTReader_create()
 const writer = geos.GEOSWKTWriter_create()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // create some geometries from WKT strings
 const wkt1 = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 const wkt2 = 'POLYGON ((0.5 0.5, 1.5 0.5, 1.5 1.5, 0.5 1.5, 0.5 0.5))'
 const wkt3 = 'POINT (0.75 0.75)'
-const geomPtr1 = geos.GEOSWKTReader_read(reader, wkt1)
-const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt2)
-const geomPtr3 = geos.GEOSWKTReader_read(reader, wkt3)
+const geomPtr1 = wktToGeom(wkt1)
+const geomPtr2 = wktToGeom(wkt2)
+const geomPtr3 = wktToGeom(wkt3)
 
 // test the GEOSWithin function
 test('GEOSWithin', function (t) {

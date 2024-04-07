@@ -9,7 +9,11 @@ const geomSize = 3
 
 const read = (wkt) => {
   const reader = geos.GEOSWKTReader_create_r(handle_)
-  const geom_ = geos.GEOSWKTReader_read_r(handle_, reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geom_ = geos.GEOSWKTReader_read_r(handle_, reader, wktPtr)
+  geos.Module._free(wktPtr)
   geos.GEOSWKTReader_destroy_r(handle_, reader)
   return geom_
 }

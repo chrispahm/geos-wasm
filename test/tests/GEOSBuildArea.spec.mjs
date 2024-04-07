@@ -5,6 +5,16 @@ import test from 'tape'
 import initGeosJs from '../../build/package/geos.esm.js'
 const geos = await initGeosJs()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (reader, wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Test GEOSBuildArea function
 test('GEOSBuildArea', async (t) => {
   // Create a reader and a writer for WKT conversion
@@ -19,9 +29,9 @@ test('GEOSBuildArea', async (t) => {
   const wkt3 = 'POLYGON ((-1 -1, -1 -2, -2 -2, -2 -1, -1 -1))'
 
   // Read the WKT strings into GEOS geometries
-  const geomPtr1 = geos.GEOSWKTReader_read(reader, wkt1)
-  const geomPtr2 = geos.GEOSWKTReader_read(reader, wkt2)
-  const geomPtr3 = geos.GEOSWKTReader_read(reader, wkt3)
+  const geomPtr1 = wktToGeom(reader, wkt1)
+  const geomPtr2 = wktToGeom(reader, wkt2)
+  const geomPtr3 = wktToGeom(reader, wkt3)
 
   // Create a list of geometries
   const geomPtrs = new Int32Array([geomPtr1, geomPtr2, geomPtr3])
@@ -36,7 +46,9 @@ test('GEOSBuildArea', async (t) => {
   const areaPtr = geos.GEOSBuildArea(collectionPtr)
 
   // Write the result geometry to a WKT string
-  const areaWkt = geos.GEOSWKTWriter_write(writer, areaPtr)
+  const areaWktPtr = geos.GEOSWKTWriter_write(writer, areaPtr)
+  const areaWkt = geos.Module.UTF8ToString(areaWktPtr)
+  geos.GEOSFree(areaWktPtr)
 
   // Expected WKT string for the result geometry
   const expectedWkt = 'MULTIPOLYGON (((-1 -2, -2 -2, -2 -1, -1 -1, -1 -2)), ((0 0, 0 1, 1 1, 1 0, 2 0, 2 0, 0 0, 0 0, 0 0)))'

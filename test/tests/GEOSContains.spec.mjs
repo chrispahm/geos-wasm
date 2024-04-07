@@ -5,6 +5,16 @@ import test from 'tape'
 import initGeosJs from '../../build/package/geos.esm.js'
 const geos = await initGeosJs()
 
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (reader, wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Define some test cases for GEOSContains
 const testCases = [
   {
@@ -38,8 +48,8 @@ test('GEOSContains', (t) => {
   // Loop through the test cases
   for (const testCase of testCases) {
     // Create the geometries from the WKT strings
-    const geom1 = geos.GEOSWKTReader_read(reader, testCase.geom1)
-    const geom2 = geos.GEOSWKTReader_read(reader, testCase.geom2)
+    const geom1 = wktToGeom(reader, testCase.geom1)
+    const geom2 = wktToGeom(reader, testCase.geom2)
 
     // Call the GEOSContains function and get the result
     const result = geos.GEOSContains(geom1, geom2)

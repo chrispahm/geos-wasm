@@ -16,14 +16,20 @@ initGeosJs().then(geos => {
     const wkt = 'POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0), (2 2, 8 2, 8 8, 2 8, 2 2))'
 
     // Convert the WKT string to a GEOS geometry pointer
-    const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+    const size = wkt.length + 1
+    const wktPtr = geos.Module._malloc(size)
+    geos.Module.stringToUTF8(wkt, wktPtr, size)
+    const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+    geos.Module._free(wktPtr)
 
     // Call the GEOSConvexHull function with the geometry pointer as the argument
     // The function returns another geometry pointer for the convex hull
     const hullPtr = geos.GEOSConvexHull(geomPtr)
 
     // Convert the convex hull pointer to a WKT string
-    const hullWkt = geos.GEOSWKTWriter_write(writer, hullPtr)
+    const hullWktPtr = geos.GEOSWKTWriter_write(writer, hullPtr)
+    const hullWkt = geos.Module.UTF8ToString(hullWktPtr)
+    geos.GEOSFree(hullWktPtr)
 
     // Assert that the convex hull WKT string is equal to the expected value
     t.equal(hullWkt, 'POLYGON ((0 0, 0 10, 10 10, 10 0, 0 0))')

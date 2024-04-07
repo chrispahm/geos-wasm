@@ -13,12 +13,18 @@ const writer = geos.GEOSWKTWriter_create()
 test('GEOSWKTWriter_write', (t) => {
   // Create a WKT string and a geometry pointer
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Set precision to 0 digits
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
   // Write the geometry to a WKT string using the writer
-  const wkt2 = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2Ptr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2 = geos.Module.UTF8ToString(wkt2Ptr)
+  geos.GEOSFree(wkt2Ptr)
 
   // Check that the output WKT string is equal to the input one
   t.equal(wkt2, wkt, 'Output WKT matches input WKT')
@@ -32,13 +38,19 @@ test('GEOSWKTWriter_write', (t) => {
 test('GEOSWKTWriter_setTrim', (t) => {
   // Create a WKT string and a geometry pointer
   const wkt = 'POINT (1.0000000000000000 2.0000000000000000)'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Set the trim flag to true on the writer
   geos.GEOSWKTWriter_setTrim(writer, true)
 
   // Write the geometry to a WKT string using the writer
-  const wkt2 = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2Ptr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2 = geos.Module.UTF8ToString(wkt2Ptr)
+  geos.GEOSFree(wkt2Ptr)
 
   // Check that the output WKT string is trimmed of trailing zeros
   t.equal(wkt2, 'POINT (1 2)', 'Output WKT is trimmed')
@@ -52,13 +64,19 @@ test('GEOSWKTWriter_setTrim', (t) => {
 test('GEOSWKTWriter_setRoundingPrecision', (t) => {
   // Create a WKT string and a geometry pointer
   const wkt = 'POINT (1.2345678901234567 2.3456789012345678)'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Set the rounding precision to 3 on the writer
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 3)
 
   // Write the geometry to a WKT string using the writer
-  const wkt2 = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2Ptr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2 = geos.Module.UTF8ToString(wkt2Ptr)
+  geos.GEOSFree(wkt2Ptr)
 
   // Check that the output WKT string is rounded to three decimal places
   t.equal(wkt2, 'POINT (1.235 2.346)', 'Output WKT is rounded')
@@ -72,13 +90,19 @@ test('GEOSWKTWriter_setRoundingPrecision', (t) => {
 test('GEOSWKTWriter_setOutputDimension', (t) => {
   // Create a WKT string and a geometry pointer with Z dimension
   const wkt = 'POINT Z (1.0 2.0 3.0)'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Set the output dimension to two on the writer
   geos.GEOSWKTWriter_setOutputDimension(writer, 2)
 
   // Write the geometry to a WKT string using the writer
-  const wkt2 = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2Ptr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt2 = geos.Module.UTF8ToString(wkt2Ptr)
+  geos.GEOSFree(wkt2Ptr)
 
   // Check that the output WKT string does not have Z dimension
   t.equal(wkt2, 'POINT (1 2)', 'Output WKT has no Z dimension')
