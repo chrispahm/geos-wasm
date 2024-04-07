@@ -23,7 +23,11 @@ test('GEOSBuffer', async (t) => {
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
   // Read the WKT string and get a geometry pointer
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Buffer the geometry by 0.5 units and get a new geometry pointer
   const bufferPtr = geos.GEOSBuffer(geomPtr, 0.5)

@@ -12,7 +12,11 @@ const wktToGeom = (wkt) => {
   // Create a WKT reader
   const reader = geos.GEOSWKTReader_create()
   // Read the WKT string and get a geometry pointer
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   // Destroy the reader
   geos.GEOSWKTReader_destroy(reader)
   // Return the geometry pointer
@@ -26,7 +30,9 @@ const geomToWkt = (geomPtr) => {
   // Set rounding precision for the writer
   geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
   // Write the geometry pointer and get a WKT string
-  const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt = geos.Module.UTF8ToString(wktPtr)
+  geos.GEOSFree(wktPtr)
   // Destroy the writer
   geos.GEOSWKTWriter_destroy(writer)
   // Return the WKT string

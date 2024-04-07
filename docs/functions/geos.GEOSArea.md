@@ -16,7 +16,11 @@ Calculate the area of a geometry.
 ```js
 const reader = geos.GEOSWKTReader_create()
 const wkt = 'POLYGON((0 0,0 10,10 10,10 0,0 0))'
-const g = geos.GEOSWKTReader_read(reader, wkt)
+const size = wkt.length + 1
+const wktPtr = geos.Module._malloc(size)
+geos.Module.stringToUTF8(wkt, wktPtr, size)
+const g = geos.GEOSWKTReader_read(reader, wktPtr)
+geos.Module._free(wktPtr)
 const area = geos.Module._malloc(8)
 geos.GEOSArea(g, area)
 const areaValue = geos.Module.getValue(area, 'double')

@@ -54,7 +54,11 @@ test('GEOSWKTReader', (t) => {
   // Loop over the test cases
   for (const testCase of testCases) {
     // Convert the WKT string to a GEOS geometry pointer
-    const geomPtr = geos.GEOSWKTReader_read(reader, testCase.wkt)
+    const size = testCase.wkt.length + 1
+    const testCaseWktPtr = geos.Module._malloc(size)
+    geos.Module.stringToUTF8(testCase.wkt, testCaseWktPtr, size)
+    const geomPtr = geos.GEOSWKTReader_read(reader, testCaseWktPtr)
+    geos.Module._free(testCaseWktPtr)
 
     // Check if the pointer is valid
     t.ok(geomPtr, `GEOSWKTReader_read should return a valid pointer for ${testCase.wkt}`)
@@ -62,7 +66,9 @@ test('GEOSWKTReader', (t) => {
     // Convert the GEOS geometry pointer back to a WKT string
     // Set the rounding precision to 0 digits
     geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
-    const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+    const wktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+    const wkt = geos.Module.UTF8ToString(wktPtr)
+    geos.GEOSFree(wktPtr)
 
     // Check if the WKT string matches the original one
     t.equal(wkt, testCase.wkt, `GEOSWKTWriter_write should return the original WKT string for ${testCase.wkt}`)

@@ -8,7 +8,11 @@ const geos = await initGeosJs()
 // Define a helper function to create a GEOS geometry from a WKT string
 const wktToGeom = (wkt) => {
   const reader = geos.GEOSWKTReader_create()
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
   geos.GEOSWKTReader_destroy(reader)
   return geomPtr
 }
@@ -16,7 +20,9 @@ const wktToGeom = (wkt) => {
 // Define a helper function to create a WKT string from a GEOS geometry
 const geomToWkt = (geomPtr) => {
   const writer = geos.GEOSWKTWriter_create()
-  const wkt = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt = geos.Module.UTF8ToString(wktPtr)
+  geos.GEOSFree(wktPtr)
   geos.GEOSWKTWriter_destroy(writer)
   return wkt
 }

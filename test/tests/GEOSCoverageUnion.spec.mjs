@@ -29,7 +29,12 @@ test('GEOSCoverageUnion', (t) => {
   for (const testCase of testCases) {
     // Convert the input WKT strings to GEOS geometries
     const inputGeoms = testCase.input.map(wkt => {
-      return geos.GEOSWKTReader_read(reader, wkt)
+      const size = wkt.length + 1
+      const wktPtr = geos.Module._malloc(size)
+      geos.Module.stringToUTF8(wkt, wktPtr, size)
+      const geom = geos.GEOSWKTReader_read(reader, wktPtr)
+      geos.Module._free(wktPtr)
+      return geom
     })
 
     // Create a list of geometries
@@ -45,7 +50,9 @@ test('GEOSCoverageUnion', (t) => {
     const outputGeomPtr = geos.GEOSCoverageUnion(collectionPtr)
 
     // Convert the output GEOS geometry to a WKT string
-    const outputWkt = geos.GEOSWKTWriter_write(writer, outputGeomPtr)
+    const outputWktPtr = geos.GEOSWKTWriter_write(writer, outputGeomPtr)
+    const outputWkt = geos.Module.UTF8ToString(outputWktPtr)
+    geos.GEOSFree(outputWktPtr)
 
     // Compare the output WKT with the expected output WKT
     t.equal(outputWkt, testCase.output)

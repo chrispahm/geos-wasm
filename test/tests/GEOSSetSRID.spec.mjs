@@ -13,7 +13,11 @@ const writer = geos.GEOSWKTWriter_create()
 const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
 // Convert the WKT string to a GEOS geometry
-const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+const size = wkt.length + 1
+const wktPtr = geos.Module._malloc(size)
+geos.Module.stringToUTF8(wkt, wktPtr, size)
+const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+geos.Module._free(wktPtr)
 
 // Test the GEOSSetSRID function
 test('GEOSSetSRID', (t) => {

@@ -5,6 +5,14 @@ import tape from 'tape'
 import initGeosJs from '../../build/package/geos.esm.js'
 const geos = await initGeosJs()
 
+// Define a helper function to convert a GEOS geometry pointer to a WKT string
+const geomToWkt = (writer, geomPtr) => {
+  const wktPtr = geos.GEOSWKTWriter_write(writer, geomPtr)
+  const wkt = geos.Module.UTF8ToString(wktPtr)
+  geos.GEOSFree(wktPtr)
+  return wkt
+}
+
 // Define a helper function to get the area of a GEOS geometry
 const getArea = (geomPtr) => {
   const ptr = geos.Module._malloc(8) // allocate 8 bytes for a double
@@ -30,7 +38,11 @@ tape('GEOSBufferWithStyle', (t) => {
 
   // Create a polygon geometry from a WKT string
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Buffer the polygon with different styles and parameters
   const buffer1 = geos.GEOSBufferWithStyle(geomPtr, 0.5, 8, GEOSBUF_CAP_ROUND, GEOSBUF_JOIN_ROUND, 5.0)
@@ -38,9 +50,9 @@ tape('GEOSBufferWithStyle', (t) => {
   const buffer3 = geos.GEOSBufferWithStyle(geomPtr, -0.4, -1, GEOSBUF_CAP_SQUARE, GEOSBUF_JOIN_BEVEL, -1.0)
 
   // Convert the buffered geometries to WKT strings
-  const wkt1 = geos.GEOSWKTWriter_write(writer, buffer1)
-  const wkt2 = geos.GEOSWKTWriter_write(writer, buffer2)
-  const wkt3 = geos.GEOSWKTWriter_write(writer, buffer3)
+  const wkt1 = geomToWkt(writer, buffer1)
+  const wkt2 = geomToWkt(writer, buffer2)
+  const wkt3 = geomToWkt(writer, buffer3)
 
   // Get the areas of the buffered geometries
   const area1 = getArea(buffer1)

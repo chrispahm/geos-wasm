@@ -7,6 +7,17 @@ const geos = await initGeosJs()
 // Create a reader and a writer for WKT conversion
 const reader = geos.GEOSWKTReader_create()
 const writer = geos.GEOSWKTWriter_create()
+
+// Define a helper function to convert a WKT string to a GEOS geometry pointer
+const wktToGeom = (wkt) => {
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
+  return geomPtr
+}
+
 // Set the rounding precision of the writer to 0
 geos.GEOSWKTWriter_setRoundingPrecision(writer, 0)
 
@@ -23,13 +34,15 @@ function runTests () {
       const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
       // Convert the WKT string to a GEOS geometry
-      const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+      const geomPtr = wktToGeom(wkt)
 
       // Apply GEOSNode to the geometry
       const nodePtr = geos.GEOSNode(geomPtr)
 
       // Convert the result to a WKT string
-      const nodeWkt = geos.GEOSWKTWriter_write(writer, nodePtr)
+      const nodeWktPtr = geos.GEOSWKTWriter_write(writer, nodePtr)
+      const nodeWkt = geos.Module.UTF8ToString(nodeWktPtr)
+      geos.GEOSFree(nodeWktPtr)
 
       // Check if the result is equal to the input
       t.equal(nodeWkt, 'MULTILINESTRING ((0 0, 1 0, 1 1, 0 1, 0 0))', 'GEOSNode should return the same polygon')
@@ -51,7 +64,7 @@ function runTests () {
       const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0), (0.5 0.5, 0.5 1.5, 1.5 1.5, 1.5 0.5, 0.5 0.5))'
 
       // Convert the WKT string to a GEOS geometry
-      const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+      const geomPtr = wktToGeom(wkt)
 
       // Apply GEOSNode to the geometry
       const nodePtr = geos.GEOSNode(geomPtr)
@@ -76,13 +89,15 @@ function runTests () {
       const wkt = 'LINESTRING (0 0, 1 1, 2 0, 1 -1, 0 0)'
 
       // Convert the WKT string to a GEOS geometry
-      const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+      const geomPtr = wktToGeom(wkt)
 
       // Apply GEOSNode to the geometry
       const nodePtr = geos.GEOSNode(geomPtr)
 
       // Convert the result to a WKT string
-      const nodeWkt = geos.GEOSWKTWriter_write(writer, nodePtr)
+      const nodeWktPtr = geos.GEOSWKTWriter_write(writer, nodePtr)
+      const nodeWkt = geos.Module.UTF8ToString(nodeWktPtr)
+      geos.GEOSFree(nodeWktPtr)
 
       // Check if the result is a multilinestring with four segments
       t.equal(nodeWkt, 'MULTILINESTRING ((0 0, 1 1, 2 0, 1 -1, 0 0))', 'GEOSNode should return a multilinestring with four segments')

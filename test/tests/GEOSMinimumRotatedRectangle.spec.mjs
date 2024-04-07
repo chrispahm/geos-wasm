@@ -15,13 +15,19 @@ test('GEOSMinimumRotatedRectangle', async t => {
   const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 
   // Convert the WKT string to a GEOS geometry
-  const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+  const size = wkt.length + 1
+  const wktPtr = geos.Module._malloc(size)
+  geos.Module.stringToUTF8(wkt, wktPtr, size)
+  const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
+  geos.Module._free(wktPtr)
 
   // Call the GEOSMinimumRotatedRectangle function
   const resultPtr = geos.GEOSMinimumRotatedRectangle(geomPtr)
 
   // Convert the result geometry to a WKT string
-  const resultWkt = geos.GEOSWKTWriter_write(writer, resultPtr)
+  const resultWktPtr = geos.GEOSWKTWriter_write(writer, resultPtr)
+  const resultWkt = geos.Module.UTF8ToString(resultWktPtr)
+  geos.GEOSFree(resultWktPtr)
 
   // Check if the result is correct
   t.equal(resultWkt, 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0))', 'should return the minimum rotated rectangle')
