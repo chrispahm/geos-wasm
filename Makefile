@@ -1,4 +1,4 @@
-GEOS_VERSION = 3.12.0
+GEOS_VERSION = 3.13.0
 
 GEOS_URL = "http://download.osgeo.org/geos/geos-$(GEOS_VERSION).tar.bz2"
 
