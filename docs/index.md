@@ -47,7 +47,7 @@ const wkt = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 const size = wkt.length + 1
 const wktPtr = geos.Module._malloc(size)
 geos.Module.stringToUTF8(wkt, wktPtr, size)
-const geomPtr = geos.GEOSWKTReader_read(reader, wkt)
+const geomPtr = geos.GEOSWKTReader_read(reader, wktPtr)
 geos.Module._free(wktPtr)
 // create a pointer where the area will be written to
 const areaPtr = geos.Module._malloc(8)
