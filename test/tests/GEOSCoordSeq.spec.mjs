@@ -144,7 +144,9 @@ test('3: Test not swapped setOrdinate calls (see bug #133, fixed)', (t) => {
   t.equal(zcheck, z)
 
   // correct error on wrong ordinate index
-  t.ok(geos.GEOSCoordSeq_setOrdinate(cs_, 0, 37, z) === 0)
+  t.throws(() => {
+    geos.GEOSCoordSeq_setOrdinate(cs_, 0, 37, z)
+  })
 
   t.end()
 })
@@ -899,8 +901,8 @@ test('17: test 4D from/to buffer', (t) => {
 })
 
 test('18: test error on invalid dim', (t) => {
-  t.ok(!geos.GEOSCoordSeq_create(0, 1))
-  t.ok(!geos.GEOSCoordSeq_create(0, 5))
+  t.throws(() => geos.GEOSCoordSeq_create(0, 1))
+  t.throws(() => geos.GEOSCoordSeq_create(0, 5))
 
   t.end()
 })

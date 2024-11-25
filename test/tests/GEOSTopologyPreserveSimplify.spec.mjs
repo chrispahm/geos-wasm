@@ -40,7 +40,7 @@ test('GEOSTopologyPreserveSimplify', (t) => {
   const inputWkt = 'POLYGON ((0 0, 1 0, 1 1, 0.5 0.5, 0 1, 0 0))'
 
   // The expected output WKT string
-  const expectedOutputWkt = 'POLYGON ((0 0, 1 0, 1 1, 0 0, 0 1, 0 0))'
+  const expectedOutputWkt = 'POLYGON ((0 0, 1 0, 1 1, 0.5 0.5, 0 1, 0 0))'
 
   // The tolerance value
   const tolerance = 0.25

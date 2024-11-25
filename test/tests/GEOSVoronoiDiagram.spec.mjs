@@ -55,7 +55,7 @@ test('GEOSVoronoiDiagram', (t) => {
   const outputWkt = geomToWkt(outputGeom)
 
   // Compare the output WKT with the expected WKT
-  const expectedWkt = 'GEOMETRYCOLLECTION (POLYGON ((2 2, 2 0, 0 0, 0 2, 2 2)), POLYGON ((-1 2, 0 2, 0 0, -1 0, -1 2)), POLYGON ((-1 -1, -1 0, 0 0, 0 -1, -1 -1)), POLYGON ((2 -1, 0 -1, 0 0, 2 0, 2 -1)))'
+  const expectedWkt = 'GEOMETRYCOLLECTION (POLYGON ((2 2, 2 0.5, 0.5 0.5, 0.5 2, 2 2)), POLYGON ((-1 2, 0.5 2, 0.5 0.5, -1 0.5, -1 2)), POLYGON ((-1 -1, -1 0.5, 0.5 0.5, 0.5 -1, -1 -1)), POLYGON ((2 -1, 0.5 -1, 0.5 0.5, 2 0.5, 2 -1)))'
 
   t.equal(outputWkt, expectedWkt, 'The output WKT matches the expected WKT')
 

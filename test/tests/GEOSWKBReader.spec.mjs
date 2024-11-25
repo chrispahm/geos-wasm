@@ -44,7 +44,12 @@ test('GEOSWKBReader', async (t) => {
   geos.GEOSSetSRID(geomPtr, 4326)
 
   // Convert the GEOS geometry to a WKB hex string
-  const wkbHex = strip(geos.GEOSWKBWriter_writeHEX(writer, geomPtr))
+  const sizeWkbPtr = geos.Module._malloc(4)
+  const wkbHexPointer = geos.GEOSWKBWriter_writeHEX(writer, geomPtr, sizeWkbPtr)
+  // read the size
+  const wkbSize = geos.Module.getValue(sizeWkbPtr, 'i32')
+
+  const wkbHex = geos.Module.UTF8ToString(wkbHexPointer)
 
   // Expected WKB hex string for the polygon
   const expectedWkbHex =
@@ -54,7 +59,15 @@ test('GEOSWKBReader', async (t) => {
   t.ok(wkbHex.includes(expectedWkbHex), 'WKB hex string includes expected WKB hex string')
 
   // Convert the WKB hex string back to a GEOS geometry
-  const geomPtr2 = geos.GEOSWKBReader_readHEX(reader, expectedWkbHex, expectedWkbHex.length)
+  const expectedWkbHexPtr = geos.Module._malloc(expectedWkbHex.length + 1)
+  geos.Module.stringToUTF8(expectedWkbHex, expectedWkbHexPtr, expectedWkbHex.length + 1)
+
+  // read string back to js
+  const wkbHexString = geos.Module.UTF8ToString(expectedWkbHexPtr)
+  // check if the string is the same
+  t.equal(wkbHexString, expectedWkbHex, 'WKB hex string is the same')
+  const geomPtr2 = geos.GEOSWKBReader_readHEX(reader, expectedWkbHexPtr, expectedWkbHex.length)
+  geos.Module._free(expectedWkbHexPtr)
 
   // Assert that the geometries are equal
   t.ok(geos.GEOSEquals(geomPtr, geomPtr2), 'Geometries are equal')

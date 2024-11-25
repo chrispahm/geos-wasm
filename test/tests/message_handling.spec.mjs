@@ -23,13 +23,11 @@ test('Test custom message handlers', async (t) => {
   t.equal(geomPtr, 0, 'Line before should read: ParseException...')
 
   // provoke the same error with the non-r variant
-  const geomPtr2 = geos.GEOSWKTReader_read(reader, wktPtr)
-  t.equal(geomPtr2, 0, 'Line before should read: ParseException...')
+  t.throws(() => geos.GEOSWKTReader_read(reader, wktPtr), 'Line before should read: ParseException: Expected word but encountered end of stream')
 
   // free memory
   geos.GEOSWKTReader_destroy_r(ctx, reader)
   geos.GEOSGeom_destroy_r(ctx, geomPtr)
-  geos.GEOSGeom_destroy_r(ctx, geomPtr2)
   geos.GEOS_finish_r(ctx)
 
   t.end()
