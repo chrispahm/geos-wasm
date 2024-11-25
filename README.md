@@ -26,6 +26,7 @@ GEOS provides many of the algorithms used by [PostGIS](http://www.postgis.net/),
 import initGeosJs from './src/index.mjs';
 const geos = await initGeosJs();
 ```
+
 ## Example
 
 ```js
@@ -60,7 +61,6 @@ geos.GEOSFree(areaPtr)
 Please refer to the
 [API documentation](https://chrispahm.github.io/geos-wasm/).
 
-
 ## Development
 
 ### Prerequisites
@@ -84,5 +84,5 @@ npm test
 
 ### Contribution
 
-Contributions are welcome! 
+Contributions are welcome!
 Please open an issue in order to discuss contributions before submitting a pull request.
