@@ -46,12 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Performance bottleneck for GEOS relate operations (discussed in https://github.com/libgeos/geos/issues/1024, benchmarked in https://github.com/chrispahm/contains-benchmark) -> Fixed by https://github.com/locationtech/jts/pull/1052 in GEOS >= v3.13.0
+- Performance bottleneck for GEOS relate operations (discussed in <https://github.com/libgeos/geos/issues/1024>, benchmarked in <https://github.com/chrispahm/contains-benchmark>) -> Fixed by <https://github.com/locationtech/jts/pull/1052> in GEOS >= v3.13.0
 - #23: Missing C functions since 3.11 and 3.12 (and 3.13)
 - #24: Some GEOSPolygonize variant methods' argument/return 'string' types are wrong -> fixed
 - #25: GEOSPolygonize variant methods' argument/return 'string' types are wrong -> fixed
 
 ### Changed
-  - Switched to [GEOS 3.13.0](https://libgeos.org/posts/2024-09-06-geos-3-13-released/)
-  - Updated to emscripten 3.1.72
+
+- Switched to [GEOS 3.13.0](https://libgeos.org/posts/2024-09-06-geos-3-13-released/)
+- Updated to emscripten 3.1.72
   
