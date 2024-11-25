@@ -55,7 +55,9 @@ test('GEOSGeoJSONReader', async (t) => {
   }
 
   const reader = geos.GEOSGeoJSONReader_create()
-  const geom = geos.GEOSGeoJSONReader_readGeometry(reader, JSON.stringify(geometry))
+  const stringPointer = geos.Module._malloc(JSON.stringify(geometry).length + 1)
+  geos.Module.stringToUTF8(JSON.stringify(geometry), stringPointer, JSON.stringify(geometry).length + 1)
+  const geom = geos.GEOSGeoJSONReader_readGeometry(reader, stringPointer)
 
   const writer = geos.GEOSWKTWriter_create()
   const wktPtr = geos.GEOSWKTWriter_write(writer, geom)

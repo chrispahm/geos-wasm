@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSisRing"></a>
 
 ## geos.GEOSisRing ⇒ <code>number</code> ⏏
-Tests whether a geometry is a ring.
-A ring is a closed and simple linestring.
+Tests whether the input geometry is a ring. Rings are linestrings, without self-intersections, with start and end point being identical.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is a ring, 0 if not, or -1 on error  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | a pointer to a GEOSGeometry object |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisRing_r"></a>
 
 ## geos.GEOSisRing\_r ⇒ <code>number</code> ⏏
-Tests whether a geometry is a ring (thread-safe version).
-A ring is a closed and simple linestring.
+Tests whether the input geometry is a ring. Rings are linestrings, without self-intersections, with start and end point being identical.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is a ring, 0 if not, or -1 on error  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | a pointer to a GEOS context handle |
-| g | <code>number</code> | a pointer to a GEOSGeometry object |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---

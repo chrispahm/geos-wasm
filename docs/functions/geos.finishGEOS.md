@@ -14,3 +14,17 @@ geos.finishGEOS()
 ```
 
 ---
+<a name="exp_module_geos--geos.finishGEOS_r"></a>
+
+## ~~geos.finishGEOS\_r ⇒ <code>null</code> ⏏~~
+***Deprecated***
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+
+
+---

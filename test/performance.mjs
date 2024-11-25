@@ -2,11 +2,10 @@ import { performance } from 'perf_hooks'
 import * as turf from '@turf/turf'
 import { readFileSync } from 'fs'
 import initGeosJs from '../src/index.mjs'
-import geosBuffer from '../docs/assets/buffer_wkb.js'
-// import geosBuffer from '../docs/assets/buffer_coordseq.js'
+// import geosBuffer from '../docs/assets/buffer_wkb.js'
+import geosBuffer from '../docs/assets/buffer_coordseq.js'
 
 const geos = await initGeosJs()
-
 const australiaBorder = JSON.parse(readFileSync('./test/data/AUS.json'))
 
 // Define the input geometry
@@ -38,7 +37,11 @@ const bufferDistance = 1
 const runs = 100
 
 // Define the performance test function
-function runPerformanceTest (inputGeometry, numIterations, bufferSingleFeatures = false) {
+function runPerformanceTest (
+  inputGeometry,
+  numIterations,
+  bufferSingleFeatures = false
+) {
   // Measure the performance of the GEOS buffer method
   const geosBufferStart = performance.now()
   for (let i = 0; i < numIterations; i++) {
@@ -70,17 +73,29 @@ function runPerformanceTest (inputGeometry, numIterations, bufferSingleFeatures 
   const turfTimePerIteration = turfBufferTime / numIterations
 
   // Output the results
-  console.log(`GEOS buffer method took ${geosBufferTime} milliseconds to run ${numIterations} times.`)
-  console.log(`Average time per iteration: ${Math.round(geosTimePerIteration)} milliseconds.`)
+  console.log(
+    `GEOS buffer method took ${geosBufferTime} milliseconds to run ${numIterations} times.`
+  )
+  console.log(
+    `Average time per iteration: ${Math.round(geosTimePerIteration)} milliseconds.`
+  )
 
-  console.log(`@turf/turf buffer method took ${turfBufferTime} milliseconds to run ${numIterations} times.`)
-  console.log(`Average time per iteration: ${Math.round(turfTimePerIteration)} milliseconds.`)
+  console.log(
+    `@turf/turf buffer method took ${turfBufferTime} milliseconds to run ${numIterations} times.`
+  )
+  console.log(
+    `Average time per iteration: ${Math.round(turfTimePerIteration)} milliseconds.`
+  )
 
   // log which was faster including multiplication factor
   if (geosTimePerIteration < turfTimePerIteration) {
-    console.log(`GEOS buffer method was ${Math.round(turfTimePerIteration / geosTimePerIteration * 100) / 100}x faster than @turf/turf buffer method.`)
+    console.log(
+      `GEOS buffer method was ${Math.round((turfTimePerIteration / geosTimePerIteration) * 100) / 100}x faster than @turf/turf buffer method.`
+    )
   } else {
-    console.log(`@turf/turf buffer method was ${Math.round(geosTimePerIteration / turfTimePerIteration * 100) / 100}x faster than GEOS buffer method.`)
+    console.log(
+      `@turf/turf buffer method was ${Math.round((geosTimePerIteration / turfTimePerIteration) * 100) / 100}x faster than GEOS buffer method.`
+    )
   }
   // add a line break
   console.log()
@@ -97,7 +112,7 @@ const geometryToTest = [
     feature: australiaBorder
   }
 ]
-geometryToTest.forEach(obj => {
+geometryToTest.forEach((obj) => {
   console.log(`Testing feature ${obj.name}`)
   runPerformanceTest(obj.feature, runs)
 })
@@ -107,7 +122,9 @@ console.log('Real life performance test')
 
 // we download all NUTS3 geometries from Eurostat
 // and buffer them by 1km
-const nuts3 = await fetch('https://ec.europa.eu/eurostat/cache/GISCO/distribution/v2/nuts/geojson/NUTS_RG_10M_2021_4326_LEVL_3.geojson').then(res => res.json())
+const nuts3 = await fetch(
+  'https://ec.europa.eu/eurostat/cache/GISCO/distribution/v2/nuts/geojson/NUTS_RG_10M_2021_4326_LEVL_3.geojson'
+).then((res) => res.json())
 
 // we try 2 tests:
 // 1. buffer all geometries at once

@@ -1,30 +1,29 @@
 <a name="exp_module_geos--geos.GEOSHasZ"></a>
 
 ## geos.GEOSHasZ ⇒ <code>number</code> ⏏
-Check if a geometry has a Z coordinate dimension.
+Tests whether the input geometry has Z coordinates.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry has Z dimension, 0 otherwise, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The GEOS geometry object. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSHasZ_r"></a>
 
 ## geos.GEOSHasZ\_r ⇒ <code>number</code> ⏏
-Check if a geometry has a Z coordinate dimension.
+Tests whether the input geometry has Z coordinates.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry has Z dimension, 0 otherwise, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The GEOS geometry object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---

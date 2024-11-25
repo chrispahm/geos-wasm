@@ -33,7 +33,7 @@ initGeosJs().then(geos => {
   geos.GEOSFree(simplifiedWktPtr)
 
   // Define the expected WKT string after simplification
-  const expectedWkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0 0, 0 1, 1 1, 1 0, 0 0))'
+  const expectedWkt = 'POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.1 0.1, 0.1 0.9, 0.9 0.9, 0.9 0.1, 0.1 0.1))'
 
   // Use tape to test if the simplified WKT string matches the expected WKT string
   test('GEOSSimplify', t => {

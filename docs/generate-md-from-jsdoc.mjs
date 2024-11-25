@@ -5,25 +5,46 @@ import path from 'path'
 /* input and output paths */
 const inputFiles = [
   '../src/allCFunctions.mjs',
+  '../src/addGeosFunctions.mjs',
   '../src/helpers/geojsonToGeosGeom.mjs',
   '../src/helpers/geosGeomToGeojson.mjs'
 ]
 const outputDir = './functions/'
+const typedefsEnumsDir = './typedefs-enums/'
 
 /* create output directory if it doesn't exist */
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
+if (!fs.existsSync(typedefsEnumsDir)) fs.mkdirSync(typedefsEnumsDir)
 
 /* get template data */
-const templateData = jsdoc2md.getTemplateDataSync({ files: inputFiles, configure: '../jsdoc.conf' })
+const templateData = await jsdoc2md.getTemplateData({ files: inputFiles, configure: '../jsdoc.conf' })
 
+const typedefs = []
+const enums = []
 /* reduce templateData to an array of class names */
 const functionNames = templateData.reduce((functionNames, identifier) => {
+  if (identifier.kind === 'typedef') {
+    typedefs.push(identifier)
+    console.log(identifier)
+  }
+  if (identifier.kind === 'enum') {
+    enums.push(identifier)
+  }
   if (identifier.scope !== 'global' &&
     (identifier.kind === 'member' || identifier.kind === 'function')) {
+    if (identifier.name.startsWith('GEOS')) {
+      identifier.id = `module:geos.${identifier.name}`
+      identifier.memberof = 'module:geos'
+      // console.log(identifier)
+    } else {
+      functionNames.push(identifier.name)
+    }
+  } else if (identifier.kind === 'member' && identifier.memberof === 'module:geos' && identifier.params) {
     functionNames.push(identifier.name)
   }
   return functionNames
 }, [])
+
 const globalFunctionNames = templateData.reduce((globalFunctionNames, identifier) => {
   if (identifier.scope === 'global' && identifier.kind === 'function') {
     globalFunctionNames.push(identifier.name)
@@ -33,6 +54,7 @@ const globalFunctionNames = templateData.reduce((globalFunctionNames, identifier
 
 // sort function names alphabetically
 functionNames.sort()
+
 globalFunctionNames.sort()
 
 // group functions by similar name
@@ -72,16 +94,35 @@ globalFunctionNames.forEach(globalFunctionName => {
   if (!similarNames[globalFunctionName]) similarNames[globalFunctionName] = [globalFunctionName]
 })
 
+// write all typedefs and enums to a single file
+let output = '# Typedefs and Enums\n\n## Typedefs\n\n'
+for (const typedef of typedefs) {
+  const template = `{{#identifier name="${typedef.name}"}}{{>docs}}{{/identifier}}`
+  output += await jsdoc2md.render({ data: templateData, template })
+  output += '\n---\n'
+}
+output += '\n## Enums\n\n'
+for (const enumType of enums) {
+  const template = `{{#identifier name="${enumType.name}"}}{{>docs}}{{/identifier}}`
+  output += await jsdoc2md.render({ data: templateData, template })
+  output += '\n---\n'
+}
+fs.writeFileSync(path.resolve(typedefsEnumsDir, 'typedefs-enums.md'), output)
+
+// write functions to files
 for (const functionName of Object.keys(similarNames)) {
   // create a single documentation file for each group of similar names
   let output = ''
-  similarNames[functionName].forEach(similarName => {
+  for (const similarName of similarNames[functionName]) {
     const template = `{{#identifier name="${similarName}"}}{{>docs}}{{/identifier}}`
     // console.log(`rendering ${similarName}, template: ${template}`)
-    output += jsdoc2md.renderSync({ data: templateData, template })
+    const rendered = await jsdoc2md.render({ data: templateData, template })
+    // replace links to typedefs and enums (#(.*)) with links to /geos-wasm/typedefs-enums/typedefs-enums.html#(.*)
+    output += rendered.replace(/\(#(.*?)\)/g, '(/typedefs-enums/typedefs-enums.html#$1)')
     // add a horizontal rule between each function
     output += '\n---\n'
-  })
+  }
+
   fs.writeFileSync(path.resolve(outputDir, `${functionName}.md`), output)
 }
 

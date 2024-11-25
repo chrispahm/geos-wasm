@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSMinimumWidth"></a>
 
-## geos.GEOSMinimumWidth ⇒ <code>number</code> ⏏
-Computes the minimum width of a geometry.
-The minimum width is the smallest distance between two parallel lines that contain the geometry.
+## geos.GEOSMinimumWidth ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns a linestring geometry which represents the minimum diameter of the geometry. The minimum diameter is defined to be the width of the smallest band that contains the geometry, where a band is a strip of the plane defined by two parallel lines. This can be thought of as the smallest hole that the geometry can be moved through, with a single rotation.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a LineString containing two points defining the minimum width line segment, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the LEC. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The input geometry pointer. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSMinimumWidth_r"></a>
 
-## geos.GEOSMinimumWidth\_r ⇒ <code>number</code> ⏏
-Computes the minimum width of a geometry in a reentrant way.
-The minimum width is the smallest distance between two parallel lines that contain the geometry.
+## geos.GEOSMinimumWidth\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns a linestring geometry which represents the minimum diameter of the geometry. The minimum diameter is defined to be the width of the smallest band that contains the geometry, where a band is a strip of the plane defined by two parallel lines. This can be thought of as the smallest hole that the geometry can be moved through, with a single rotation.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a LineString containing two points defining the minimum width line segment, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the LEC. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The context handle pointer to use for error reporting. |
-| g | <code>number</code> | The input geometry pointer. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---

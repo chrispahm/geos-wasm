@@ -3,44 +3,29 @@
 ## geos.GEOSArea ⇒ <code>number</code> ⏏
 Calculate the area of a geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 on success, 0 on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#af5eec7e8796b756cf007fd21bb3a88ad  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success, 0 on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
-| area | <code>number</code> | A pointer to be filled in with area result |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| area | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with area result |
 
-**Example**  
-```js
-const reader = geos.GEOSWKTReader_create()
-const wkt = 'POLYGON((0 0,0 10,10 10,10 0,0 0))'
-const size = wkt.length + 1
-const wktPtr = geos.Module._malloc(size)
-geos.Module.stringToUTF8(wkt, wktPtr, size)
-const g = geos.GEOSWKTReader_read(reader, wktPtr)
-geos.Module._free(wktPtr)
-const area = geos.Module._malloc(8)
-geos.GEOSArea(g, area)
-const areaValue = geos.Module.getValue(area, 'double')
-console.log(areaValue) // 100
-```
 
 ---
 <a name="exp_module_geos--geos.GEOSArea_r"></a>
 
 ## geos.GEOSArea\_r ⇒ <code>number</code> ⏏
-Calculate the area of a geometry using a custom context handle.
+Calculate the area of a geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 on success, 0 on exception  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success, 0 on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOSContextHandle_t object |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
-| area | <code>number</code> | A pointer to be filled in with area result |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| area | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with area result |
 
 
 ---

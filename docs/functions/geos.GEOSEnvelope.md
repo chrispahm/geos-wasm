@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSEnvelope"></a>
 
-## geos.GEOSEnvelope ⇒ <code>number</code> ⏏
-Computes an envelope (bounding box) of a geometry.
+## geos.GEOSEnvelope ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns minimum rectangular polygon or point that contains the geometry, or an empty point for empty inputs.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A newly allocated geometry pointer representing the envelope, or NULL on exception.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a5d7f5dcbdb489edddbb43374ece97c  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated polygonal envelope or point. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The geometry pointer to compute the envelope of. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to calculate an envelope for |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSEnvelope_r"></a>
 
-## geos.GEOSEnvelope\_r ⇒ <code>number</code> ⏏
-Computes an envelope (bounding box) of a geometry.
+## geos.GEOSEnvelope\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns minimum rectangular polygon or point that contains the geometry, or an empty point for empty inputs.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A newly allocated geometry pointer representing the envelope, or NULL on exception.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a4b1b77abcf0b320bc625129ff5e6d1d6  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated polygonal envelope or point. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The geometry pointer to compute the envelope of. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to calculate an envelope for |
 
 
 ---

@@ -58,15 +58,10 @@ test('2: test error on wrong input type (linestring) for shell', (t) => {
   const holes = null
   const nholes = 0
 
-  // Returns null on exception, wrong input type for shell
-  const polygon = geos.GEOSGeom_createPolygon(shell, holes, nholes)
-  console.log('polygon', polygon)
-  t.ok(polygon === 0)
-
-  // Shouldn't need this
-  if (polygon) {
-    geos.GEOSGeom_destroy(polygon)
-  }
+  // Throws exception, wrong input type for shell
+  t.throws(() => {
+    geos.GEOSGeom_createPolygon(shell, holes, nholes)
+  })
 
   t.end()
 })
@@ -76,17 +71,14 @@ test('3: test error on wrong input type (null) for shell', (t) => {
   const holes = null
 
   // Returns null on exception, wrong input type for shell
-  let polygon = geos.GEOSGeom_createPolygon(shell, holes, 0)
-  t.ok(polygon === 0)
+  t.throws(() => {
+    geos.GEOSGeom_createPolygon(shell, holes, 0)
+  })
 
   // Returns null on exception, wrong input type for shell
-  polygon = geos.GEOSGeom_createPolygon(shell, holes, 1)
-  t.ok(polygon === 0)
-
-  // Shouldn't need this
-  if (polygon) {
-    geos.GEOSGeom_destroy(polygon)
-  }
+  t.throws(() => {
+    geos.GEOSGeom_createPolygon(shell, holes, 1)
+  })
 
   t.end()
 })

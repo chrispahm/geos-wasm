@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSReverse"></a>
 
-## geos.GEOSReverse ⇒ <code>number</code> ⏏
-Reverses the order of the coordinates in a geometry.
+## geos.GEOSReverse ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+For geometries with coordinate sequences, reverses the order of the sequences. Converts CCW rings to CW. Reverses direction of LineStrings.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a geometry with reversed coordinates, or NULL on exception.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1geom_1_1Geometry.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The reversed geometry Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The input geometry pointer, which must be a point, linestring, linearring or polygon. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSReverse_r"></a>
 
-## geos.GEOSReverse\_r ⇒ <code>number</code> ⏏
-Reverses the order of the coordinates in a geometry, using a GEOS context handle.
+## geos.GEOSReverse\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+For geometries with coordinate sequences, reverses the order of the sequences. Converts CCW rings to CW. Reverses direction of LineStrings.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a geometry with reversed coordinates, or NULL on exception.  
-**See**: https://libgeos.org/doxygen/geos__c_8h_source.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The reversed geometry Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| g | <code>number</code> | The input geometry pointer, which must be a point, linestring, linearring or polygon. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---

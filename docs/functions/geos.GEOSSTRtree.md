@@ -1,10 +1,39 @@
+<a name="exp_module_geos--geos.GEOSSTRtree_build"></a>
+
+## geos.GEOSSTRtree\_build ⇒ <code>number</code> ⏏
+Construct an STRtree from items that have been inserted. Once constructed, no more items may be inserted into the tree. Functions that require a constructed tree will build it automatically, so there is no need to call GEOSSTRtree_build unless it is desired to explicitly construct the tree in a certain section of code or using a certain thread.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success, 0 on error  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to apply the build to |
+
+
+---
+<a name="exp_module_geos--geos.GEOSSTRtree_build_r"></a>
+
+## geos.GEOSSTRtree\_build\_r ⇒ <code>number</code> ⏏
+Construct an STRtree from items that have been inserted. Once constructed, no more items may be inserted into the tree. Functions that require a constructed tree will build it automatically, so there is no need to call GEOSSTRtree_build unless it is desired to explicitly construct the tree in a certain section of code or using a certain thread.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success, 0 on error  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to apply the build to |
+
+
+---
 <a name="exp_module_geos--geos.GEOSSTRtree_create"></a>
 
-## geos.GEOSSTRtree\_create ⇒ <code>number</code> ⏏
-Creates a GEOS STRTree, a spatial index for quickly querying geometries by their bounding boxes.
+## geos.GEOSSTRtree\_create ⇒ [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) ⏏
+Create a new GEOSSTRtree using the Sort-Tile-Recursive algorithm (STRtree) for two-dimensional spatial data.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the GEOS STRTree object.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) - a pointer to the created tree  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -14,241 +43,247 @@ Creates a GEOS STRTree, a spatial index for quickly querying geometries by their
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_create_r"></a>
 
-## geos.GEOSSTRtree\_create\_r ⇒ <code>number</code> ⏏
-Creates a GEOS STRTree with a context handle, a spatial index for quickly querying geometries by their bounding boxes.
+## geos.GEOSSTRtree\_create\_r ⇒ [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) ⏏
+Create a new GEOSSTRtree using the Sort-Tile-Recursive algorithm (STRtree) for two-dimensional spatial data.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the GEOS STRTree object.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) - a pointer to the created tree  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The context handle to use for error reporting and memory management. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
 | nodeCapacity | <code>number</code> | The maximum number of child nodes that a node may have. The minimum recommended capacity value is 4. If unsure, use a default node capacity of 10. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_destroy"></a>
 
-## geos.GEOSSTRtree\_destroy ⏏
-Destroys an STRtree and frees its memory.
+## geos.GEOSSTRtree\_destroy ⇒ <code>null</code> ⏏
+Frees all the memory associated with a GEOSSTRtree. Only the tree is freed. The geometries and items fed into GEOSSTRtree_insert() are not owned by the tree, and are still left to the caller to manage.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | A pointer to a GEOSSTRtree object. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to destroy |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_destroy_r"></a>
 
-## geos.GEOSSTRtree\_destroy\_r ⏏
-Destroys a GEOSSTRtree spatial index.
+## geos.GEOSSTRtree\_destroy\_r ⇒ <code>null</code> ⏏
+Frees all the memory associated with a GEOSSTRtree. Only the tree is freed. The geometries and items fed into GEOSSTRtree_insert() are not owned by the tree, and are still left to the caller to manage.
 
-**Kind**: Exported member  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a1323e  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| tree | <code>number</code> | The GEOSSTRtree pointer to destroy. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to destroy |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_insert"></a>
 
-## geos.GEOSSTRtree\_insert ⏏
-Inserts a geometry into a GEOS STRTree, along with an associated item that can be retrieved later.
+## geos.GEOSSTRtree\_insert ⇒ <code>null</code> ⏏
+Insert an item into an GEOSSTRtree
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | A pointer to the GEOS STRTree object. |
-| g | <code>number</code> | A pointer to the GEOS geometry object to insert. |
-| item | <code>number</code> | A pointer to the item associated with the geometry. This can be any arbitrary data that can be cast to a void pointer. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree in which the item should be inserted |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeometry whose envelope corresponds to the extent of 'item'. As of GEOS 3.9, this envelope will be copied into the tree and the caller may destroy g while the tree is still in use. Before GEOS 3.9, g must be retained until the tree is destroyed. |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item to insert into the tree |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_insert_r"></a>
 
-## geos.GEOSSTRtree\_insert\_r ⏏
-Inserts a geometry into a GEOS STRTree with a context handle, along with an associated item that can be retrieved later.
+## geos.GEOSSTRtree\_insert\_r ⇒ <code>null</code> ⏏
+Insert an item into an GEOSSTRtree
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The context handle to use for error reporting and memory management. |
-| tree | <code>number</code> | A pointer to the GEOS STRTree object. |
-| g | <code>number</code> | A pointer to the GEOS geometry object to insert. |
-| item | <code>number</code> | A pointer to the item associated with the geometry. This can be any arbitrary data that can be cast to a void pointer. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree in which the item should be inserted |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeometry whose envelope corresponds to the extent of 'item'. As of GEOS 3.9, this envelope will be copied into the tree and the caller may destroy g while the tree is still in use. Before GEOS 3.9, g must be retained until the tree is destroyed. |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item to insert into the tree |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_iterate"></a>
 
-## geos.GEOSSTRtree\_iterate ⏏
-Iterates over every item in an STRtree.
+## geos.GEOSSTRtree\_iterate ⇒ <code>null</code> ⏏
+Iterate over all items in the GEOSSTRtree. This will not cause the tree to be constructed.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | A pointer to a GEOSSTRtree object. |
-| callback | <code>function</code> | A function to be called for each item in the tree. |
-| userdata | <code>any</code> | An optional user data to be passed to the callback function. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree over which to iterate |
+| callback | [<code>GEOSQueryCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSQueryCallback) | a function to be executed for each item in the tree. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | payload to pass the callback function. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_iterate_r"></a>
 
-## geos.GEOSSTRtree\_iterate\_r ⏏
-Iterates over every item in an STRtree using a reentrant context handle.
+## geos.GEOSSTRtree\_iterate\_r ⇒ <code>null</code> ⏏
+Iterate over all items in the GEOSSTRtree. This will not cause the tree to be constructed.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOSpointer  context handle. |
-| tree | <code>number</code> | A pointer to a GEOSSTRtree object. |
-| callback | <code>function</code> | A function to be called for each item in the tree. |
-| userdata | <code>any</code> | An optional user data to be passed to the callback function. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree over which to iterate |
+| callback | [<code>GEOSQueryCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSQueryCallback) | a function to be executed for each item in the tree. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | payload to pass the callback function. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_nearest"></a>
 
 ## geos.GEOSSTRtree\_nearest ⇒ <code>number</code> ⏏
-Returns the item whose extent is nearest to the given geometry's envelope.
+Returns the nearest item in the GEOSSTRtree to the supplied geometry. All items in the tree MUST be of type GEOSGeometry. If this is not the case, use GEOSSTRtree_nearest_generic() instead. The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the nearest item, or NULL if the tree is empty.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | The GEOSSTRtree to query. |
-| geom | <code>number</code> | The GEOSGeometry whose envelope is used for querying. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to search |
+| geom | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the geometry with which the tree should be queried |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_nearest_generic"></a>
 
-## geos.GEOSSTRtree\_nearest\_generic ⇒ <code>any</code> ⏏
-Returns the item whose extent is nearest to the given item's envelope, using a custom distance function.
+## geos.GEOSSTRtree\_nearest\_generic ⇒ <code>number</code> ⏏
+Returns the nearest item in the GEOSSTRtree to the supplied item The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>any</code> - A pointer to the nearest item, or NULL if the tree is empty or an error occurred.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - a const pointer to the nearest item in the tree to item, or NULL in case of exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | The GEOSSTRtree to query. |
-| item | <code>any</code> | The item whose envelope is used for querying. |
-| itemEnvelope | <code>number</code> | The GEOSGeometry representing the envelope of the item. |
-| distancefn | <code>function</code> | The GEOSDistanceCallback function to compute the distance between two items. |
-| userdata | <code>any</code> | An optional pointer to user data that is passed to the distance function. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree to search |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item with which the tree should be queried |
+| itemEnvelope | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeometry having the bounding box of 'item' |
+| distancefn | [<code>GEOSDistanceCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSDistanceCallback) | a function that can compute the distance between two items in the STRtree. The function should return zero in case of error, and should store the computed distance to the location pointed to by the distance argument. The computed distance between two items must not exceed the Cartesian distance between their envelopes. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | optional pointer to arbitrary data; will be passed to distancefn each time it is called. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_nearest_generic_r"></a>
 
-## geos.GEOSSTRtree\_nearest\_generic\_r ⇒ <code>any</code> ⏏
-Returns the item whose extent is nearest to the given item's envelope, using a custom distance function.
+## geos.GEOSSTRtree\_nearest\_generic\_r ⇒ <code>number</code> ⏏
+Returns the nearest item in the GEOSSTRtree to the supplied item The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>any</code> - A pointer to the nearest item, or NULL if the tree is empty or an error occurred.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - a const pointer to the nearest item in the tree to item, or NULL in case of exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| tree | <code>number</code> | The GEOSSTRtree to query. |
-| item | <code>any</code> | The item whose envelope is used for querying. |
-| itemEnvelope | <code>number</code> | The GEOSGeometry representing the envelope of the item. |
-| distancefn | <code>function</code> | The GEOSDistanceCallback function to compute the distance between two items. |
-| userdata | <code>any</code> | An optional pointer to user data that is passed to the distance function and the callback function. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree to search |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item with which the tree should be queried |
+| itemEnvelope | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeometry having the bounding box of 'item' |
+| distancefn | [<code>GEOSDistanceCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSDistanceCallback) | a function that can compute the distance between two items in the STRtree. The function should return zero in case of error, and should store the computed distance to the location pointed to by the distance argument. The computed distance between two items must not exceed the Cartesian distance between their envelopes. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | optional pointer to arbitrary data; will be passed to distancefn each time it is called. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_nearest_r"></a>
 
 ## geos.GEOSSTRtree\_nearest\_r ⇒ <code>number</code> ⏏
-Returns the item whose extent is nearest to the given geometry's envelope, using a custom distance function.
+Returns the nearest item in the GEOSSTRtree to the supplied geometry. All items in the tree MUST be of type GEOSGeometry. If this is not the case, use GEOSSTRtree_nearest_generic() instead. The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the nearest item, or NULL if the tree is empty or an error occurred.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| tree | <code>number</code> | The GEOSSTRtree to query. |
-| geom | <code>number</code> | The GEOSGeometry whose envelope is used for querying. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to search |
+| geom | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the geometry with which the tree should be queried |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_query"></a>
 
-## geos.GEOSSTRtree\_query ⏏
-Queries a GEOS STRTree for all geometries whose bounding boxes intersect with the given geometry's bounding box, and calls a callback function for each matching pair.
+## geos.GEOSSTRtree\_query ⇒ <code>null</code> ⏏
+Query a GEOSSTRtree for items intersecting a specified envelope. The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | A pointer to the GEOS STRTree object. |
-| g | <code>number</code> | A pointer to the GEOS geometry object to query with. |
-| callback | <code>function</code> | A function that takes two void pointers as arguments: one for the item associated with the tree geometry, and one for the user data passed to this function. The callback function is called for each matching pair of geometries in the tree and the query geometry. The callback function should return 1 to continue the query or 0 to stop it. |
-| userdata | <code>any</code> | A pointer to any user data that needs to be passed to the callback function. This can be any arbitrary data that can be cast to a void pointer. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to search |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeomety from which a query envelope will be extracted |
+| callback | [<code>GEOSQueryCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSQueryCallback) | a function to be executed for each item in the tree whose envelope intersects the envelope of 'g'. The callback function should take two parameters: a void pointer representing the located item in the tree, and a void userdata pointer. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | an optional pointer to pe passed to callback as an argument |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_query_r"></a>
 
-## geos.GEOSSTRtree\_query\_r ⏏
-Queries the tree for all items whose extents intersect the given geometry's envelope and applies an
-item visitor function to them.
+## geos.GEOSSTRtree\_query\_r ⇒ <code>null</code> ⏏
+Query a GEOSSTRtree for items intersecting a specified envelope. The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| tree | <code>number</code> | The GEOSSTRtree to query. |
-| g | <code>number</code> | The GEOSGeometry whose envelope is used for querying. |
-| callback | <code>number</code> | The GEOSQueryCallback function to apply to the items found. |
-| userdata | <code>number</code> | An optional pointer to user data that is passed to the callback function. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the GEOSSTRtree to search |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | a GEOSGeomety from which a query envelope will be extracted |
+| callback | [<code>GEOSQueryCallback</code>](/typedefs-enums/typedefs-enums.html#GEOSQueryCallback) | a function to be executed for each item in the tree whose envelope intersects the envelope of 'g'. The callback function should take two parameters: a void pointer representing the located item in the tree, and a void userdata pointer. |
+| userdata | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | an optional pointer to pe passed to callback as an argument |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_remove"></a>
 
 ## geos.GEOSSTRtree\_remove ⇒ <code>number</code> ⏏
-Removes an item from an STRtree that has a matching geometry and user data.
+Removes an item from the GEOSSTRtree The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the item was found and removed, 0 otherwise.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 0 if the item was not removed; 1 if the item was removed; 2 if an exception occurred  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| tree | <code>number</code> | A pointer to a GEOSSTRtree object. |
-| g | <code>number</code> | A pointer to a GEOSGeometry object representing the envelope of the item to be removed. |
-| item | <code>any</code> | The user data of the item to be removed. |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree from which to remove an item |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the envelope of the item to remove |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item to remove |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSTRtree_remove_r"></a>
 
 ## geos.GEOSSTRtree\_remove\_r ⇒ <code>number</code> ⏏
-Removes an item from an STRtree that has a matching geometry and user data using a reentrant context handle.
+Removes an item from the GEOSSTRtree The tree will automatically be constructed if necessary, after which no more items may be added.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the item was found and removed, 0 otherwise.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 0 if the item was not removed; 1 if the item was removed; 2 if an exception occurred  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOSpointer  context handle. |
-| tree | <code>number</code> | A pointer to a GEOSSTRtree object. |
-| g | <code>number</code> | A pointer to a GEOSGeometry object representing the envelope of the item to be removed. |
-| item | <code>any</code> | The user data of the item to be removed. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| tree | [<code>GEOSSTRtree</code>](/typedefs-enums/typedefs-enums.html#GEOSSTRtree) | the STRtree from which to remove an item |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the envelope of the item to remove |
+| item | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | the item to remove |
 
 
 ---

@@ -1,29 +1,31 @@
 <a name="exp_module_geos--geos.GEOSSetSRID"></a>
 
-## geos.GEOSSetSRID ⏏
-Sets the Spatial Reference System ID (SRID) of a geometry.
+## geos.GEOSSetSRID ⇒ <code>null</code> ⏏
+Set the "spatial reference id" (SRID) for this geometry.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOSGeometry object. |
-| SRID | <code>number</code> | The SRID value to set. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| SRID | <code>number</code> | SRID number or 0 for unknown SRID. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSetSRID_r"></a>
 
-## geos.GEOSSetSRID\_r ⏏
-Sets the Spatial Reference System ID (SRID) of a geometry in a thread-safe manner.
+## geos.GEOSSetSRID\_r ⇒ <code>null</code> ⏏
+Set the "spatial reference id" (SRID) for this geometry.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOSContextHandle_t object. |
-| g | <code>number</code> | A pointer to a GEOSGeometry object. |
-| SRID | <code>number</code> | The SRID value to set. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| SRID | <code>number</code> | SRID number or 0 for unknown SRID. |
 
 
 ---

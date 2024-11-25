@@ -1,205 +1,128 @@
 <a name="exp_module_geos--geos.GEOSPolygonize"></a>
 
-## geos.GEOSPolygonize ⇒ <code>number</code> ⏏
+## geos.GEOSPolygonize ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
 Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
 
-All types of Geometry are accepted as input; the constituent linework is extracted as the edges to be polygonized.
-
-The edges must be correctly noded; that is, they must only meet at their endpoints and not overlap anywhere. If your edges are not already noded, run them through GEOSUnaryUnion() first. Polygonization will accept incorrectly noded input but will not form polygons from non-noded edges, and reports them as errors.
-
-The Polygonizer reports the following kinds of errors:
-
-- Dangles - edges which have one or both ends which are not incident on another edge endpoint
-- Cut Edges - edges which are connected at both ends but which do not form part of a polygon
-- Invalid Ring Lines - edges which form rings which are invalid (e.g. the component lines contain a self-intersection)
-Errors are reported to output parameters "cuts", "dangles" and "invalid" (if not-null). Formed polygons are returned as a collection. NULL is returned on exception. All returned geometries must be destroyed by caller.
-
-The GEOSPolygonize_valid() variant allows extracting only polygons which form a valid polygonal result. The set of extracted polygons is guaranteed to be edge-disjoint. This is useful when it is known that the input lines form a valid polygonal geometry (which may include holes or nested polygons).
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the polygonized geometry, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a9d98e448d3b846d591c726d1c0000d25  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geoms | <code>number</code> | A pointer to an array of pointers to GEOS geometry objects representing line segments. |
-| ngeoms | <code>number</code> | The number of geometries in the array. |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngeoms | <code>number</code> | Size of the geoms array. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonize_full"></a>
 
-## geos.GEOSPolygonize\_full ⇒ <code>number</code> ⏏
-Polygonizes a set of Geometrys which contain linework that
-represents the edges of a planar graph.
-All types of Geometry are accepted as input; the constituent
-linework is extracted as the edges to be polygonized.
-The processed edges must be correctly noded; that is, they must only meet
-at their endpoints. The Polygonizer will run on incorrectly noded input
-but will not form polygons from non-noded edges, and will report them as errors.
+## geos.GEOSPolygonize\_full ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform the polygonization as GEOSPolygonize() and return the polygonal result as well as all extra outputs.
 
-The Polygonizer reports the follow kinds of errors:
-
-- Dangles - edges which have one or both ends which are not incident on another edge endpoint
-- Cut Edges - edges which are connected at both ends but which do not form part of a polygon
-- Invalid Ring Lines - edges which form rings which are invalid
-  (e.g. the component lines contain a self-intersection)
-
-The returned geometry is a collection containing valid polygonal geometry.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - a pointer to a collection containing the polygons formed by the polygonization  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a0f0a7f5c9a3b6d7f9b4d1c8e2a0d4f5a  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal valid output Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| input | <code>number</code> | a pointer to an array of Geometrys |
-| cuts | <code>number</code> | if non-null, will be set to a pointer to a collection containing the cut edges found during polygonization |
-| dangles | <code>number</code> | if non-null, will be set to a pointer to a collection containing the dangle edges found during polygonization |
-| invalidRings | <code>number</code> | if non-null, will be set to a pointer to a collection containing the invalid ring lines found during polygonization |
+| input | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A single geometry with all the input lines to polygonize. |
+| cuts | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold "cut edges", connected on both ends but not part of output. Caller must free. |
+| dangles | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold "dangles", connected one end but not part of output. Caller must free. |
+| invalid | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold invalid outputs, polygons formed but not valid. Caller must free. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonize_full_r"></a>
 
-## geos.GEOSPolygonize\_full\_r ⇒ <code>number</code> ⏏
-Polygonizes a set of Geometrys which contain linework that
-represents the edges of a planar graph.
-All types of Geometry are accepted as input; the constituent
-linework is extracted as the edges to be polygonized.
-The processed edges must be correctly noded; that is, they must only meet
-at their endpoints. The Polygonizer will run on incorrectly noded input
-but will not form polygons from non-noded edges, and will report them as errors.
+## geos.GEOSPolygonize\_full\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform the polygonization as GEOSPolygonize() and return the polygonal result as well as all extra outputs.
 
-The Polygonizer reports the follow kinds of errors:
-
-- Dangles - edges which have one or both ends which are not incident on another edge endpoint
-- Cut Edges - edges which are connected at both ends but which do not form part of a polygon
-- Invalid Ring Lines - edges which form rings which are invalid
-  (e.g. the component lines contain a self-intersection)
-
-The returned geometry is a collection containing valid polygonal geometry.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - a pointer to a collection containing the polygons formed by the polygonization  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a1b2a8f7c3b2b6d9a3a0b4c6e1d0f9e1f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal valid output Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | a pointer to an opaque GEOS context handle object |
-| input | <code>number</code> | a pointer to an array of Geometrys |
-| cuts | <code>number</code> | if non-null, will be set to a pointer to a collection containing the cut edges found during polygonization |
-| dangles | <code>number</code> | if non-null, will be set to a pointer to a collection containing the dangle edges found during polygonization |
-| invalidRings | <code>number</code> | if non-null, will be set to a pointer to a collection containing the invalid ring lines found during polygonization |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| input | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A single geometry with all the input lines to polygonize. |
+| cuts | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold "cut edges", connected on both ends but not part of output. Caller must free. |
+| dangles | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold "dangles", connected one end but not part of output. Caller must free. |
+| invalidRings | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer to hold invalid outputs, polygons formed but not valid. Caller must free. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonize_r"></a>
 
-## geos.GEOSPolygonize\_r ⇒ <code>number</code> ⏏
+## geos.GEOSPolygonize\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
 Polygonizes a set of Geometries which contain linework that represents the edges of a planar graph.
 
-All types of Geometry are accepted as input; the constituent linework is extracted as the edges to be polygonized.
-
-The edges must be correctly noded; that is, they must only meet at their endpoints and not overlap anywhere. If your edges are not already noded, run them through GEOSUnaryUnion() first. Polygonization will accept incorrectly noded input but will not form polygons from non-noded edges, and reports them as errors.
-
-The Polygonizer reports the following kinds of errors:
-
-- Dangles - edges which have one or both ends which are not incident on another edge endpoint
-- Cut Edges - edges which are connected at both ends but which do not form part of a polygon
-- Invalid Ring Lines - edges which form rings which are invalid (e.g. the component lines contain a self-intersection)
-Errors are reported to output parameters "cuts", "dangles" and "invalid" (if not-null). Formed polygons are returned as a collection. NULL is returned on exception. All returned geometries must be destroyed by caller.
-
-The GEOSPolygonize_valid() variant allows extracting only polygons which form a valid polygonal result. The set of extracted polygons is guaranteed to be edge-disjoint. This is useful when it is known that the input lines form a valid polygonal geometry (which may include holes or nested polygons).
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A GeometryCollection containing the polygons formed by the polygonization.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| geoms | <code>number</code> | A pointer to an array of Geometrys containing the linework to polygonize. |
-| ngeoms | <code>number</code> | The number of Geometrys in the array. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngeoms | <code>number</code> | Size of the geoms array. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonize_valid"></a>
 
-## geos.GEOSPolygonize\_valid ⇒ <code>number</code> ⏏
-Polygonizes a set of valid Geometrys which contain linework that
-represents the edges of a planar graph.
-All types of Geometry are accepted as input; the constituent
-linework is extracted as the edges to be polygonized.
-The processed edges must be correctly noded; that is, they must only meet
-at their endpoints. The Polygonizer will run on incorrectly noded input
-but will not form polygons from non-noded edges,
-and will report them as errors.
+## geos.GEOSPolygonize\_valid ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Has the same polygonizing behavior as GEOSPolygonize(), but returns a result which is a valid polygonal geometry. The result will not contain any edge-adjacent elements.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A GeometryCollection containing the polygons formed by the polygonization.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geoms | <code>number</code> | A pointer to an array of valid Geometrys containing the linework to polygonize. |
-| ngeoms | <code>number</code> | The number of valid Geometrys in the array. |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngeoms | <code>number</code> | Size of the geoms array. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonize_valid_r"></a>
 
-## geos.GEOSPolygonize\_valid\_r ⇒ <code>string</code> ⏏
-Polygonizes a set of valid Geometrys which contain linework that
-represents the edges of a planar graph, using a GEOS context handle.
-All types of Geometry are accepted as input; the constituent
-linework is extracted as the edges to be polygonized.
-The processed edges must be correctly noded; that is, they must only meet
-at their endpoints. The Polygonizer will run on incorrectly noded input
-but will not form polygons from non-noded edges,
-and will report them as errors.
+## geos.GEOSPolygonize\_valid\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Has the same polygonizing behavior as GEOSPolygonize(), but returns a result which is a valid polygonal geometry. The result will not contain any edge-adjacent elements.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A GeometryCollection containing the polygons formed by the polygonization.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| geoms | <code>string</code> | An array of valid Geometrys containing the linework to polygonize. |
-| ngeoms | <code>number</code> | The number of valid Geometrys in the array. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngems | <code>number</code> | Size of the geoms array. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonizer_getCutEdges"></a>
 
-## geos.GEOSPolygonizer\_getCutEdges ⇒ <code>string</code> ⏏
-Gets the list of line segments forming the boundary between
-inside and outside portions of a set of Geometrys which contain linework that
-represents the edges of a planar graph.
+## geos.GEOSPolygonizer\_getCutEdges ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform the polygonization as GEOSPolygonize() but return only the "cut edges", the linear features that are connected at both ends, do not participate in the final polygon.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A MultiLineString containing the boundary segments.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The "cut edges" Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geoms | <code>string</code> | An array of Geometrys containing the linework to process. |
-| ngeoms | <code>number</code> | The number of Geometrys in the array. |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngeoms | <code>number</code> | Size of the geoms array. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPolygonizer_getCutEdges_r"></a>
 
-## geos.GEOSPolygonizer\_getCutEdges\_r ⇒ <code>string</code> ⏏
-Gets the list of line segments forming the boundary between
-inside and outside portions of a set of Geometrys which contain linework that
-represents the edges of a planar graph, using a GEOS context handle.
+## geos.GEOSPolygonizer\_getCutEdges\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform the polygonization as GEOSPolygonize() but return only the "cut edges", the linear features that are connected at both ends, do not participate in the final polygon.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A MultiLineString containing the boundary segments.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The "cut edges" Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| geoms | <code>string</code> | An array of Geometrys containing the linework to process. |
-| ngeoms | <code>number</code> | The number of Geometrys in the array. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| geoms | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Array of linear geometries to polygons. Caller retains ownersihp of both array container and objects. |
+| ngeoms | <code>number</code> | Size of the geoms array. |
 
 
 ---

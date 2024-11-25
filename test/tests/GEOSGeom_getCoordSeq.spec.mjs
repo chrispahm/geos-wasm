@@ -34,9 +34,7 @@ test('2: test error on getting coordseq from polygon', (t) => {
   const wktPtr = geos.Module._malloc(size)
   geos.Module.stringToUTF8(wkt, wktPtr, size)
   const input_ = geos.GEOSGeomFromWKT(wktPtr)
-  const seq = geos.GEOSGeom_getCoordSeq(input_)
-
-  t.ok(seq === 0) // can't get seq from Polygon
+  t.throws(() => geos.GEOSGeom_getCoordSeq(input_), 'IllegalArgumentException: Geometry must be a Point or LineString')
 
   t.end()
 })

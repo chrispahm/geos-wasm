@@ -1,94 +1,105 @@
-<a name="exp_module_geos--geos.GEOSWKTReader_create"></a>
-
-## geos.GEOSWKTReader\_create ⇒ <code>number</code> ⏏
-Creates a new GEOSWKTReader object.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOSWKTReader object, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html  
-
----
 <a name="exp_module_geos--geos.GEOSWKTReader_create_r"></a>
 
-## geos.GEOSWKTReader\_create\_r ⇒ <code>number</code> ⏏
-Creates a new GEOSWKTReader object. Thread-safe version.
+## geos.GEOSWKTReader\_create\_r ⇒ [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) ⏏
+Allocate a new GEOSWKTReader.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOSWKTReader object, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) - a new reader. Caller must free with GEOSWKTReader_destroy()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOSContextHandle object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTReader_destroy"></a>
 
-## geos.GEOSWKTReader\_destroy ⏏
-Destroys a GEOSWKTReader object and releases its memory.
+## geos.GEOSWKTReader\_destroy ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSWKTReader.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| reader | <code>number</code> | A pointer to a GEOSWKTReader object. |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | The reader to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTReader_destroy_r"></a>
 
 ## geos.GEOSWKTReader\_destroy\_r ⇒ <code>null</code> ⏏
-Destroys a GEOSWKTReader object.
+Free the memory associated with a GEOSWKTReader.
 
-**Kind**: Exported member  
-**See**: [GEOSWKTReader_destroy_r](https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | The reader to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTReader_read"></a>
 
-## geos.GEOSWKTReader\_read ⇒ <code>number</code> ⏏
-Reads a WKT string and returns a GEOSGeometry object.
+## geos.GEOSWKTReader\_read ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Use a reader to parse the well-known text representation of a geometry, and return an allocated geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to the GEOSGeometry object or null if an error occurred.  
-**Throws**:
-
-- <code>ParseError</code> If the WKT string is invalid or cannot be parsed.
-
-**See**: [GEOSWKTReader_read_r](https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry, caller to free with GEOSGeom_destroy())  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
-| wkt | <code>number</code> | The WKT string pointer to read. |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | A WKT reader object, caller retains ownership |
+| wkt | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | The WKT string to parse, caller retains ownership |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTReader_read_r"></a>
 
-## geos.GEOSWKTReader\_read\_r ⇒ <code>number</code> ⏏
-Reads a WKT string and returns a GEOSGeometry object.
+## geos.GEOSWKTReader\_read\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Use a reader to parse the well-known text representation of a geometry, and return an allocated geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to the GEOSGeometry object or null if an error occurred.  
-**Throws**:
-
-- <code>ParseError</code> If the WKT string is invalid or cannot be parsed.
-
-**See**: [GEOSWKTReader_read_r](https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry, caller to free with GEOSGeom_destroy())  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| reader | <code>number</code> | The pointer to the GEOSWKTReader object. |
-| wkt | <code>number</code> | The WKT string pointer to read. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | A WKT reader object, caller retains ownership |
+| wkt | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | The WKT string to parse, caller retains ownership |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKTReader_setFixStructure"></a>
+
+## geos.GEOSWKTReader\_setFixStructure ⇒ <code>null</code> ⏏
+Set the reader to automatically repair structural errors in the input (currently just unclosed rings) while reading.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | A WKT reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKTReader_setFixStructure_r"></a>
+
+## geos.GEOSWKTReader\_setFixStructure\_r ⇒ <code>null</code> ⏏
+Set the reader to automatically repair structural errors in the input (currently just unclosed rings) while reading.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKTReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTReader) | A WKT reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
 
 
 ---

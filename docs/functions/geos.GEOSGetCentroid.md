@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSGetCentroid"></a>
 
-## geos.GEOSGetCentroid ⇒ <code>number</code> ⏏
-Computes the centroid point of a geometry.
+## geos.GEOSGetCentroid ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns a point at the center of mass of the input.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - - The centroid point geometry, or null if an error occurred or the input is empty.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1Centroid.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A point at the center of mass of the input Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The geometry to use. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSGetCentroid_r"></a>
 
-## geos.GEOSGetCentroid\_r ⇒ <code>number</code> ⏏
-Computes the centroid point of a geometry.
+## geos.GEOSGetCentroid\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns a point at the center of mass of the input.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - - The centroid point geometry, or null if an error occurred or the input is empty.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1Centroid.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A point at the center of mass of the input Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The geometry to use. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---

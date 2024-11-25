@@ -1,95 +1,93 @@
 <a name="exp_module_geos--geos.GEOSUnion"></a>
 
-## geos.GEOSUnion ⇒ <code>number</code> ⏏
-Computes a union of two geometries.
+## geos.GEOSUnion ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of two geometries A and B: the set of points that fall in A or within B.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the resulting geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to the first geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| ga | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry A |
+| gb | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry B |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnionCascaded"></a>
 
-## geos.GEOSUnionCascaded ⇒ <code>number</code> ⏏
-Computes the union of a collection of polygonal geometries using an optimized algorithm.
+## ~~geos.GEOSUnionCascaded ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏~~
+***Deprecated***
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to a GEOS geometry representing the union, or NULL on error.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CascadedPolygonUnion.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - GEOSGeometry*  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The pointer to a GEOS geometry collection. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnionCascaded_r"></a>
 
-## geos.GEOSUnionCascaded\_r ⇒ <code>number</code> ⏏
-Computes the union of a collection of polygonal geometries using an optimized algorithm.
+## ~~geos.GEOSUnionCascaded\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏~~
+***Deprecated***
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to a GEOS geometry representing the union, or NULL on error.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CascadedPolygonUnion.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - GEOSGeometry*  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The pointer to a GEOS geometry collection. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnionPrec"></a>
 
-## geos.GEOSUnionPrec ⇒ <code>number</code> ⏏
-Computes a union of two geometries using a specified precision model.
+## geos.GEOSUnionPrec ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of two geometries A and B: the set of points that fall in A or within B. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the resulting geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to the first geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
-| gridsize | <code>number</code> | The precision grid size to use. |
+| ga | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | one of the geometries |
+| gb | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the other geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnionPrec_r"></a>
 
-## geos.GEOSUnionPrec\_r ⇒ <code>number</code> ⏏
-Computes a union of two geometries using a specified precision model and context handle.
+## geos.GEOSUnionPrec\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of two geometries A and B: the set of points that fall in A or within B. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the resulting geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
-| gridsize | <code>number</code> | The precision grid size to use. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | one of the geometries |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the other geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnion_r"></a>
 
-## geos.GEOSUnion\_r ⇒ <code>number</code> ⏏
-Computes a union of two geometries using a specified context handle.
+## geos.GEOSUnion\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of two geometries A and B: the set of points that fall in A or within B.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the resulting geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry A |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry B |
 
 
 ---

@@ -24,14 +24,15 @@ test('GEOSRelate', (t) => {
   const geom2 = wktToGeom('POINT (0.5 0.5)')
 
   // Call the GEOSRelate function with the geometries and the matrix pointer
-  const result = geos.GEOSRelate(geom1, geom2)
-
+  const resultStrPtr = geos.GEOSRelate(geom1, geom2)
+  const result = geos.Module.UTF8ToString(resultStrPtr)
   // Check if the matrix is correct
   t.equal(result, '0F2FF1FF2', 'GEOSRelate should return the correct intersection matrix')
 
   // Free the memory allocated for the geometries and the matrix pointer
   geos.GEOSGeom_destroy(geom1)
   geos.GEOSGeom_destroy(geom2)
+  geos.GEOSFree(resultStrPtr)
 
   // End the test
   t.end()

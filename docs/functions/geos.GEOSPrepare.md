@@ -1,465 +1,595 @@
 <a name="exp_module_geos--geos.GEOSPrepare"></a>
 
 ## geos.GEOSPrepare ⇒ <code>number</code> ⏏
-Creates a prepared geometry from a regular geometry.
+Create a Prepared Geometry. The caller retains ownership of the base geometry, and after processing is complete, must free both the prepared and the base geometry. (Ideally, destroy the prepared geometry first, as it has an internal reference to the base geometry.)
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A GEOSPreparedGeometry pointer, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A GEOSGeometry pointer. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The base geometry to wrap in a prepared geometry. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPrepare_r"></a>
 
 ## geos.GEOSPrepare\_r ⇒ <code>number</code> ⏏
-Creates a prepared geometry from a regular geometry, with a context handle.
+Create a Prepared Geometry. The caller retains ownership of the base geometry, and after processing is complete, must free both the prepared and the base geometry. (Ideally, destroy the prepared geometry first, as it has an internal reference to the base geometry.)
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A GEOSPreparedGeometry pointer, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOSContextHandle pointer. |
-| g | <code>number</code> | A GEOSGeometry pointer. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The base geometry to wrap in a prepared geometry. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedContains"></a>
 
 ## geos.GEOSPreparedContains ⇒ <code>number</code> ⏏
-Tests whether a prepared geometry contains another geometry.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is contained.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if prepGeom1 contains geom2, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| prepGeom1 | <code>number</code> | The pointer to the prepared geometry object that is the potential container. |
-| geom2 | <code>number</code> | The pointer to the geometry object that is the potential containee. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedContainsProperly"></a>
 
 ## geos.GEOSPreparedContainsProperly ⇒ <code>number</code> ⏏
-Tests whether a prepared geometry properly contains another geometry. Proper containment means that the test geometry is contained in the interior of the target geometry, and does not intersect its boundary.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is contained properly.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if prepGeom1 properly contains geom2, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| prepGeom1 | <code>number</code> | The pointer to the prepared geometry object that is the potential container. |
-| geom2 | <code>number</code> | The pointer to the geometry object that is the potential containee. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedContainsProperly_r"></a>
 
 ## geos.GEOSPreparedContainsProperly\_r ⇒ <code>number</code> ⏏
-Tests whether a prepared geometry properly contains another geometry. Proper containment means that the test geometry is contained in the interior of the target geometry, and does not intersect its boundary.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is contained properly.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if prepGeom1 properly contains geom2, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| prepGeom1 | <code>number</code> | The pointer to the prepared geometry object that is the potential container. |
-| geom2 | <code>number</code> | The pointer to the geometry object that is the potential containee. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedContainsXY"></a>
+
+## geos.GEOSPreparedContainsXY ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided point is contained.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedContainsXY_r"></a>
+
+## geos.GEOSPreparedContainsXY\_r ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided point is contained.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedContains_r"></a>
 
 ## geos.GEOSPreparedContains\_r ⇒ <code>number</code> ⏏
-Tests whether a prepared geometry contains another geometry.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is contained.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if prepGeom1 contains geom2, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| prepGeom1 | <code>number</code> | The pointer to the prepared geometry object that is the potential container. |
-| geom2 | <code>number</code> | The pointer to the geometry object that is the potential containee. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCoveredBy"></a>
 
 ## geos.GEOSPreparedCoveredBy ⇒ <code>number</code> ⏏
-Tests whether a geometry is covered by another geometry.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is covered by.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if g2 is covered by pg1, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to a prepared geometry. |
-| g2 | <code>number</code> | A pointer to a geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCoveredBy_r"></a>
 
 ## geos.GEOSPreparedCoveredBy\_r ⇒ <code>number</code> ⏏
-Tests whether a geometry is covered by another geometry, using a GEOS context handle.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is covered by.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if g2 is covered by pg1, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle. |
-| pg1 | <code>number</code> | A pointer to a prepared geometry. |
-| g2 | <code>number</code> | A pointer to a geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCovers"></a>
 
 ## geos.GEOSPreparedCovers ⇒ <code>number</code> ⏏
-Tests whether a geometry covers another geometry.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry covers.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if pg1 covers g2, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to a prepared geometry. |
-| g2 | <code>number</code> | A pointer to a geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCovers_r"></a>
 
 ## geos.GEOSPreparedCovers\_r ⇒ <code>number</code> ⏏
-Tests whether a geometry covers another geometry, using a GEOS context handle.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry covers.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if pg1 covers g2, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle. |
-| pg1 | <code>number</code> | A pointer to a prepared geometry. |
-| g2 | <code>number</code> | A pointer to a geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCrosses"></a>
 
 ## geos.GEOSPreparedCrosses ⇒ <code>number</code> ⏏
-Tests whether a geometry crosses another geometry.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry crosses.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if pg1 crosses g2, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to a prepared geometry. |
-| g2 | <code>number</code> | A pointer to a geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedCrosses_r"></a>
 
 ## geos.GEOSPreparedCrosses\_r ⇒ <code>number</code> ⏏
-Computes whether the given geometries cross.
+Using a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry crosses.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries cross, 0 if they do not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| pg1 | <code>number</code> | The first prepared geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDisjoint"></a>
 
 ## geos.GEOSPreparedDisjoint ⇒ <code>number</code> ⏏
-Computes whether the given geometries are disjoint.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is disjoint.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are disjoint, 0 if they are not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | The first prepared geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDisjoint_r"></a>
 
 ## geos.GEOSPreparedDisjoint\_r ⇒ <code>number</code> ⏏
-Computes whether the given geometries are disjoint.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is disjoint.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are disjoint, 0 if they are not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| pg1 | <code>number</code> | The first prepared geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDistance"></a>
 
 ## geos.GEOSPreparedDistance ⇒ <code>number</code> ⏏
-Computes the distance between two geometries using a prepared geometry for the first argument.
+Use a GEOSPreparedGeometry do a high performance calculation to find the distance between the prepared and provided geometry. Useful for situations where one geometry is large and static and needs to be tested against a large number of other geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the distance was computed successfully, 0 otherwise, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to the prepared geometry to compute the distance from. |
-| g2 | <code>number</code> | A pointer to the geometry to compute the distance to. |
-| dist | <code>number</code> | A pointer to a double variable to store the distance result. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to store the result in |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDistanceWithin"></a>
 
 ## geos.GEOSPreparedDistanceWithin ⇒ <code>number</code> ⏏
-Tests whether the distance between a prepared geometry and another geometry is within a specified distance.
+Use a GEOSPreparedGeometry do a high performance calculation to find whether the prepared and provided geometry are within the given max distance. Useful for situations where one geometry is large and static and needs to be tested against a large number of other geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are within the distance, 0 if not, or -1 on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a6f5a0b7f6f9e3a9c4b0b8a3c1a4d4e6d  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| prep | <code>number</code> | A pointer to a GEOS prepared geometry object. |
-| g2 | <code>number</code> | A pointer to a GEOS geometry object. |
-| dist | <code>number</code> | A double value representing the distance threshold. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| dist | <code>number</code> | The max distance |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDistanceWithin_r"></a>
 
 ## geos.GEOSPreparedDistanceWithin\_r ⇒ <code>number</code> ⏏
-Computes the distance between a prepared geometry and another geometry, and checks if it is within a given tolerance.
+Use a GEOSPreparedGeometry do a high performance calculation to find whether the prepared and provided geometry are within the given max distance. Useful for situations where one geometry is large and static and needs to be tested against a large number of other geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are within the given distance of each other, 0 if not, or -1 on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a9f7c0b6f9b2c6a0e3f4f5a7d8b9e5d  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ctx | <code>number</code> | A GEOS context handle. |
-| prep | <code>number</code> | A pointer to a prepared GEOS geometry object. |
-| g | <code>number</code> | A pointer to a GEOS geometry object. |
-| tolerance | <code>number</code> | A non-negative distance value. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| dist | <code>number</code> | The max distance |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedDistance_r"></a>
 
 ## geos.GEOSPreparedDistance\_r ⇒ <code>number</code> ⏏
-Computes the distance between two geometries using a prepared geometry for the first argument and a GEOS context handle.
+Use a GEOSPreparedGeometry do a high performance calculation to find the distance between the prepared and provided geometry. Useful for situations where one geometry is large and static and needs to be tested against a large number of other geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the distance was computed successfully, 0 otherwise, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on success  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| pg1 | <code>number</code> | A pointer to the prepared geometry to compute the distance from. |
-| g2 | <code>number</code> | A pointer to the geometry to compute the distance to. |
-| dist | <code>number</code> | A pointer to a double variable to store the distance result. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to store the result in |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedGeom_destroy"></a>
 
-## geos.GEOSPreparedGeom\_destroy ⏏
-Destroys a prepared geometry.
+## geos.GEOSPreparedGeom\_destroy ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSPreparedGeometry. Caller must separately free the base GEOSGeometry used to create the prepared geometry.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A GEOSPreparedGeometry pointer. |
+| g | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | Prepared geometry to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedGeom_destroy_r"></a>
 
-## geos.GEOSPreparedGeom\_destroy\_r ⏏
-Destroys a prepared geometry object.
+## geos.GEOSPreparedGeom\_destroy\_r ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSPreparedGeometry. Caller must separately free the base GEOSGeometry used to create the prepared geometry.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| prepGeom | <code>number</code> | The pointer to the prepared geometry object to be destroyed. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | Prepared geometry to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedIntersects"></a>
 
 ## geos.GEOSPreparedIntersects ⇒ <code>number</code> ⏏
-Computes whether the given geometries intersect.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry intersects.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries intersect, 0 if they do not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | The first prepared geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedIntersectsXY"></a>
+
+## geos.GEOSPreparedIntersectsXY ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided point intersects.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedIntersectsXY_r"></a>
+
+## geos.GEOSPreparedIntersectsXY\_r ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided point intersects.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| x | <code>number</code> | x coordinate of point to test |
+| y | <code>number</code> | y coordinate of point to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedIntersects_r"></a>
 
 ## geos.GEOSPreparedIntersects\_r ⇒ <code>number</code> ⏏
-Computes whether the given geometries intersect.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry intersects.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries intersect, 0 if they do not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| pg1 | <code>number</code> | The first prepared geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedNearestPoints"></a>
 
-## geos.GEOSPreparedNearestPoints ⇒ <code>number</code> ⏏
-Computes the nearest points of two geometries.
+## geos.GEOSPreparedNearestPoints ⇒ [<code>GEOSCoordSequence</code>](/typedefs-enums/typedefs-enums.html#GEOSCoordSequence) ⏏
+Use a GEOSPreparedGeometry do a high performance calculation to find the nearest points between the prepared and provided geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a coordinate sequence containing the nearest points, or NULL on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSCoordSequence</code>](/typedefs-enums/typedefs-enums.html#GEOSCoordSequence) - A coordinate sequence containing the nearest points, or NULL on exception. The first point in the sequence is from the prepared geometry, and the seconds is from the other argument.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedNearestPoints_r"></a>
 
-## geos.GEOSPreparedNearestPoints\_r ⇒ <code>number</code> ⏏
-Computes the nearest points of two geometries using a GEOS context handle.
+## geos.GEOSPreparedNearestPoints\_r ⇒ [<code>GEOSCoordSequence</code>](/typedefs-enums/typedefs-enums.html#GEOSCoordSequence) ⏏
+Use a GEOSPreparedGeometry do a high performance calculation to find the nearest points between the prepared and provided geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a coordinate sequence containing the nearest points, or NULL on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSCoordSequence</code>](/typedefs-enums/typedefs-enums.html#GEOSCoordSequence) - A coordinate sequence containing the nearest points, or NULL on exception. The first point in the sequence is from the prepared geometry, and the seconds is from the other argument.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedOverlaps"></a>
 
 ## geos.GEOSPreparedOverlaps ⇒ <code>number</code> ⏏
-Tests whether two geometries overlap.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry overlaps.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries overlap, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedOverlaps_r"></a>
 
 ## geos.GEOSPreparedOverlaps\_r ⇒ <code>number</code> ⏏
-Tests whether two geometries overlap, using a context handle.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry overlaps.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries overlap, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The context handle.pointer |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedRelate"></a>
+
+## geos.GEOSPreparedRelate ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Use a GEOSPreparedGeometry do a high-performance calculation of the DE9IM relationship between the prepared and provided geometry.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - The DE9IM string  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedRelatePattern"></a>
+
+## geos.GEOSPreparedRelatePattern ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high-performance calculation of the DE9IM relationship between the prepared and provided geometry, and compare the relationship to the provided DE9IM pattern. Returns true if the patterns are consistent and false otherwise.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| imPattern | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | The DE9IM pattern to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedRelatePattern_r"></a>
+
+## geos.GEOSPreparedRelatePattern\_r ⇒ <code>number</code> ⏏
+Use a GEOSPreparedGeometry do a high-performance calculation of the DE9IM relationship between the prepared and provided geometry, and compare the relationship to the provided DE9IM pattern. Returns true if the patterns are consistent and false otherwise.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| im | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | The DE9IM pattern to test |
+
+
+---
+<a name="exp_module_geos--geos.GEOSPreparedRelate_r"></a>
+
+## geos.GEOSPreparedRelate\_r ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Use a GEOSPreparedGeometry do a high-performance calculation of the DE9IM relationship between the prepared and provided geometry.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - The DE9IM string  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedTouches"></a>
 
 ## geos.GEOSPreparedTouches ⇒ <code>number</code> ⏏
-Tests whether two geometries touch at one or more points.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry touches.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries touch, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedTouches_r"></a>
 
 ## geos.GEOSPreparedTouches\_r ⇒ <code>number</code> ⏏
-Tests whether two geometries touch at one or more points, using a context handle.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry touches.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries touch, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The context handle.pointer |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedWithin"></a>
 
 ## geos.GEOSPreparedWithin ⇒ <code>number</code> ⏏
-Tests whether the first geometry is within the second geometry.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is within.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the first geometry is within the second geometry, 0 if not, -1 on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pg1 | <code>number</code> | A pointer to the first prepared geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSPreparedWithin_r"></a>
 
 ## geos.GEOSPreparedWithin\_r ⇒ <code>number</code> ⏏
-Tests whether a geometry is within another geometry.
+Use a GEOSPreparedGeometry do a high performance calculation of whether the provided geometry is within.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if pg1 is within g2, 0 otherwise, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| pg1 | <code>number</code> | A pointer to the prepared geometry to test. |
-| g2 | <code>number</code> | A pointer to the geometry to test against. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| pg1 | [<code>GEOSPreparedGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSPreparedGeometry) | The prepared geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---

@@ -20,7 +20,7 @@ const wkt1 = 'POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'
 const wkt2 = 'POLYGON ((0.5 0.5, 1.5 0.5, 1.5 1.5, 0.5 1.5, 0.5 0.5))'
 
 // Define the expected output WKT string
-const expected = 'POLYGON ((1 0, 0 0, 0 1, 0 1, 0 0, 1 0, 1 0))'
+const expected = 'POLYGON ((1 0, 0 0, 0 1, 0.5 1, 0.5 0.5, 1 0.5, 1 0))'
 
 // Create a reader and a writer for WKT conversion
 const reader = geos.GEOSWKTReader_create()

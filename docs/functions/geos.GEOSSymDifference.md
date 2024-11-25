@@ -1,64 +1,64 @@
 <a name="exp_module_geos--geos.GEOSSymDifference"></a>
 
-## geos.GEOSSymDifference ⇒ <code>number</code> ⏏
-Computes the symmetric difference of two geometries.
+## geos.GEOSSymDifference ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the symmetric difference of two geometries A and B: the set of points that fall in A but not within B and the set of points that fall in B but not in A.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOSGeometry object representing the symmetric difference, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the symmetric difference. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to a GEOSGeometry object. |
-| g2 | <code>number</code> | A pointer to another GEOSGeometry object. |
+| ga | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry A |
+| gb | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry B |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSymDifferencePrec"></a>
 
-## geos.GEOSSymDifferencePrec ⇒ <code>number</code> ⏏
-Computes the symmetric difference of two geometries with precision control.
+## geos.GEOSSymDifferencePrec ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the symmetric difference of two geometries A and B: the set of points that fall in A but not within B and the set of points that fall in B but not in A. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOSGeometry object representing the symmetric difference, or NULL on exception or invalid input.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the symmetric difference. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to a GEOSGeometry object. |
-| g2 | <code>number</code> | A pointer to another GEOSGeometry object. |
-| gridSize | <code>number</code> | The size of the grid used for snapping coordinates. Must be positive and non-zero. |
+| ga | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | one of the geometries |
+| gb | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the other geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSymDifferencePrec_r"></a>
 
-## geos.GEOSSymDifferencePrec\_r ⇒ <code>number</code> ⏏
-Computes a symmetric difference of two geometries using a specified precision model.
+## geos.GEOSSymDifferencePrec\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the symmetric difference of two geometries A and B: the set of points that fall in A but not within B and the set of points that fall in B but not in A. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the resulting geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the symmetric difference. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry. |
-| g2 | <code>number</code> | A pointer to the second geometry. |
-| gridsize | <code>number</code> | The precision grid size to use. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | one of the geometries |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the other geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSymDifference_r"></a>
 
-## geos.GEOSSymDifference\_r ⇒ <code>number</code> ⏏
-Computes the symmetric difference of two geometries in a thread-safe manner.
+## geos.GEOSSymDifference\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the symmetric difference of two geometries A and B: the set of points that fall in A but not within B and the set of points that fall in B but not in A.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOSGeometry object representing the symmetric difference, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the symmetric difference. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOSContextHandle_t object. |
-| g1 | <code>number</code> | A pointer to a GEOSGeometry object. |
-| g2 | <code>number</code> | A pointer to another GEOSGeometry object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry A |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | geometry B |
 
 
 ---

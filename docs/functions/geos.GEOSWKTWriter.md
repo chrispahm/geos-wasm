@@ -1,247 +1,227 @@
-<a name="exp_module_geos--geos.GEOSWKTWriter_create"></a>
-
-## geos.GEOSWKTWriter\_create ⇒ <code>number</code> ⏏
-Creates a GEOSWKTWriter object.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to the GEOSWKTWriter object or null if an error occurred.  
-**See**: [GEOSWKTWriter_create](https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e)  
-
----
 <a name="exp_module_geos--geos.GEOSWKTWriter_create_r"></a>
 
-## geos.GEOSWKTWriter\_create\_r ⇒ <code>number</code> ⏏
-Creates a GEOSWKTWriter object.
+## geos.GEOSWKTWriter\_create\_r ⇒ [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) ⏏
+Allocate a new GEOSWKTReader.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to the GEOSWKTWriter object or null if an error occurred.  
-**See**: [GEOSWKTWriter_create_r](https://libgeos.org/doxygen/geos__c_8h.html#a0a0f7c1b9f6a9f7c3c4d1b5a7b6f9e2e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) - a new reader. Caller must free with GEOSWKTReader_destroy()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_destroy"></a>
 
-## geos.GEOSWKTWriter\_destroy ⏏
-Destroys a GEOSWKTWriter object.
+## geos.GEOSWKTWriter\_destroy ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSWKTWriter.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | The pointer to the GEOSWKTWriter object to be destroyed. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | The writer to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_destroy_r"></a>
 
-## geos.GEOSWKTWriter\_destroy\_r ⏏
-Destroys a GEOSWKTWriter object using a context handle.
+## geos.GEOSWKTWriter\_destroy\_r ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSWKTWriter.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The pointer to the GEOSContextHandle_t object. |
-| writer | <code>number</code> | The pointer to the GEOSWKTWriter object to be destroyed. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | The writer to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_getOutputDimension"></a>
 
 ## geos.GEOSWKTWriter\_getOutputDimension ⇒ <code>number</code> ⏏
-Get the output dimension of a GEOSWKTWriter object.
+Reads the current output dimension from a GEOSWKTWriter.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The output dimension, either 2 or 3.  
-**See**: https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - The current dimension.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | A pointer to a GEOSWKTWriter object. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_getOutputDimension_r"></a>
 
 ## geos.GEOSWKTWriter\_getOutputDimension\_r ⇒ <code>number</code> ⏏
-Get the output dimension of a GEOSWKTWriter object (thread-safe version).
+Reads the current output dimension from a GEOSWKTWriter.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The output dimension, either 2 or 3.  
-**See**: https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - The current dimension.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle. |
-| writer | <code>number</code> | A pointer to a GEOSWKTWriter object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setOld3D"></a>
 
-## geos.GEOSWKTWriter\_setOld3D ⏏
-Set whether to use the old-style 3D WKT representation (Z inside brackets).
+## geos.GEOSWKTWriter\_setOld3D ⇒ <code>null</code> ⏏
+Sets the format for 3D outputs. The "old 3D" format does not include a Z dimension tag, e.g. "POINT (1 2 3)", except for XYM, e.g. "POINT M (1 2 3)". Geometries with XYZM coordinates do not add any dimensionality tags, e.g. "POINT (1 2 3 4)".
 
-**Kind**: Exported member  
-**See**: https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | A pointer to a GEOSWKTWriter object. |
-| useOld3D | <code>number</code> | A boolean value indicating whether to use the old-style 3D WKT representation. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| useOld3D | <code>number</code> | True to use the old format, false is the default. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setOld3D_r"></a>
 
-## geos.GEOSWKTWriter\_setOld3D\_r ⏏
-Set whether to use the old-style 3D WKT representation (Z inside brackets) (thread-safe version).
+## geos.GEOSWKTWriter\_setOld3D\_r ⇒ <code>null</code> ⏏
+Sets the format for 3D outputs. The "old 3D" format does not include a Z dimension tag, e.g. "POINT (1 2 3)", except for XYM, e.g. "POINT M (1 2 3)". Geometries with XYZM coordinates do not add any dimensionality tags, e.g. "POINT (1 2 3 4)".
 
-**Kind**: Exported member  
-**See**: https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle. |
-| writer | <code>number</code> | A pointer to a GEOSWKTWriter object. |
-| useOld3D | <code>number</code> | A boolean value indicating whether to use the old-style 3D WKT representation. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| useOld3D | <code>number</code> | True to use the old format, false is the default. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setOutputDimension"></a>
 
-## geos.GEOSWKTWriter\_setOutputDimension ⏏
-Sets the output dimension on a GEOSWKTWriter.
-If the specified dimension is 2, any input geometries
-that have a higher dimension will be flattened to 2D
-by dropping their z value. If the specified dimension is 3,
-any input geometries that have a lower dimension will be
-promoted to 3D by appending a z value of 0.
+## geos.GEOSWKTWriter\_setOutputDimension ⇒ <code>null</code> ⏏
+Set the output dimensionality of the writer. Either 2, 3, or 4 dimensions. Default since GEOS 3.12 is 4.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | The GEOSWKTWriter object. |
-| dim | <code>number</code> | The output dimension (2 or 3). |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| dim | <code>number</code> | The dimensionality desired. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setOutputDimension_r"></a>
 
-## geos.GEOSWKTWriter\_setOutputDimension\_r ⏏
-Sets the output dimension on a GEOSWKTWriter.
-If the specified dimension is 2, any input geometries
-that have a higher dimension will be flattened to 2D
-by dropping their z value. If the specified dimension is 3,
-any input geometries that have a lower dimension will be
-promoted to 3D by appending a z value of 0.
+## geos.GEOSWKTWriter\_setOutputDimension\_r ⇒ <code>null</code> ⏏
+Set the output dimensionality of the writer. Either 2, 3, or 4 dimensions. Default since GEOS 3.12 is 4.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| writer | <code>number</code> | The GEOSWKTWriter object. |
-| dim | <code>number</code> | The output dimension (2 or 3). |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| dim | <code>number</code> | The dimensionality desired. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setRoundingPrecision"></a>
 
-## geos.GEOSWKTWriter\_setRoundingPrecision ⏏
+## geos.GEOSWKTWriter\_setRoundingPrecision ⇒ <code>null</code> ⏏
 Sets the number places after the decimal to output in WKT.
-Default 16.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | The GEOSWKTWriter object. |
-| precision | <code>number</code> | The number of decimal places. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| precision | <code>number</code> | The desired precision, default 16. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setRoundingPrecision_r"></a>
 
-## geos.GEOSWKTWriter\_setRoundingPrecision\_r ⏏
+## geos.GEOSWKTWriter\_setRoundingPrecision\_r ⇒ <code>null</code> ⏏
 Sets the number places after the decimal to output in WKT.
-Default 16.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| writer | <code>number</code> | The GEOSWKTWriter object. |
-| precision | <code>number</code> | The number of decimal places. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| precision | <code>number</code> | The desired precision, default 16. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setTrim"></a>
 
-## geos.GEOSWKTWriter\_setTrim ⏏
-Sets whether the output WKT string should be trimmed of unnecessary spaces.
+## geos.GEOSWKTWriter\_setTrim ⇒ <code>null</code> ⏏
+Sets the number trimming option on a GEOSWKTWriter. With trim set to 1, the writer will strip trailing 0's from the output coordinates. With 1 (trimming enabled), big and small absolute coordinates will use scientific notation, otherwise positional notation is used; see GEOS_printDouble for details. With 0 (trimming disabled), all coordinates will be padded with 0's out to the rounding precision. Default since GEOS 3.12 is with trim set to 1 for 'on'.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | The pointer to the GEOSWKTWriter object. |
-| trim | <code>number</code> | A boolean value indicating whether to trim or not. 1 for true, 0 for false. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| trim | <code>number</code> | The trimming behaviour to set, 1 for 'on', 0 for 'off' |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_setTrim_r"></a>
 
-## geos.GEOSWKTWriter\_setTrim\_r ⏏
-Sets the number trimming option on a GEOSWKTWriter.
-With trim set to 1, the writer will strip trailing 0's from
-the output coordinates. With 0, all coordinates will be
-padded with 0's out to the rounding precision.
+## geos.GEOSWKTWriter\_setTrim\_r ⇒ <code>null</code> ⏏
+Sets the number trimming option on a GEOSWKTWriter. With trim set to 1, the writer will strip trailing 0's from the output coordinates. With 1 (trimming enabled), big and small absolute coordinates will use scientific notation, otherwise positional notation is used; see GEOS_printDouble for details. With 0 (trimming disabled), all coordinates will be padded with 0's out to the rounding precision. Default since GEOS 3.12 is with trim set to 1 for 'on'.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| writer | <code>number</code> | The GEOSWKTWriter object. |
-| trim | <code>number</code> | The trimming option (0 or 1). |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| trim | <code>number</code> | The trimming behaviour to set, 1 for 'on', 0 for 'off' |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_write"></a>
 
-## geos.GEOSWKTWriter\_write ⇒ <code>string</code> ⏏
-Converts a GEOSGeometry object to a WKT string.
+## geos.GEOSWKTWriter\_write ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Writes out the well-known text representation of a geometry, using the trim, rounding and dimension settings of the writer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The WKT representation pointer of the geometry, or null on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - A newly allocated string containing the WKT output or NULL on exception. Caller must free with GEOSFree()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| writer | <code>number</code> | The pointer to the GEOSWKTWriter object. |
-| g | <code>number</code> | The pointer to the GEOSGeometry object to be converted. |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKTWriter_write_r"></a>
 
-## geos.GEOSWKTWriter\_write\_r ⇒ <code>string</code> ⏏
-Converts a GEOSGeometry object to a WKT string using a context handle.
+## geos.GEOSWKTWriter\_write\_r ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Writes out the well-known text representation of a geometry, using the trim, rounding and dimension settings of the writer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The WKT representation pointer of the geometry, or null on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - A newly allocated string containing the WKT output or NULL on exception. Caller must free with GEOSFree()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The pointer to the GEOSContextHandle_t object. |
-| writer | <code>number</code> | The pointer to the GEOSWKTWriter object. |
-| g | <code>number</code> | The pointer to the GEOSGeometry object to be converted. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| writer | [<code>GEOSWKTWriter</code>](/typedefs-enums/typedefs-enums.html#GEOSWKTWriter) | A GEOSWKTWriter. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---

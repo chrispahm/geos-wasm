@@ -1,29 +1,29 @@
 <a name="exp_module_geos--geos.GEOS_setWKBOutputDims"></a>
 
-## geos.GEOS\_setWKBOutputDims ⇒ <code>number</code> ⏏
-Set the output dimension of WKB geometries.
+## ~~geos.GEOS\_setWKBOutputDims ⇒ <code>number</code> ⏏~~
+***Deprecated***
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The previous output dimension.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - int  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| newDims | <code>number</code> | The new output dimension (2 or 3). |
+| newDims | <code>number</code> | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOS_setWKBOutputDims_r"></a>
 
-## geos.GEOS\_setWKBOutputDims\_r ⇒ <code>number</code> ⏏
-Set the output dimension of WKB geometries in a given context.
+## ~~geos.GEOS\_setWKBOutputDims\_r ⇒ <code>number</code> ⏏~~
+***Deprecated***
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The previous output dimension.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - int  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| newDims | <code>number</code> | The new output dimension (2 or 3). |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| newDims | <code>number</code> | - |
 
 
 ---

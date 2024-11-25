@@ -1,33 +1,31 @@
 <a name="exp_module_geos--geos.GEOSSimplify"></a>
 
-## geos.GEOSSimplify ⇒ <code>number</code> ⏏
-Simplifies a Geometry using the standard Douglas-Peucker algorithm.
+## geos.GEOSSimplify ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Apply the Douglas/Peucker algorithm to the coordinate sequences of the input geometry. Removes "unnecessary" vertices, vertices that are co-linear within the tolerance distance.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new simplified geometry, or NULL if an exception occurs.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1simplify_1_1DouglasPeuckerSimplifier.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The simplified geometry Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | The input geometry pointer. |
-| tolerance | <code>number</code> | The distance tolerance for the simplification. All vertices in the simplified geometry will be within this distance of the original geometry. The tolerance value must be non-negative. A tolerance value of zero is effectively a no-op. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
+| tolerance | <code>number</code> | The tolerance to apply. Larger tolerance leads to simpler output. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSimplify_r"></a>
 
-## geos.GEOSSimplify\_r ⇒ <code>number</code> ⏏
-Simplifies a Geometry using the standard Douglas-Peucker algorithm.
+## geos.GEOSSimplify\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Apply the Douglas/Peucker algorithm to the coordinate sequences of the input geometry. Removes "unnecessary" vertices, vertices that are co-linear within the tolerance distance.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new simplified geometry, or NULL if an exception occurs.  
-**See**: https://docs.rs/geos-sys/1.0.10/geos_sys/fn.GEOSSimplify_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The simplified geometry Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| g | <code>number</code> | The input geometry pointer. |
-| tolerance | <code>number</code> | The distance tolerance for the simplification. All vertices in the simplified geometry will be within this distance of the original geometry. The tolerance value must be non-negative. A tolerance value of zero is effectively a no-op. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
+| tolerance | <code>number</code> | The tolerance to apply. Larger tolerance leads to simpler output. |
 
 
 ---

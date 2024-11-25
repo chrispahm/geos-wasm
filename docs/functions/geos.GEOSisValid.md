@@ -1,101 +1,93 @@
 <a name="exp_module_geos--geos.GEOSisValid"></a>
 
 ## geos.GEOSisValid ⇒ <code>number</code> ⏏
-Tests whether a geometry is valid according to the OGC rules for geometry validity.
+Check the validity of the provided geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is valid, 0 if it is invalid, or -1 if an error occurred.  
-**See**: https://docs.rs/geos-sys/1.0.10/geos_sys/fn.GEOSisValid.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | The geometry to test. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisValidDetail"></a>
 
 ## geos.GEOSisValidDetail ⇒ <code>number</code> ⏏
-Returns a valid_detail row, containing a boolean stating if a geometry is valid,
-a varchar stating a reason why it is invalid and a geometry pointing out where it is invalid.
+In one step, calculate and return the validity, the human readable validity reason and a point at which validity rules are broken. Caller has the responsibility to destroy 'reason' with GEOSFree() and 'location' with GEOSGeom_destroy()
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is valid, 0 if it is invalid, or -1 on error  
-**See**: [GEOSisValidDetail](https://libgeos.org/doxygen/geos__c_8h.html#a1f7b2d9e0a7d2e9d7e6f4a7a2f3e5b9d)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 when valid, 0 when invalid, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
-| flags | <code>number</code> | A bitfield for setting options. See [ST_IsValidDetail](https://postgis.net/docs/ST_IsValidDetail.html) for details. |
-| reason | <code>string</code> | A pointer to store the null-terminated string describing the validity of the geometry |
-| location | <code>number</code> | A pointer to store the GEOSGeometry object indicating the location of invalidity |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| flags | <code>number</code> | A value from the GEOSValidFlags enum |
+| reason | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer in which the reason string will be places |
+| location | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A pointer in which the location GEOSGeometry will be placed |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisValidDetail_r"></a>
 
 ## geos.GEOSisValidDetail\_r ⇒ <code>number</code> ⏏
-Returns a valid_detail row, containing a boolean stating if a geometry is valid,
-a varchar stating a reason why it is invalid and a geometry pointing out where it is invalid. Thread-safe version.
+In one step, calculate and return the validity, the human readable validity reason and a point at which validity rules are broken. Caller has the responsibility to destroy 'reason' with GEOSFree() and 'location' with GEOSGeom_destroy()
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is valid, 0 if it is invalid, or -1 on error  
-**See**: [GEOSisValidDetail_r](https://libgeos.org/doxygen/geos__c_8h.html#a1f7b2d9e0a7d2e9d7e6f4a7a2f3e5b9d)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 when valid, 0 when invalid, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
-| flags | <code>number</code> | A bitfield for setting options. See [ST_IsValidDetail](https://postgis.net/docs/ST_IsValidDetail.html) for details. |
-| reason | <code>string</code> | A pointer to store the null-terminated string describing the validity of the geometry |
-| location | <code>number</code> | A pointer to store the GEOSGeometry object indicating the location of invalidity |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
+| flags | <code>number</code> | A value from the GEOSValidFlags enum |
+| reason | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer in which the reason string will be places |
+| location | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A pointer in which the location GEOSGeometry will be placed |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisValidReason"></a>
 
-## geos.GEOSisValidReason ⇒ <code>string</code> ⏏
-Returns text stating if a geometry is valid, or if invalid a reason why.
+## geos.GEOSisValidReason ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Return the human readable reason a geometry is invalid, "Valid Geometry" string otherwise, or NULL on exception.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A null-terminated string describing the validity of the geometry  
-**See**: [GEOSisValidReason](https://libgeos.org/doxygen/geos__c_8h.html#a0f3a7b9f9c6b5a1d0c2f6c8e3a4d4b5e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - A string with the reason, NULL on exception. Caller must GEOSFree() their result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisValidReason_r"></a>
 
-## geos.GEOSisValidReason\_r ⇒ <code>string</code> ⏏
-Returns text stating if a geometry is valid, or if invalid a reason why. Thread-safe version.
+## geos.GEOSisValidReason\_r ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Return the human readable reason a geometry is invalid, "Valid Geometry" string otherwise, or NULL on exception.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A null-terminated string describing the validity of the geometry  
-**See**: [GEOSisValidReason_r](https://libgeos.org/doxygen/geos__c_8h.html#a0f3a7b9f9c6b5a1d0c2f6c8e3a4d4b5e)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - A string with the reason, NULL on exception. Caller must GEOSFree() their result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle |
-| g | <code>number</code> | A pointer to a GEOSGeometry object |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSisValid_r"></a>
 
 ## geos.GEOSisValid\_r ⇒ <code>number</code> ⏏
-Tests whether a geometry is valid according to the OGC rules for geometry validity.
+Check the validity of the provided geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometry is valid, 0 if it is invalid, or -1 if an error occurred.  
-**See**: https://docs.rs/geos-sys/1.0.10/geos_sys/fn.GEOSisValid_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| geom | <code>number</code> | The geometry to test. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The geometry to test |
 
 
 ---

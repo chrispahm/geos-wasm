@@ -1,31 +1,31 @@
 <a name="exp_module_geos--geos.GEOSOverlaps"></a>
 
 ## geos.GEOSOverlaps ⇒ <code>number</code> ⏏
-Tests if two geometries overlap in their interior points.
+Tests if two geometries share interiors but are neither within nor contained.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - = 1 if true, 0 if false, -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | The first geometry pointer. |
-| g2 | <code>number</code> | The second geometry pointer. |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSOverlaps_r"></a>
 
 ## geos.GEOSOverlaps\_r ⇒ <code>number</code> ⏏
-Tests whether two geometries overlap.
+Tests if two geometries share interiors but are neither within nor contained.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries overlap, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---

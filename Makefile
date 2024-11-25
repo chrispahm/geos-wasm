@@ -1,4 +1,6 @@
-GEOS_VERSION = 3.12.0
+# Read GEOS_VERSION from package.json
+PACKAGE_JSON = package.json
+GEOS_VERSION = $(shell node -e "console.log(require('./package.json').GEOS_VERSION)")
 
 GEOS_URL = "http://download.osgeo.org/geos/geos-$(GEOS_VERSION).tar.bz2"
 
@@ -17,14 +19,42 @@ TYPE_FLAGS = -O3
 endif
 
 # EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s ERROR_ON_UNDEFINED_SYMBOLS=0
-EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions -s
+EMCC_CFLAGS = $(TYPE_FLAGS) -fexceptions
 EMMAKE ?= EMCC_CFLAGS="$(EMCC_CFLAGS)" emmake
 EMCMAKE ?= emcmake
 EMCC ?= CFLAGS="$(EMCC_CFLAGS)" emcc
 EMCONFIGURE ?= CXXFLAGS="$(EMCC_CFLAGS)" CFLAGS="$(EMCC_CFLAGS)" emconfigure
 
+GEOS_EMCC_FLAGS :=
+
+ifeq ($(type), debug)
+GEOS_EMCC_FLAGS += -gsource-map -fsanitize=address
+else
+GEOS_EMCC_FLAGS += -O3 --closure 1
+endif
+
+# GEOS_EMCC_FLAGS += -gsource-map -fsanitize=leak
+# output a single js file instead of a .js and .wasm file
+# this is ~33% larger than the two file output, but it's easier to use
+# in different environments...
+GEOS_EMCC_FLAGS += -s SINGLE_FILE=1 -s ALLOW_TABLE_GROWTH=1
+GEOS_EMCC_FLAGS += -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s FORCE_FILESYSTEM=0
+GEOS_EMCC_FLAGS += -s ALLOW_MEMORY_GROWTH=1 -s DISABLE_EXCEPTION_CATCHING=0
+GEOS_EMCC_FLAGS += -s NODEJS_CATCH_EXIT=0 -s NODEJS_CATCH_REJECTION=0
+GEOS_EMCC_FLAGS += -s WASM=1 -s EXPORT_ES6=1 -s MODULARIZE=1 -s 'EXPORT_NAME="CModule"'
+
 include GEOS_EMCC_FLAGS.mk
 
+GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
+  'addFunction',\
+  'removeFunction',\
+  'setValue',\
+  'getValue',\
+  'ccall',\
+  'cwrap',\
+  'UTF8ToString',\
+  'stringToUTF8'\
+]"
 ########
 # GEOS #
 ########
