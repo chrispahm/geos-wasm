@@ -32,7 +32,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       {
-        text: 'v1 (current)',
+        text: 'v3 (current)',
           items: [
             {
               text: 'Contributing',
@@ -65,8 +65,18 @@ export default defineConfig({
       },
       {
         text: 'API Documentation',
-        items: allFunctions,
-        collapsed: false
+        items: [
+          {
+            text: 'Typedefs and Enums',
+            items: [
+              { text: 'Typedefs', link: '/typedefs-enums/typedefs-enums#typedefs' },
+              { text: 'Enums', link: '/typedefs-enums/typedefs-enums#enums' }
+            ]
+          }, {
+            text: 'Functions',
+            items: allFunctions
+          }
+        ]
       }
     ],
 

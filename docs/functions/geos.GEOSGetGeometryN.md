@@ -1,32 +1,31 @@
 <a name="exp_module_geos--geos.GEOSGetGeometryN"></a>
 
 ## geos.GEOSGetGeometryN ⇒ <code>number</code> ⏏
-Returns a geometry from a collection by index.
+Returns the specified sub-geometry of a collection. For a simple geometry, returns a pointer to the input. Returned object is a pointer to internal storage: it must NOT be destroyed directly.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a newly allocated GEOSGeometry object corresponding to the geometry at index n. The caller is responsible for destroying it. Returns NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOSGeometry object of type GeometryCollection or its subclasses (MultiPoint, MultiLineString, MultiPolygon). |
-| n | <code>number</code> | The index of the geometry to return, starting from 0. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| n | <code>number</code> | Sub-geometry index, zero-based |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSGetGeometryN_r"></a>
 
 ## geos.GEOSGetGeometryN\_r ⇒ <code>number</code> ⏏
-Return the Nth geometry of a collection.
+Returns the specified sub-geometry of a collection. For a simple geometry, returns a pointer to the input. Returned object is a pointer to internal storage: it must NOT be destroyed directly.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A geometry object. Caller must free with GEOSGeom_destroy().
-NULL on exception or if n is out of range.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The input geometry, must be a collection. |
-| n | <code>number</code> | The index of the geometry to return, starting from 0. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| n | <code>number</code> | Sub-geometry index, zero-based |
 
 
 ---

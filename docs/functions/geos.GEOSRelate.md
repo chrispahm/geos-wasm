@@ -1,154 +1,128 @@
 <a name="exp_module_geos--geos.GEOSRelate"></a>
 
-## geos.GEOSRelate ⇒ <code>string</code> ⏏
-Computes a DE-9IM intersection matrix for two geometries.
+## geos.GEOSRelate ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Calculate the DE9IM string for this geometry pair. The result is a 9-character string containing dimension symbols in the set "012F".
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - A string representing the DE-9IM matrix, or NULL on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - DE9IM string. Caller is responsible for freeing with GEOSFree(). NULL on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to the first geometry |
-| g2 | <code>number</code> | A pointer to the second geometry |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelateBoundaryNodeRule"></a>
 
-## geos.GEOSRelateBoundaryNodeRule ⇒ <code>string</code> ⏏
-Computes the DE-9IM intersection matrix for two geometries using a specified Boundary Node Rule.
+## geos.GEOSRelateBoundaryNodeRule ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Calculate the DE9IM string for this geometry pair, using the supplied GEOSRelateBoundaryNodeRules.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - The DE-9IM intersection matrix as a string, or null if an error occurred.  
-**See**: https://docs.rs/geos-sys/2.0.1/geos_sys/fn.GEOSRelateBoundaryNodeRule.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - DE9IM string. Caller is responsible for freeing with GEOSFree(). NULL on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| bnr | <code>number</code> | The Boundary Node Rule to use. One of: 1 (Mod2), 2 (EndPoint), 3 (MultiValentEndPoint), 4 (MonoValentEndPoint). |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
+| bnr | <code>number</code> | A member of the GEOSRelateBoundaryNodeRules enum |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelateBoundaryNodeRule_r"></a>
 
-## geos.GEOSRelateBoundaryNodeRule\_r ⇒ <code>string</code> ⏏
-Computes the DE-9IM intersection matrix for two geometries using a specified Boundary Node Rule.
+## geos.GEOSRelateBoundaryNodeRule\_r ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Calculate the DE9IM string for this geometry pair, using the supplied GEOSRelateBoundaryNodeRules.
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - The DE-9IM intersection matrix as a string, or null if an error occurred.  
-**See**: https://docs.rs/geos-sys/2.0.1/geos_sys/fn.GEOSRelateBoundaryNodeRule_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - DE9IM string. Caller is responsible for freeing with GEOSFree(). NULL on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| bnr | <code>number</code> | The Boundary Node Rule to use. One of: 1 (Mod2), 2 (EndPoint), 3 (MultiValentEndPoint), 4 (MonoValentEndPoint). |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
+| bnr | <code>number</code> | A member of the GEOSRelateBoundaryNodeRules enum |
 
-
----
-<a name="exp_module_geos--geos.GEOSRelateBoundaryNodeRules"></a>
-
-## geos.GEOSRelateBoundaryNodeRules ⏏
-Controls the behavior of the result of GEOSRelate when returning
-DE9IM results for two geometries.
-
-| Name             | Value     |
-| :--------------- | :----------  |
-| GEOSRELATE_BNR_MOD2   | 1         |
-| GEOSRELATE_BNR_OGC   | 1         |
-| GEOSRELATE_BNR_ENDPOINT   | 2         |
-| GEOSRELATE_BNR_MULTIVALENT_ENDPOINT   | 3         |
-| GEOSRELATE_BNR_MONOVALENT_ENDPOINT   | 4         |
-
-**Kind**: Exported member  
 
 ---
 <a name="exp_module_geos--geos.GEOSRelatePattern"></a>
 
 ## geos.GEOSRelatePattern ⇒ <code>number</code> ⏏
-Tests whether two geometries are related according to a given DE-9IM intersection matrix pattern.
+Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern. Returns true if the computed matrix matches the pattern. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are related, 0 if not, 2 on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | A pointer to the first geometry |
-| g2 | <code>number</code> | A pointer to the second geometry |
-| pat | <code>string</code> | A string representing the DE-9IM pattern |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
+| imPattern | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | DE9IM pattern to match |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelatePatternMatch"></a>
 
 ## geos.GEOSRelatePatternMatch ⇒ <code>number</code> ⏏
-Tests whether a DE-9IM intersection matrix matches a given pattern.
+Compare a DE9IM string to a pattern and return true if they are consistent.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the matrix matches the pattern, 0 if not, 2 on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| mat | <code>string</code> | A string representing the DE-9IM matrix |
-| pat | <code>string</code> | A string representing the DE-9IM pattern |
+| intMatrix | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | DE9IM string (contains symbols "012F") |
+| imPattern | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | Pattern to match to (may also contain symbols "T" and "*") |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelatePatternMatch_r"></a>
 
 ## geos.GEOSRelatePatternMatch\_r ⇒ <code>number</code> ⏏
-Tests whether a DE-9IM intersection matrix matches a given pattern in a thread-safe manner.
+Compare a DE9IM string to a pattern and return true if they are consistent.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the matrix matches the pattern, 0 if not, 2 on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle |
-| mat | <code>string</code> | A string representing the DE-9IM matrix |
-| pat | <code>string</code> | A string representing the DE-9IM pattern |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| intMatrix | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | DE9IM string (contains symbols "012F") |
+| imPattern | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | Pattern to match to (may also contain symbols "T" and "*") |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelatePattern_r"></a>
 
 ## geos.GEOSRelatePattern\_r ⇒ <code>number</code> ⏏
-Tests whether two geometries are related according to a given DE-9IM intersection matrix pattern in a thread-safe manner.
+Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern. Returns true if the computed matrix matches the pattern. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the geometries are related, 0 if not, 2 on exception  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3a6f4e9a7f0b8c8d5b4a0c5f6c7e4d3f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOS context handle |
-| g1 | <code>number</code> | A pointer to the first geometry |
-| g2 | <code>number</code> | A pointer to the second geometry |
-| pat | <code>string</code> | A string representing the DE-9IM pattern |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
+| imPattern | [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) | DE9IM pattern to match |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSRelate_r"></a>
 
-## geos.GEOSRelate\_r ⇒ <code>string</code> ⏏
-Computes the DE-9IM intersection matrix for two geometries.
+## geos.GEOSRelate\_r ⇒ [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) ⏏
+Calculate the DE9IM string for this geometry pair. The result is a 9-character string containing dimension symbols in the set "012F".
 
-**Kind**: Exported member  
-**Returns**: <code>string</code> - The DE-9IM intersection matrix as a string, or null if an error occurred.  
-**See**: https://docs.rs/geos-sys/2.0.0/geos_sys/fn.GEOSRelate_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>StringPointer</code>](/typedefs-enums/typedefs-enums.html#StringPointer) - DE9IM string. Caller is responsible for freeing with GEOSFree(). NULL on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | First geometry in pair |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Second geometry in pair |
 
 
 ---

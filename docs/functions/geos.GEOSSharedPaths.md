@@ -1,34 +1,31 @@
 <a name="exp_module_geos--geos.GEOSSharedPaths"></a>
 
-## geos.GEOSSharedPaths ⇒ <code>number</code> ⏏
-Computes a geometry representing the shared paths between two linear geometries.
+## geos.GEOSSharedPaths ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Find paths shared between the two given lineal geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the geometry representing the shared paths between g1 and g2, or NULL on exception.  
-**See**: [https://libgeos.org/doxygen/geos__c_8h.html](https://libgeos.org/doxygen/geos__c_8h.html)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The shared paths Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry. Must be linear. |
-| g2 | <code>number</code> | A pointer to the second geometry. Must be linear. |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSharedPaths_r"></a>
 
-## geos.GEOSSharedPaths\_r ⇒ <code>number</code> ⏏
-Computes a geometry representing the shared paths between two linear geometries using a GEOS context handle.
+## geos.GEOSSharedPaths\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Find paths shared between the two given lineal geometries.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to the geometry representing the shared paths between g1 and g2, or NULL on exception.  
-**See**: [https://libgeos.org/doxygen/geos__c_8h.html](https://libgeos.org/doxygen/geos__c_8h.html)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The shared paths Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry. Must be linear. |
-| g2 | <code>number</code> | A pointer to the second geometry. Must be linear. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
 
 
 ---

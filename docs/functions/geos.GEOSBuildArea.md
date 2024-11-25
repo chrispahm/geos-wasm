@@ -1,35 +1,29 @@
 <a name="exp_module_geos--geos.GEOSBuildArea"></a>
 
-## geos.GEOSBuildArea ⇒ <code>number</code> ⏏
-Creates an areal geometry formed by constituent linework of given geometry.
+## geos.GEOSBuildArea ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform a polygonization using all the linework, assuming that rings contained within rings are empty holes, rather then extra polygons.
 
-Returns null on exception or empty result.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - a pointer to a Geometry (polygon or multipolygon) representing the input's areal geometry  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a0a8f4f9d7e3b9c1a2b6a0f1b5c4a7d0f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | a pointer to an input Geometry (linestring or multilinestring) |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input linework |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSBuildArea_r"></a>
 
-## geos.GEOSBuildArea\_r ⇒ <code>number</code> ⏏
-Creates an areal geometry formed by constituent linework of given geometry.
+## geos.GEOSBuildArea\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Perform a polygonization using all the linework, assuming that rings contained within rings are empty holes, rather then extra polygons.
 
-Returns null on exception or empty result.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - a pointer to a Geometry (polygon or multipolygon) representing the input's areal geometry  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a3e6d7e2a4f9c5b6b2e0d1f3e8a9c1b3d  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The polygonal output Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | a pointer to an opaque GEOS context handle object |
-| g | <code>number</code> | a pointer to an input Geometry (linestring or multilinestring) |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input linework |
 
 
 ---

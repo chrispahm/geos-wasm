@@ -41,7 +41,7 @@
     "build:dev": "rollup -c -w",
     "test": "tape test/tests/*.mjs",
     "benchmark": "node --trace-uncaught test/performance.mjs",
-    "docs:generate": "cd docs && rm -rf ./functions && node generate-md-from-jsdoc.mjs",
+    "docs:generate": "cd docs && rm -rf ./functions && rm -rf ./typedefs-enums && node generate-md-from-jsdoc.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"

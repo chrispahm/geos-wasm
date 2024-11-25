@@ -1,110 +1,68 @@
 <a name="exp_module_geos--geos.GEOSFrechetDistance"></a>
 
 ## geos.GEOSFrechetDistance ⇒ <code>number</code> ⏏
-Computes the Fréchet distance between two geometries.
-The Fréchet distance is a measure of similarity between curves that takes into account
-the location and ordering of the points along the curves.
-It is defined as the minimum length of a leash that connects a dog and its owner who walk along their respective curves,
-without backtracking, from one end to the other end.
+Calculate the Frechet distance between two geometries, a similarity measure for linear features.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
 **Returns**: <code>number</code> - 1 on success, 0 on exception.  
-**See**
-
-- https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
-- https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1distance_1_1DiscreteFrechetDistance.html
-
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| distance | <code>number</code> | A pointer to a double to store the computed distance. |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with distance result |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSFrechetDistanceDensify"></a>
 
 ## geos.GEOSFrechetDistanceDensify ⇒ <code>number</code> ⏏
-Computes the Fréchet distance between two geometries, densifying them by a given fraction.
-The Fréchet distance is a measure of similarity between curves that takes into account
-the location and ordering of the points along the curves.
-It is defined as the minimum length of a leash that connects a dog and its owner who walk along their respective curves,
-without backtracking, from one end to the other end.
-Densifying the geometries involves inserting extra vertices along every line segment so that
-the total length of the segments is increased by a given fraction.
+Calculate the Frechet distance between two geometries, a similarity measure for linear features. The inputs can be densified to provide a more accurate result.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
 **Returns**: <code>number</code> - 1 on success, 0 on exception.  
-**See**
-
-- https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
-- https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1distance_1_1DiscreteFrechetDistance.html
-- https://r-spatial.github.io/sf/reference/geos_measures.html
-
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| densifyFrac | <code>number</code> | The fraction by which to densify each segment. Must be between 0 and 1. |
-| distance | <code>number</code> | A pointer to a double to store the computed distance. |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| densifyFrac | <code>number</code> | The largest % of the overall line length that any given two-point segment should be |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with distance result |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSFrechetDistanceDensify_r"></a>
 
 ## geos.GEOSFrechetDistanceDensify\_r ⇒ <code>number</code> ⏏
-Computes the Fréchet distance between two geometries using a GEOS context handle, densifying them by a given fraction.
-The Fréchet distance is a measure of similarity between curves that takes into account
-the location and ordering of the points along the curves.
-It is defined as the minimum length of a leash that connects a dog and its owner who walk along their respective curves,
-without backtracking, from one end to the other end.
-Densifying the geometries involves inserting extra vertices along every line segment so that
-the total length of the segments is increased by a given fraction.
+Calculate the Frechet distance between two geometries, a similarity measure for linear features. The inputs can be densified to provide a more accurate result.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
 **Returns**: <code>number</code> - 1 on success, 0 on exception.  
-**See**
-
-- https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
-- https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1distance_1_1DiscreteFrechetDistance.html
-- https://r-spatial.github.io/sf/reference/geos_measures.html
-
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| densifyFrac | <code>number</code> | The fraction by which to densify each segment. Must be between 0 and 1. |
-| distance | <code>number</code> | A pointer to a double to store the computed distance. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| densifyFrac | <code>number</code> | The largest % of the overall line length that any given two-point segment should be |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with distance result |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSFrechetDistance_r"></a>
 
 ## geos.GEOSFrechetDistance\_r ⇒ <code>number</code> ⏏
-Computes the Fréchet distance between two geometries using a GEOS context handle.
-The Fréchet distance is a measure of similarity between curves that takes into account
-the location and ordering of the points along the curves.
-It is defined as the minimum length of a leash that connects a dog and its owner who walk along their respective curves,
-without backtracking, from one end to the other end.
+Calculate the Frechet distance between two geometries, a similarity measure for linear features.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
 **Returns**: <code>number</code> - 1 on success, 0 on exception.  
-**See**
-
-- https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
-- https://libgeos.org/doxygen/classgeos_1_1algorithm_1_1distance_1_1DiscreteFrechetDistance.html
-
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
-| distance | <code>number</code> | A pointer to a double to store the computed distance. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| dist | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer to be filled in with distance result |
 
 
 ---

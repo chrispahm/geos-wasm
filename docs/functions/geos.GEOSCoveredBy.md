@@ -1,31 +1,31 @@
 <a name="exp_module_geos--geos.GEOSCoveredBy"></a>
 
 ## geos.GEOSCoveredBy ⇒ <code>number</code> ⏏
-Tests whether the first geometry is covered by the second geometry.
+Tests if geometry g1 is covered by g2, which is the case if every point of g1 lies in g2.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the first geometry is covered by the second geometry, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSCoveredBy_r"></a>
 
 ## geos.GEOSCoveredBy\_r ⇒ <code>number</code> ⏏
-Tests whether the first geometry is covered by the second geometry in a given context.
+Tests if geometry g1 is covered by g2, which is the case if every point of g1 lies in g2.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - 1 if the first geometry is covered by the second geometry, 0 if not, or -1 on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>number</code> - 1 on true, 0 on false, 2 on exception  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | The first geometry. |
-| g2 | <code>number</code> | The second geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Input geometry |
 
 
 ---

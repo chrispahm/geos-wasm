@@ -1,35 +1,33 @@
 <a name="exp_module_geos--geos.GEOSMinimumBoundingCircle"></a>
 
-## geos.GEOSMinimumBoundingCircle ⇒ <code>number</code> ⏏
+## geos.GEOSMinimumBoundingCircle ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
 Returns a geometry which represents the "minimum bounding circle", the smallest circle that contains the input.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the minimum bounding circle, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#af09ef325324bec3c1ccb981db52eec4f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The circle geometry or NULL on exception Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | A pointer to a GEOS geometry object. |
-| radius | <code>number</code> | A pointer to a double that will store the radius of the circle. |
-| center | <code>number</code> | A pointer to a GEOS geometry object that will store the center point of the circle. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
+| radius | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer will be filled with output radius. |
+| center | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer will be filled with output circle center. Caller must free. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSMinimumBoundingCircle_r"></a>
 
-## geos.GEOSMinimumBoundingCircle\_r ⇒ <code>number</code> ⏏
+## geos.GEOSMinimumBoundingCircle\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
 Returns a geometry which represents the "minimum bounding circle", the smallest circle that contains the input.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the minimum bounding circle, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#af09ef325324bec3c1ccb981db52eec4f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The circle geometry or NULL on exception Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOS context handle. |
-| geom | <code>number</code> | A pointer to a GEOS geometry object. |
-| radius | <code>number</code> | A pointer to a double that will store the radius of the circle. |
-| center | <code>number</code> | A pointer to a GEOS geometry object that will store the center point of the circle. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
+| radius | [<code>NumberPointer</code>](/typedefs-enums/typedefs-enums.html#NumberPointer) | Pointer will be filled with output radius. |
+| center | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | Pointer will be filled with output circle center. Caller must free. |
 
 
 ---

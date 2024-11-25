@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSConstrainedDelaunayTriangulation"></a>
 
-## geos.GEOSConstrainedDelaunayTriangulation ⇒ <code>number</code> ⏏
-Computes the Constrained Delaunay Triangulation of a polygon geometry.
+## geos.GEOSConstrainedDelaunayTriangulation ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Return a constrained Delaunay triangulation of the vertices of the given polygon(s). For non-polygonal inputs, returns an empty geometry collection.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the triangulation, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a0f6b9f4c2e8a3b1f7c2a5d0e3c6a7d9f  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| g | <code>number</code> | A pointer to a GEOS geometry object representing the input polygon. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the input geometry whose rings will be used as input |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSConstrainedDelaunayTriangulation_r"></a>
 
-## geos.GEOSConstrainedDelaunayTriangulation\_r ⇒ <code>number</code> ⏏
-Computes the Constrained Delaunay Triangulation of a polygon.
+## geos.GEOSConstrainedDelaunayTriangulation\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Return a constrained Delaunay triangulation of the vertices of the given polygon(s). For non-polygonal inputs, returns an empty geometry collection.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOS geometry object representing the triangulation, or NULL on error.  
-**See**: https://libgeos.org/doxygen/geos__c_8h.html#a4a9f3c0bfbf1f9c6b1a7b0e7a8d4d5c6  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOS context handle. |
-| g | <code>number</code> | A pointer to a GEOS geometry object representing the polygon. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | the input geometry whose rings will be used as input |
 
 
 ---

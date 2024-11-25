@@ -12,14 +12,6 @@
     "link": "/functions/geos.GEOSBoundary.md"
   },
   {
-    "text": "GEOSBufCapStyles",
-    "link": "/functions/geos.GEOSBufCapStyles.md"
-  },
-  {
-    "text": "GEOSBufJoinStyles",
-    "link": "/functions/geos.GEOSBufJoinStyles.md"
-  },
-  {
     "text": "GEOSBuffer",
     "link": "/functions/geos.GEOSBuffer.md"
   },
@@ -54,6 +46,14 @@
   {
     "text": "GEOSCoordSeq",
     "link": "/functions/geos.GEOSCoordSeq.md"
+  },
+  {
+    "text": "GEOSCoverageIsValid",
+    "link": "/functions/geos.GEOSCoverageIsValid.md"
+  },
+  {
+    "text": "GEOSCoverageSimplifyVW",
+    "link": "/functions/geos.GEOSCoverageSimplifyVW.md"
   },
   {
     "text": "GEOSCoverageUnion",
@@ -152,12 +152,20 @@
     "link": "/functions/geos.GEOSGetSRID.md"
   },
   {
+    "text": "GEOSHasM",
+    "link": "/functions/geos.GEOSHasM.md"
+  },
+  {
     "text": "GEOSHasZ",
     "link": "/functions/geos.GEOSHasZ.md"
   },
   {
     "text": "GEOSHausdorffDistance",
     "link": "/functions/geos.GEOSHausdorffDistance.md"
+  },
+  {
+    "text": "GEOSHilbertCode",
+    "link": "/functions/geos.GEOSHilbertCode.md"
   },
   {
     "text": "GEOSInterpolate",
@@ -182,6 +190,10 @@
   {
     "text": "GEOSLineMerge",
     "link": "/functions/geos.GEOSLineMerge.md"
+  },
+  {
+    "text": "GEOSLineSubstring",
+    "link": "/functions/geos.GEOSLineSubstring.md"
   },
   {
     "text": "GEOSMakeValid",
@@ -224,6 +236,10 @@
     "link": "/functions/geos.GEOSOffsetCurve.md"
   },
   {
+    "text": "GEOSOrientPolygons",
+    "link": "/functions/geos.GEOSOrientPolygons.md"
+  },
+  {
     "text": "GEOSOrientationIndex",
     "link": "/functions/geos.GEOSOrientationIndex.md"
   },
@@ -236,16 +252,12 @@
     "link": "/functions/geos.GEOSPointOnSurface.md"
   },
   {
-    "text": "GEOSPolygonHullParameterModes",
-    "link": "/functions/geos.GEOSPolygonHullParameterModes.md"
+    "text": "GEOSPolygonHullSimplify",
+    "link": "/functions/geos.GEOSPolygonHullSimplify.md"
   },
   {
     "text": "GEOSPolygonize",
     "link": "/functions/geos.GEOSPolygonize.md"
-  },
-  {
-    "text": "GEOSPrecisionRules",
-    "link": "/functions/geos.GEOSPrecisionRules.md"
   },
   {
     "text": "GEOSPrepare",
@@ -258,6 +270,10 @@
   {
     "text": "GEOSRelate",
     "link": "/functions/geos.GEOSRelate.md"
+  },
+  {
+    "text": "GEOSRemoveRepeatedPoints",
+    "link": "/functions/geos.GEOSRemoveRepeatedPoints.md"
   },
   {
     "text": "GEOSReverse",
@@ -312,24 +328,8 @@
     "link": "/functions/geos.GEOSUnion.md"
   },
   {
-    "text": "GEOSValidFlags",
-    "link": "/functions/geos.GEOSValidFlags.md"
-  },
-  {
     "text": "GEOSVoronoiDiagram",
     "link": "/functions/geos.GEOSVoronoiDiagram.md"
-  },
-  {
-    "text": "GEOSVoronoiFlags",
-    "link": "/functions/geos.GEOSVoronoiFlags.md"
-  },
-  {
-    "text": "GEOSWKBByteOrders",
-    "link": "/functions/geos.GEOSWKBByteOrders.md"
-  },
-  {
-    "text": "GEOSWKBFlavors",
-    "link": "/functions/geos.GEOSWKBFlavors.md"
   },
   {
     "text": "GEOSWKBReader",
@@ -356,28 +356,20 @@
     "link": "/functions/geos.GEOS_finish_r.md"
   },
   {
-    "text": "GEOS_getWKBByteOrder",
-    "link": "/functions/geos.GEOS_getWKBByteOrder.md"
+    "text": "GEOS_getWKBByteOrder_r",
+    "link": "/functions/geos.GEOS_getWKBByteOrder_r.md"
   },
   {
-    "text": "GEOS_getWKBOutputDims",
-    "link": "/functions/geos.GEOS_getWKBOutputDims.md"
-  },
-  {
-    "text": "GEOS_init_r",
-    "link": "/functions/geos.GEOS_init_r.md"
-  },
-  {
-    "text": "GEOS_interruptCancel",
-    "link": "/functions/geos.GEOS_interruptCancel.md"
+    "text": "GEOS_getWKBOutputDims_r",
+    "link": "/functions/geos.GEOS_getWKBOutputDims_r.md"
   },
   {
     "text": "GEOS_interruptRegisterCallback",
     "link": "/functions/geos.GEOS_interruptRegisterCallback.md"
   },
   {
-    "text": "GEOS_interruptRequest",
-    "link": "/functions/geos.GEOS_interruptRequest.md"
+    "text": "GEOS_printDouble",
+    "link": "/functions/geos.GEOS_printDouble.md"
   },
   {
     "text": "GEOS_setWKBByteOrder",
@@ -406,14 +398,6 @@
   {
     "text": "GEOSisValid",
     "link": "/functions/geos.GEOSisValid.md"
-  },
-  {
-    "text": "GEOSjtsport",
-    "link": "/functions/geos.GEOSjtsport.md"
-  },
-  {
-    "text": "GEOSversion",
-    "link": "/functions/geos.GEOSversion.md"
   },
   {
     "text": "finishGEOS",

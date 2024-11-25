@@ -1,83 +1,58 @@
 {
-  "hash": "71eb308d",
-  "browserHash": "97fe173f",
+  "hash": "cbbe4685",
+  "configHash": "e80cf295",
+  "lockfileHash": "972ed68e",
+  "browserHash": "0b5c5a93",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "10bd6522",
+      "fileHash": "fd158b6c",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
+      "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "a3b44230",
+      "fileHash": "99e1ee3d",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "00417fe4",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/integrations/useFocusTrap": {
+      "src": "../../../../node_modules/@vueuse/integrations/useFocusTrap.mjs",
+      "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
+      "fileHash": "8250dd4a",
+      "needsInterop": false
+    },
+    "vitepress > mark.js/src/vanilla.js": {
+      "src": "../../../../node_modules/mark.js/src/vanilla.js",
+      "file": "vitepress___mark__js_src_vanilla__js.js",
+      "fileHash": "84bfee26",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "3c46337a",
+      "fileHash": "624e3cfa",
       "needsInterop": false
     },
     "@theme/index": {
       "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
       "file": "@theme_index.js",
-      "fileHash": "e5a7cf06",
-      "needsInterop": false
-    },
-    "maplibre-gl": {
-      "src": "../../../../node_modules/maplibre-gl/dist/maplibre-gl.js",
-      "file": "maplibre-gl.js",
-      "fileHash": "08a46f3f",
-      "needsInterop": true
-    },
-    "@turf/bbox": {
-      "src": "../../../../node_modules/@turf/bbox/dist/es/index.js",
-      "file": "@turf_bbox.js",
-      "fileHash": "3c5bf571",
-      "needsInterop": false
-    },
-    "@turf/center": {
-      "src": "../../../../node_modules/@turf/center/dist/es/index.js",
-      "file": "@turf_center.js",
-      "fileHash": "7fc9b876",
-      "needsInterop": false
-    },
-    "@turf/meta": {
-      "src": "../../../../node_modules/@turf/meta/dist/es/index.js",
-      "file": "@turf_meta.js",
-      "fileHash": "40bc95a9",
-      "needsInterop": false
-    },
-    "d3-geo": {
-      "src": "../../../../node_modules/d3-geo/src/index.js",
-      "file": "d3-geo.js",
-      "fileHash": "a21e4db7",
-      "needsInterop": false
-    },
-    "@turf/helpers": {
-      "src": "../../../../node_modules/@turf/helpers/dist/es/index.js",
-      "file": "@turf_helpers.js",
-      "fileHash": "fa855cd3",
+      "fileHash": "be4f1b49",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-MMVC6BQJ": {
-      "file": "chunk-MMVC6BQJ.js"
+    "chunk-LLU7DL6N": {
+      "file": "chunk-LLU7DL6N.js"
     },
-    "chunk-VQFI4SDW": {
-      "file": "chunk-VQFI4SDW.js"
-    },
-    "chunk-HE4C34TC": {
-      "file": "chunk-HE4C34TC.js"
-    },
-    "chunk-V634PGSD": {
-      "file": "chunk-V634PGSD.js"
-    },
-    "chunk-76J2PTFD": {
-      "file": "chunk-76J2PTFD.js"
+    "chunk-LW4I4DCF": {
+      "file": "chunk-LW4I4DCF.js"
     }
   }
 }

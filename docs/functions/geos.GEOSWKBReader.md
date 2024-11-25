@@ -1,117 +1,140 @@
-<a name="exp_module_geos--geos.GEOSWKBReader_create"></a>
-
-## geos.GEOSWKBReader\_create ⇒ <code>number</code> ⏏
-Create a new GEOSWKBReader object.
-
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a newly allocated GEOSWKBReader object.  
-**See**: https://github.com/libgeos/geos/blob/main/capi/geos_c.h.in  
-
----
 <a name="exp_module_geos--geos.GEOSWKBReader_create_r"></a>
 
-## geos.GEOSWKBReader\_create\_r ⇒ <code>number</code> ⏏
-Creates a new WKB reader object.
+## geos.GEOSWKBReader\_create\_r ⇒ [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) ⏏
+Allocate a new GEOSWKBReader.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - - The pointer to the WKB reader object.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) - a new reader. Caller must free with GEOSWKBReader_destroy()  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_destroy"></a>
 
-## geos.GEOSWKBReader\_destroy ⏏
-Destroys a WKB reader object.
+## geos.GEOSWKBReader\_destroy ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSWKBReader.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| reader | <code>number</code> | The pointer to the WKB reader object. |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | The reader to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_destroy_r"></a>
 
-## geos.GEOSWKBReader\_destroy\_r ⏏
-Destroys a WKB reader object using a context handle.
+## geos.GEOSWKBReader\_destroy\_r ⇒ <code>null</code> ⏏
+Free the memory associated with a GEOSWKBReader.
 
-**Kind**: Exported member  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| reader | <code>number</code> | The pointer to the WKB reader object. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | The reader to destroy. |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_read"></a>
 
-## geos.GEOSWKBReader\_read ⇒ <code>number</code> ⏏
-Reads a geometry from a WKB byte buffer.
+## geos.GEOSWKBReader\_read ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Read a geometry from a well-known binary buffer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - - The pointer to the geometry object, or null if an error occurred.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry built from the WKB, or NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| reader | <code>number</code> | The pointer to the WKB reader object. |
-| wkb | <code>string</code> | The WKB byte buffer as a hex string. |
-| size | <code>number</code> | The size of the WKB byte buffer in bytes. |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A GEOSWKBReader |
+| wkb | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer to the buffer to read from |
+| size | <code>number</code> | The number of bytes of data in the buffer |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_readHEX"></a>
 
-## geos.GEOSWKBReader\_readHEX ⇒ <code>number</code> ⏏
-Reads a geometry from a hexadecimal WKB representation.
+## geos.GEOSWKBReader\_readHEX ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Read a geometry from a hex encoded well-known binary buffer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOSGeometry object, or null on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry built from the HEX WKB, or NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| reader | <code>number</code> | A pointer to a GEOSWKBReader object. |
-| hex | <code>string</code> | A hexadecimal string representing the WKB of the geometry. |
-| size | <code>number</code> | The length of the hexadecimal string. |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A GEOSWKBReader |
+| hex | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer to the buffer to read from |
+| size | <code>number</code> | The number of bytes of data in the buffer |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_readHEX_r"></a>
 
-## geos.GEOSWKBReader\_readHEX\_r ⇒ <code>number</code> ⏏
-Reads a geometry from a hexadecimal WKB representation with a context handle.
+## geos.GEOSWKBReader\_readHEX\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Read a geometry from a hex encoded well-known binary buffer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a GEOSGeometry object, or null on error.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry built from the HEX WKB, or NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A GEOSContextHandle_t object. |
-| reader | <code>number</code> | A pointer to a GEOSWKBReader object. |
-| hex | <code>string</code> | A hexadecimal string representing the WKB of the geometry. |
-| size | <code>number</code> | The length of the hexadecimal string. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A GEOSWKBReader |
+| hex | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer to the buffer to read from |
+| size | <code>number</code> | The number of bytes of data in the buffer |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSWKBReader_read_r"></a>
 
-## geos.GEOSWKBReader\_read\_r ⇒ <code>number</code> ⏏
-Reads a geometry from a WKB byte buffer using a context handle.
+## geos.GEOSWKBReader\_read\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Read a geometry from a well-known binary buffer.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - - The pointer to the geometry object, or null if an error occurred.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A GEOSGeometry built from the WKB, or NULL on exception.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | The GEOS context pointer handle. |
-| reader | <code>number</code> | The pointer to the WKB reader object. |
-| wkb | <code>string</code> | The WKB byte buffer as a hex string. |
-| size | <code>number</code> | The size of the WKB byte buffer in bytes. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A GEOSWKBReader |
+| wkb | [<code>Pointer</code>](/typedefs-enums/typedefs-enums.html#Pointer) | A pointer to the buffer to read from |
+| size | <code>number</code> | The number of bytes of data in the buffer |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBReader_setFixStructure"></a>
+
+## geos.GEOSWKBReader\_setFixStructure ⇒ <code>null</code> ⏏
+Set the reader to automatically repair structural errors in the input (currently just unclosed rings) while reading.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A WKB reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
+
+
+---
+<a name="exp_module_geos--geos.GEOSWKBReader_setFixStructure_r"></a>
+
+## geos.GEOSWKBReader\_setFixStructure\_r ⇒ <code>null</code> ⏏
+Set the reader to automatically repair structural errors in the input (currently just unclosed rings) while reading.
+
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: <code>null</code> - void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| reader | [<code>GEOSWKBReader</code>](/typedefs-enums/typedefs-enums.html#GEOSWKBReader) | A WKB reader object, caller retains ownership |
+| doFix | <code>number</code> | Set to 1 to repair, 0 for no repair (default). |
 
 
 ---

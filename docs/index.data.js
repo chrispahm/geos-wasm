@@ -1,13 +1,12 @@
 import fs from 'node:fs'
 
 export default {
-  watch: ['../Makefile'],
+  watch: ['../package.json'],
   load (watchedFiles) {
     return watchedFiles.reduce((version, file) => {
-      const makefileContents = fs.readFileSync(file, 'utf-8')
-      const geosVersion = makefileContents.match(/GEOS_VERSION = (.*)/)[1]
-      version = geosVersion
-      return version
+      const packageJson = fs.readFileSync(file, 'utf-8')
+      const { GEOS_VERSION } = JSON.parse(packageJson)
+      return GEOS_VERSION
     }, '')
   }
 }

@@ -1,64 +1,60 @@
 <a name="exp_module_geos--geos.GEOSUnaryUnion"></a>
 
-## geos.GEOSUnaryUnion ⇒ <code>number</code> ⏏
-Computes the union of all the input geometries.
+## geos.GEOSUnaryUnion ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of all components of a single geometry. Usually used to convert a collection into the smallest set of polygons that cover the same area.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOS geometry representing the union, or NULL on exception.  
-**See**: https://postgis.net/docs/ST_UnaryUnion.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | A pointer to a GEOS geometry. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnaryUnionPrec"></a>
 
-## geos.GEOSUnaryUnionPrec ⇒ <code>number</code> ⏏
-Computes the union of all the input geometries with a specified precision grid size.
+## geos.GEOSUnaryUnionPrec ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of all components of a single geometry. Usually used to convert a collection into the smallest set of polygons that cover the same area. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOS geometry representing the union, or NULL on exception.  
-**See**: https://postgis.net/docs/ST_UnaryUnion.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | A pointer to a GEOS geometry. |
-| gridSize | <code>number</code> | The size of the precision grid to use for snapping. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | input geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnaryUnionPrec_r"></a>
 
-## geos.GEOSUnaryUnionPrec\_r ⇒ <code>number</code> ⏏
-Computes the union of all the input geometries with a specified precision grid size using a GEOS context handle.
+## geos.GEOSUnaryUnionPrec\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of all components of a single geometry. Usually used to convert a collection into the smallest set of polygons that cover the same area. All the vertices of the output geometry must fall on the grid defined by the gridSize, and the output will be a valid geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOS geometry representing the union, or NULL on exception.  
-**See**: https://docs.rs/geos-sys/2.0.3/geos_sys/fn.GEOSUnaryUnionPrec_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOS context handle. |
-| geom | <code>number</code> | A pointer to a GEOS geometry. |
-| gridSize | <code>number</code> | The size of the precision grid to use for snapping. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | input geometry |
+| gridSize | <code>number</code> | the cell size of the precision grid |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSUnaryUnion_r"></a>
 
-## geos.GEOSUnaryUnion\_r ⇒ <code>number</code> ⏏
-Computes the union of all the input geometries using a GEOS context handle.
+## geos.GEOSUnaryUnion\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the union of all components of a single geometry. Usually used to convert a collection into the smallest set of polygons that cover the same area.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOS geometry representing the union, or NULL on exception.  
-**See**: https://docs.rs/geos-sys/2.0.3/geos_sys/fn.GEOSUnaryUnion_r.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the union. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to a GEOS context handle. |
-| geom | <code>number</code> | A pointer to a GEOS geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---

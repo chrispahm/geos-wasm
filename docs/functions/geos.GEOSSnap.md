@@ -1,36 +1,33 @@
 <a name="exp_module_geos--geos.GEOSSnap"></a>
 
-## geos.GEOSSnap ⇒ <code>number</code> ⏏
-Snaps two geometries together with a given tolerance.
+## geos.GEOSSnap ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Snaps the vertices and segments of the first geometry to vertices of the second geometry within the given tolerance.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new snapped geometry, or NULL on exception.  
-**See**: [https://libgeos.org/doxygen/geos__c_8h.html](https://libgeos.org/doxygen/geos__c_8h.html)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The snapped version of the input. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry to snap. |
-| g2 | <code>number</code> | A pointer to the second geometry to snap. |
-| tolerance | <code>number</code> | The snapping tolerance to use, in same units as input geometries. |
+| input | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
+| snap_target | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A geometry to snap the input to |
+| tolerance | <code>number</code> | Snapping tolerance |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSSnap_r"></a>
 
-## geos.GEOSSnap\_r ⇒ <code>number</code> ⏏
-Snaps two geometries together with a given tolerance using a GEOS context handle.
+## geos.GEOSSnap\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Snaps the vertices and segments of the first geometry to vertices of the second geometry within the given tolerance.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new snapped geometry, or NULL on exception.  
-**See**: [https://libgeos.org/doxygen/geos__c_8h.html](https://libgeos.org/doxygen/geos__c_8h.html)  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - The snapped version of the input. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g1 | <code>number</code> | A pointer to the first geometry to snap. |
-| g2 | <code>number</code> | A pointer to the second geometry to snap. |
-| tolerance | <code>number</code> | The snapping tolerance to use, in same units as input geometries. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g1 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | An input geometry |
+| g2 | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | A geometry to snap the input to |
+| tolerance | <code>number</code> | Snapping tolerance |
 
 
 ---

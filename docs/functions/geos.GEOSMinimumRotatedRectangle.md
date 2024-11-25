@@ -1,29 +1,29 @@
 <a name="exp_module_geos--geos.GEOSMinimumRotatedRectangle"></a>
 
-## geos.GEOSMinimumRotatedRectangle ⇒ <code>number</code> ⏏
-Computes the minimum rotated rectangle (MRR) of a geometry. The MRR is similar to an envelope, but not necessarily aligned with coordinate axes. It has minimum area among all rectangles enclosing its input geometry.
+## geos.GEOSMinimumRotatedRectangle ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the minimum rotated rectangular POLYGON which encloses the input geometry. The rectangle has width equal to the minimum diameter, and a longer length. If the convex hill of the input is degenerate (a line or point) a linestring or point is returned. The minimum rotated rectangle can be used as an extremely generalized representation for the given geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOSGeometry object representing the MRR, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the rotated envelope. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | A pointer to a GEOSGeometry object. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSMinimumRotatedRectangle_r"></a>
 
-## geos.GEOSMinimumRotatedRectangle\_r ⇒ <code>number</code> ⏏
-Computes the minimum-area rotated rectangle containing a geometry.
+## geos.GEOSMinimumRotatedRectangle\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Returns the minimum rotated rectangular POLYGON which encloses the input geometry. The rectangle has width equal to the minimum diameter, and a longer length. If the convex hill of the input is degenerate (a line or point) a linestring or point is returned. The minimum rotated rectangle can be used as an extremely generalized representation for the given geometry.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to the output geometry, or NULL on exception.  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A newly allocated geometry of the rotated envelope. NULL on exception. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The pointer to the input geometry. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---

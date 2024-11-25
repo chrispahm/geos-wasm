@@ -1,31 +1,29 @@
 <a name="exp_module_geos--geos.GEOSCoverageUnion"></a>
 
-## geos.GEOSCoverageUnion ⇒ <code>number</code> ⏏
-Computes the union of all the input geometries using an optimized algorithm for coverages (collections of polygons that do not overlap).
+## geos.GEOSCoverageUnion ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Optimized union algorithm for polygonal inputs that are correctly noded and do not overlap. It may generate an error (return NULL) for inputs that do not satisfy this constraint, however this is not guaranteed.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - A pointer to a new GEOS geometry representing the union, or NULL on exception.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CoverageUnionOp.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A geometry that covers all the points of the input geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| geom | <code>number</code> | A pointer to a GEOS geometry. |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
 <a name="exp_module_geos--geos.GEOSCoverageUnion_r"></a>
 
-## geos.GEOSCoverageUnion\_r ⇒ <code>number</code> ⏏
-Computes the union of a collection of polygonal geometries that are correctly noded and do not overlap.
+## geos.GEOSCoverageUnion\_r ⇒ [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) ⏏
+Optimized union algorithm for polygonal inputs that are correctly noded and do not overlap. It may generate an error (return NULL) for inputs that do not satisfy this constraint, however this is not guaranteed.
 
-**Kind**: Exported member  
-**Returns**: <code>number</code> - The pointer to a GEOS geometry representing the union, or NULL on error.  
-**See**: https://libgeos.org/doxygen/classgeos_1_1operation_1_1geounion_1_1CascadedPolygonUnion.html  
+**Kind**: global property of [<code>geos</code>](/typedefs-enums/typedefs-enums.html#module_geos)  
+**Returns**: [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) - A geometry that covers all the points of the input geometry. Caller is responsible for freeing with GEOSGeom_destroy().  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| handle | <code>number</code> | A pointer to the GEOS context handle. |
-| g | <code>number</code> | The pointer to a GEOS geometry collection. |
+| handle | [<code>GEOSContextHandle\_t</code>](/typedefs-enums/typedefs-enums.html#GEOSContextHandle_t) | - |
+| g | [<code>GEOSGeometry</code>](/typedefs-enums/typedefs-enums.html#GEOSGeometry) | The input geometry |
 
 
 ---
