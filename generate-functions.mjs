@@ -1,20 +1,6 @@
 import { JSDOM } from 'jsdom'
-import { readFileSync, writeFileSync } from 'fs'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
+import { writeFileSync } from 'fs'
 import process from 'process'
-
-const __filename = fileURLToPath(import.meta.url)
-
-const { GEOS_VERSION } = JSON.parse(
-  readFileSync(join(dirname(__filename), 'package.json'), 'utf-8')
-)
-
-const [
-  GeosMajorVersion,
-  GeosMinorVersion,
-  GeosPatchVersion
-] = GEOS_VERSION.split('.').map(v => parseInt(v))
 
 const generateGeosFunctions = (html) => {
   // Read and parse HTML file
@@ -49,8 +35,8 @@ const generateGeosFunctions = (html) => {
       // return type is the first element
       const segments = signature.textContent.trim().split(' ')
       if (segments[0] === 'typedef') {
-        console.log('typedef', segments);
-        
+        console.log('typedef', segments)
+
         if (segments[1] === 'struct') {
           itemObj.type = 'typedef'
         } else {
@@ -279,7 +265,7 @@ const generateGeosFunctions = (html) => {
       if (typedef.description) {
         lines.push(` * ${typedef.description}`)
       }
-      
+
       if (typedef.type === 'callback') {
         // It's a callback function
         lines.push(' * This callback is displayed as a global member.')
