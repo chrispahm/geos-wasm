@@ -4881,10 +4881,10 @@ export default function addGEOSFunctions (Module, geos) {
 
   /**
    * Returns the current GEOS version string. eg: "3.10.0" This function does not have a reentrant variant and is available if GEOS_USE_ONLY_R_API is defined.
-   * @returns {number} version string
+   * @returns {string} version string
    * @alias module:geos
    */
-  geos.GEOSversion = null
+  geos.GEOSversion = Module.cwrap('GEOSversion', 'string', [])
 
   /**
    * Returns the Voronoi polygons or edges of the vertices of the given geometry.

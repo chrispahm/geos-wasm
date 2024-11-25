@@ -380,6 +380,8 @@ const generateGeosFunctions = (html) => {
           lines.push(
             `  geos.${func.name} = Module.cwrap('${func.name}', '${returnType}', ${JSON.stringify(paramTypes)})`
           )
+        } else if (func.name === 'GEOSversion') {
+          lines.push(`  geos.${func.name} = Module.cwrap('GEOSversion', 'string', [])`)
         } else {
           lines.push(`  geos.${func.name} = null`)
         }
@@ -412,7 +414,7 @@ const generateGeosFunctions = (html) => {
   '_free',\\
   '_malloc',\\
 ` + functions
-      .filter((func) => func.name.endsWith('_r') && func.name !== 'initGEOS_r')
+      .filter((func) => (func.name.endsWith('_r') && func.name !== 'initGEOS_r') || func.name === 'GEOSversion')
       .map((func) => `  '_${func.name}'`)
       .join(',\\\n') +
       '\\\n]"'
