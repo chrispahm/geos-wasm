@@ -35,8 +35,6 @@ const generateGeosFunctions = (html) => {
       // return type is the first element
       const segments = signature.textContent.trim().split(' ')
       if (segments[0] === 'typedef') {
-        console.log('typedef', segments)
-
         if (segments[1] === 'struct') {
           itemObj.type = 'typedef'
         } else {
@@ -85,7 +83,7 @@ const generateGeosFunctions = (html) => {
         if (paramName) {
           params.push({
             name: paramName,
-            description: paramDescription,
+            description: paramDescription || '',
             type: paramType
           })
         }
@@ -172,7 +170,12 @@ const generateGeosFunctions = (html) => {
       const baseFunc = functions.find((f) => f.name === func.see_also[0])
       if (baseFunc) {
         func.description = baseFunc.description
-        // func.parameters = [...(baseFunc.parameters ? baseFunc.parameters : [])];
+        func.parameters = func.parameters.map((param, i) => {
+          // use the description from the base function
+          if (i < 1) return param
+          param.description = baseFunc.parameters[i - 1].description
+          return param
+        })
         func.returns = baseFunc.returns
 
         // If it's a reentrant function (_r suffix)
