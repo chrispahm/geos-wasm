@@ -6,6 +6,8 @@ const inputFile = './src/allCFunctions.mjs'
 const functionsFile = './src/addGeosFunctions.mjs'
 const outputDir = './build/package'
 const helpersDir = './build/package/helpers'
+const emscriptenTypes = fs.readFileSync('./node_modules/@types/emscripten/index.d.ts', 'utf8')
+
 /* create output directory if it doesn't exist */
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 
@@ -122,7 +124,9 @@ const allEnums = templateData.map((identifier) => {
 }).filter(Boolean)
 
 const output = `
-interface Module {
+${emscriptenTypes}
+
+interface Module extends EmscriptenModule {
   ${allModuleFunctions.join('\n  ')}
 }
 
