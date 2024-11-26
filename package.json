@@ -63,6 +63,7 @@
     "@turf/center": "7.1.0",
     "@turf/meta": "7.1.0",
     "@turf/turf": "7.1.0",
+    "@types/emscripten": "^1.39.13",
     "buffer": "^6.0.3",
     "cheerio": "^1.0.0",
     "d3-geo": "^3.1.1",
