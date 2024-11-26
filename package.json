@@ -1,6 +1,6 @@
 {
   "name": "geos-wasm",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "GEOS_VERSION": "3.13.0",
   "description": "A WebAssembly build of GEOS",
   "type": "module",
