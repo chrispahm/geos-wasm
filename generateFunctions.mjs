@@ -134,9 +134,38 @@ const generateGeosFunctions = (html) => {
     }
   })
 
+  function parseEnumDefinition (text) {
+    // Do we have a repeated pattern of key=value
+    // pairs (where values are numbers) in accolades?
+    const match = text.match(/\{((?:\s*\w+\s*=\s*\d+\s*,?\s*)*)}/)
+    if (!match) {
+      return {}
+    }
+
+    const content = match[1]
+    const enumObject = {}
+
+    content.split(',').forEach(pair => {
+      const [key, value] = pair.split('=').map(part => part.trim())
+      if (key && value) {
+        enumObject[key] = parseInt(value, 10)
+      }
+    })
+
+    return enumObject
+  }
+
   function processEnum (element, itemObj) {
     const enumerator = {}
     let index = 0
+
+    // Read the values from the enum definition in the
+    // top of the documentation (because not all the enum
+    // values start at 0)
+    const enumLink = element.querySelector('a.el').getAttribute('href')
+    const enumObj = parseEnumDefinition(
+      document.querySelector(`a[href="${enumLink}"]`).parentElement.textContent
+    )
 
     // Find all enum rows in the fieldtable
     element.querySelectorAll('.fieldtable tr').forEach((row) => {
@@ -149,7 +178,7 @@ const generateGeosFunctions = (html) => {
 
         // Create the enum entry
         enumerator[name] = {
-          value: index,
+          value: enumObj[name] || index,
           description
         }
         index++
