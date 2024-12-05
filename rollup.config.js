@@ -54,7 +54,11 @@ export default [
       }
     ],
     plugins: [
-      terser()
+      terser({
+        format: {
+          semicolons: false
+        }
+      })
     ]
   }
 ]
