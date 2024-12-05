@@ -30,16 +30,15 @@ export default function geojsonToGeosGeom (geojson, geos) {
       return null
     }
     const N = coords.length
-    const dim = 2 // coords[0].length
+    const dim = coords[0].length
     const coordArr = new Float64Array(coords.flat())
     const coordPtr = geos.Module._malloc(N * dim * 8)
     geos.Module.HEAPF64.set(coordArr, coordPtr / 8)
-    const seqPtr = geos.GEOSCoordSeq_copyFromBuffer(coordPtr, N, false, false)
+    const seqPtr = geos.GEOSCoordSeq_copyFromBuffer(coordPtr, N, dim > 2, false)
     geos.Module._free(coordPtr)
     return seqPtr
   }
 
-  // assume only 2d (x, y) geometries
   switch (geojson.type) {
     case 'Feature':
       return geojsonToGeosGeom(geojson.geometry, geos)
@@ -86,11 +85,14 @@ export default function geojsonToGeosGeom (geojson, geos) {
     case 'Point':
       if (geojson.coordinates.length === 0) {
         return geos.GEOSGeom_createEmptyPoint()
-      } else {
+      } else if (geojson.coordinates.length === 2) {
         return geos.GEOSGeom_createPointFromXY(
           geojson.coordinates[0],
           geojson.coordinates[1]
         )
+      } else {
+        const seq = geojsonCoordsToGeosCoordSeq([geojson.coordinates])
+        return geos.GEOSGeom_createPoint(seq)
       }
     case 'LineString':
       if (geojson.coordinates.length === 0) {
@@ -134,12 +136,17 @@ export default function geojsonToGeosGeom (geojson, geos) {
       } else {
         const points = []
         for (let i = 0; i < geojson.coordinates.length; i++) {
-          points.push(
-            geos.GEOSGeom_createPointFromXY(
-              geojson.coordinates[i][0],
-              geojson.coordinates[i][1]
+          if (geojson.coordinates[i].length === 2) {
+            points.push(
+              geos.GEOSGeom_createPointFromXY(
+                geojson.coordinates[i][0],
+                geojson.coordinates[i][1]
+              )
             )
-          )
+          } else {
+            const seq = geojsonCoordsToGeosCoordSeq([geojson.coordinates[i]])
+            points.push(geos.GEOSGeom_createPoint(seq))
+          }
         }
         const pointsPtr = geos.Module._malloc(points.length * 4)
         const pointsArr = new Uint32Array(points)

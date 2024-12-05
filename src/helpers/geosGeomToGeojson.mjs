@@ -42,16 +42,25 @@ export default function geosGeomToGeojson (geomPtr, geos) {
     }
     const coords = []
     const coordsPtr = geos.Module._malloc(size * 2 * 8)
-    geos.GEOSCoordSeq_copyToBuffer(seqPtr, coordsPtr, false, false)
+    const dimPtr = geos.Module._malloc(4)
+    geos.GEOSCoordSeq_getDimensions(seqPtr, dimPtr)
+    const dim = geos.Module.getValue(dimPtr, 'i32')
+
+    geos.GEOSCoordSeq_copyToBuffer(seqPtr, coordsPtr, dim > 2, false)
     const view = new Float64Array(
       geos.Module.HEAPF64.buffer,
       coordsPtr,
-      size * 2
+      size * dim
     )
-    for (let i = 0; i < size * 2; i = i + 2) {
-      coords.push([view[i], view[i + 1]])
+    for (let i = 0; i < size * dim; i = i + dim) {
+      if (dim > 2) {
+        coords.push([view[i], view[i + 1], view[i + 2]])
+      } else {
+        coords.push([view[i], view[i + 1]])
+      }
     }
     geos.Module._free(coordsPtr)
+    geos.Module._free(dimPtr)
     return coords
   }
 
@@ -70,12 +79,31 @@ export default function geosGeomToGeojson (geomPtr, geos) {
       if (size === 1) {
         const xPtr = geos.Module._malloc(8)
         const yPtr = geos.Module._malloc(8)
-        geos.GEOSCoordSeq_getXY(seq, 0, xPtr, yPtr)
+        const dimPtr = geos.Module._malloc(4)
+        geos.GEOSCoordSeq_getDimensions(seq, dimPtr)
+        const dim = geos.Module.getValue(dimPtr, 'i32')
+        let zPtr
+        if (dim > 2) {
+          zPtr = geos.Module._malloc(8)
+          geos.GEOSCoordSeq_getXYZ(seq, 0, xPtr, yPtr, zPtr)
+        } else {
+          geos.GEOSCoordSeq_getXY(seq, 0, xPtr, yPtr)
+        }
         const x = geos.Module.getValue(xPtr, 'double')
         const y = geos.Module.getValue(yPtr, 'double')
+        let z
+        if (zPtr) {
+          z = geos.Module.getValue(zPtr, 'double')
+          geos.Module._free(zPtr)
+        }
         geos.Module._free(xPtr)
         geos.Module._free(yPtr)
-        coords.push(x, y)
+        geos.Module._free(dimPtr)
+        if (typeof z === 'number') {
+          coords.push(x, y, z)
+        } else {
+          coords.push(x, y)
+        }
       }
       const pointJson = {
         type: 'Point',
@@ -126,12 +154,30 @@ export default function geosGeomToGeojson (geomPtr, geos) {
         const seq = geos.GEOSGeom_getCoordSeq(point)
         const xPtr = geos.Module._malloc(8)
         const yPtr = geos.Module._malloc(8)
+        const dimPtr = geos.Module._malloc(4)
+        geos.GEOSCoordSeq_getDimensions(seq, dimPtr)
+        const dim = geos.Module.getValue(dimPtr, 'i32')
+        let zPtr
+        if (dim > 2) {
+          zPtr = geos.Module._malloc(8)
+          geos.GEOSCoordSeq_getXYZ(seq, 0, xPtr, yPtr, zPtr)
+        }
         geos.GEOSCoordSeq_getXY(seq, 0, xPtr, yPtr)
         const x = geos.Module.getValue(xPtr, 'double')
         const y = geos.Module.getValue(yPtr, 'double')
+        let z
+        if (zPtr) {
+          z = geos.Module.getValue(zPtr, 'double')
+          geos.Module._free(zPtr)
+        }
         geos.Module._free(xPtr)
         geos.Module._free(yPtr)
-        coords.push([x, y])
+        geos.Module._free(dimPtr)
+        if (z) {
+          coords.push([x, y, z])
+        } else {
+          coords.push([x, y])
+        }
       }
       const multiPointJson = {
         type: 'MultiPoint',
