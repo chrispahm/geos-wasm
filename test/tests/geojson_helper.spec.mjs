@@ -173,4 +173,64 @@ test('17: Read/Write an empty GeometryCollection', (t) => {
   t.end()
 })
 
-// TODO: 18-30
+test('18: Read/Write a GeoJSON Point with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[0,3,0]},{"type":"LineString","coordinates":[[2,0],[1,0]]}]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'GEOMETRYCOLLECTION Z (POINT Z (0 3 0), LINESTRING (2 0, 1 0))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+
+test('19: Read/Write a GeoJSON LineString with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[0,3]},{"type":"LineString","coordinates":[[2,0,0],[1,0,0]]}]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'GEOMETRYCOLLECTION Z (POINT (0 3), LINESTRING Z (2 0 0, 1 0 0))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+
+test('20: Read/Write a GeoJSON Polygon with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type":"Polygon","coordinates":[[[30,10,5],[40,40,5],[20,40,5],[10,20,5],[30,10,5]]]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'POLYGON Z ((30 10 5, 40 40 5, 20 40 5, 10 20 5, 30 10 5))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+test('21: Read/Write a GeoJSON MultiPoint with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type":"MultiPoint","coordinates":[[10, 40, 5], [40, 30, 5], [20, 20, 5], [30, 10, 5]]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'MULTIPOINT Z ((10 40 5), (40 30 5), (20 20 5), (30 10 5))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+
+test('22: Read/Write a GeoJSON MultiLineString with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type":"MultiLineString","coordinates":[[[10, 10, 5], [20, 20, 5], [10, 40, 5]],[[40, 40, 5], [30, 30, 5], [40, 20, 5], [30, 10, 5]]]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'MULTILINESTRING Z ((10 10 5, 20 20 5, 10 40 5), (40 40 5, 30 30 5, 40 20 5, 30 10 5))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+
+test('23: Read/Write a GeoJSON MultiPolygon with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type": "MultiPolygon", "coordinates": [[[[40, 40, 5], [20, 45, 5], [45, 30, 5], [40, 40, 5]]], [[[20, 35, 5], [10, 30, 5], [10, 10, 5], [30, 5, 5], [45, 20, 5], [20, 35, 5]], [[30, 20, 5], [20, 15, 5], [20, 25, 5], [30, 20, 5]]]]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'MULTIPOLYGON Z (((40 40 5, 20 45 5, 45 30 5, 40 40 5)), ((20 35 5, 10 30 5, 10 10 5, 30 5 5, 45 20 5, 20 35 5), (30 20 5, 20 15 5, 20 25 5, 30 20 5)))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
+
+test('24: Read/Write a GeoJSON GeometryCollection with Z-Values', (t) => {
+  const geojson = JSON.parse('{"type": "GeometryCollection","geometries": [{"type": "Point","coordinates": [40, 10, 5]},{"type": "LineString","coordinates": [[10, 10, 5], [20, 20, 5], [10, 40, 5]]},{"type": "Polygon","coordinates": [[[40, 40, 5], [20, 45, 5], [45, 30, 5], [40, 40, 5]]]}]}')
+  const geom = geojsonToGeosGeom(geojson, geos)
+  t.equal(geomToWkt(geom), 'GEOMETRYCOLLECTION Z (POINT Z (40 10 5), LINESTRING Z (10 10 5, 20 20 5, 10 40 5), POLYGON Z ((40 40 5, 20 45 5, 45 30 5, 40 40 5)))')
+  const json = geosGeomToGeojson(geom, geos)
+  t.equal(JSON.stringify(json), JSON.stringify(geojson))
+  t.end()
+})
