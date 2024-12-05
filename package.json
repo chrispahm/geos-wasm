@@ -38,7 +38,7 @@
   "scripts": {
     "make": "rm -f -r build/package/* && make && npm run build",
     "build": "rollup -c && node createTypes.mjs",
-    "update:geos": "node generateFunction.mjs",
+    "update:geos": "node generateFunctions.mjs",
     "build:dev": "rollup -c -w",
     "test": "tape test/tests/*.mjs",
     "benchmark": "node --trace-uncaught test/performance.mjs",
