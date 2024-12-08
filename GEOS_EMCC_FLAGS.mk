@@ -240,6 +240,7 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSUnion_r',\
   '_GEOSUnionCascaded_r',\
   '_GEOSUnionPrec_r',\
+  '_GEOSversion',\
   '_GEOSVoronoiDiagram_r',\
   '_GEOSWithin_r',\
   '_GEOSWKBReader_create_r',\
@@ -270,6 +271,5 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSWKTWriter_setOutputDimension_r',\
   '_GEOSWKTWriter_setRoundingPrecision_r',\
   '_GEOSWKTWriter_setTrim_r',\
-  '_GEOSWKTWriter_write_r',\
-  '_GEOSversion'\
+  '_GEOSWKTWriter_write_r'\
 ]"

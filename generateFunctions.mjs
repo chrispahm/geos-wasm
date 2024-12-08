@@ -1,6 +1,8 @@
 import { JSDOM } from 'jsdom'
-import { writeFileSync } from 'fs'
+import { writeFileSync, readFileSync } from 'fs'
 import process from 'process'
+
+const { GEOS_VERSION } = JSON.parse(readFileSync('package.json', 'utf-8'))
 
 const generateGeosFunctions = (html) => {
   // Read and parse HTML file
@@ -44,7 +46,22 @@ const generateGeosFunctions = (html) => {
         itemObj.type = 'enum'
       } else {
         itemObj.type = 'function'
-        itemObj.returnType = segments[0]?.trim()
+        const funcNameIndex = segments.findIndex((s) => s === itemObj.name)
+        const geosType = segments.find((s, i) => s.startsWith('GEOS') && i < funcNameIndex)
+        if (geosType) {
+          itemObj.returnType = geosType
+        } else if (funcNameIndex > 0) {
+          // join all segments before the function name
+          itemObj.returnType = segments.slice(0, funcNameIndex).join(' ').trim()
+        } else {
+          // if the function name is the first element
+          // then the return type is the first element
+          // and the function name is the second element
+          itemObj.returnType = segments[0]?.trim()
+          if (segments[1] === '*') {
+            itemObj.returnType += '*'
+          }
+        }
       }
     }
 
@@ -63,7 +80,7 @@ const generateGeosFunctions = (html) => {
     // Get parameters
     const params = []
     element
-      ?.querySelectorAll('.memproto > table > tbody > tr')
+      ?.querySelectorAll('.memname > tbody > tr')
       .forEach((param, i) => {
         const paramName = param
           .querySelector('.paramname em')
@@ -235,6 +252,7 @@ const generateGeosFunctions = (html) => {
     'char *': 'StringPointer',
     'char*': 'StringPointer',
     'const char *': 'StringPointer',
+    'unsigned char *': 'StringPointer',
     'double *': 'NumberPointer',
     'const double *': 'NumberPointer',
     'unsigned int *': 'NumberPointer',
@@ -341,9 +359,9 @@ const generateGeosFunctions = (html) => {
       lines.push(`  geos.${enumName} = {`)
 
       // Add enum values with their descriptions
-      Object.entries(enumObj.enumerator).forEach(([key, data]) => {
+      Object.entries(enumObj.enumerator).forEach(([key, data], i) => {
         lines.push(`    /** ${data.description} */`)
-        lines.push(`    ${key}: ${data.value},`)
+        lines.push(`    ${key}: ${data.value}${i < Object.keys(enumObj.enumerator).length - 1 ? ',' : ''}`)
       })
 
       lines.push('  };')
@@ -379,7 +397,7 @@ const generateGeosFunctions = (html) => {
         if (func.parameters) {
           func.parameters.forEach((param) => {
             let mappedType = param.type.startsWith('GEOS')
-              ? param.type.replace(/[^a-zA-Z _]/g, '')
+              ? param.type.replace(/[^a-zA-Z _]/g, '').trim()
               : typeMapping[param.type]
             if (param.description?.startsWith('array')) {
               mappedType = 'ArrayPointer'
@@ -390,9 +408,15 @@ const generateGeosFunctions = (html) => {
           })
         }
         if (func.returns) {
-          lines.push(
-            `   * @returns {${func.returnType.startsWith('GEOS') ? func.returnType.replace(/[^a-zA-Z _]/g, '') : typeMapping[func.returnType]}} ${func.returns}`
-          )
+          if (func.name === 'GEOSversion') {
+            lines.push(
+              '   * @returns {string} version string'
+            )
+          } else {
+            lines.push(
+              `   * @returns {${func.returnType.startsWith('GEOS') ? func.returnType.replace(/[^a-zA-Z _]/g, '').trim() : typeMapping[func.returnType]}} ${func.returns}`
+            )
+          }
         }
         if (func.deprecated) {
           lines.push(`   * @deprecated ${func.deprecated}`)
@@ -403,7 +427,7 @@ const generateGeosFunctions = (html) => {
         if (func.name.endsWith('_r')) {
           const paramTypes = func.parameters?.map((p) => 'number') || []
 
-          const returnType = func.returnType.includes('void')
+          const returnType = func.returnType === ('void')
             ? 'null'
             : 'number'
           lines.push(
@@ -414,8 +438,8 @@ const generateGeosFunctions = (html) => {
         } else {
           lines.push(`  geos.${func.name} = null`)
         }
-        lines.push('')
       }
+      lines.push('')
     })
     lines.push('  return geos;')
     lines.push('};')
@@ -434,7 +458,7 @@ const generateGeosFunctions = (html) => {
       !func.returnType.startsWith('GEOS') &&
       uniqueParamTypes.add(func.returnType)
   })
-
+  // console.log('Unique param types:', Array.from(uniqueParamTypes))
   // write all _r functions to a GEOS_EMCC_FLAGS.mk to import for make
   // write GEOS_EMCC_FLAGS.mk
   writeFileSync(
@@ -455,10 +479,10 @@ const generateGeosFunctions = (html) => {
 
 // Usage example
 try {
-  // const htmlFilePath = join(__dirname, "geos_c.html");
-  // const html = readFileSync(htmlFilePath, "utf-8");
-  const url = 'https://libgeos.org/doxygen/geos__c_8h.html'
-  const html = await fetch(url).then((res) => res.text())
+  const htmlFilePath = `./build/native/src/geos-${GEOS_VERSION}/doxygen/doxygen_docs/html/geos__c_8h.html`
+  const html = readFileSync(htmlFilePath, 'utf-8')
+  // const url = 'https://libgeos.org/doxygen/geos__c_8h.html'
+  // const html = await fetch(url).then((res) => res.text())
   generateGeosFunctions(html)
   // console.log('Successfully generated allCfunctions.mjs')
 } catch (error) {

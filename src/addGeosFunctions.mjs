@@ -111,7 +111,7 @@
  */
 
 /**
- * Callback function for use in GEOSGeom_transformXY. Allows custom function to be applied to x and y values for each coordinate in a geometry. Z and M values are unchanged by this function. Extra data for the calculation can be passed via the userdata.
+ * Callback function for use in GEOSGeom_transformXY. Allows custom function to be applied to x and y values for each coordinate in a geometry. Z values are unchanged by this function. Extra data for the calculation can be passed via the userdata.
  * This callback is displayed as a global member.
  * @callback GEOSTransformXYCallback
  * @returns {number} 1 if calculation succeeded, 0 on failure
@@ -148,11 +148,11 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSBufCapStyles = {
     /** End is rounded, with end point of original line in the centre of the round cap. */
-    GEOSBUF_CAP_ROUND: 0,
+    GEOSBUF_CAP_ROUND: 1,
     /** End is flat, with end point of original line at the end of the buffer */
-    GEOSBUF_CAP_FLAT: 1,
+    GEOSBUF_CAP_FLAT: 2,
     /** End is flat, with end point of original line in the middle of a square enclosing that point */
-    GEOSBUF_CAP_SQUARE: 2
+    GEOSBUF_CAP_SQUARE: 3
   }
 
   /**
@@ -164,11 +164,11 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSBufJoinStyles = {
     /** Join is rounded, essentially each line is terminated in a round cap. Form round corner. */
-    GEOSBUF_JOIN_ROUND: 0,
+    GEOSBUF_JOIN_ROUND: 1,
     /** Join is flat, with line between buffer edges, through the join point. Forms flat corner. */
-    GEOSBUF_JOIN_MITRE: 1,
+    GEOSBUF_JOIN_MITRE: 2,
     /** Join is the point at which the two buffer edges intersect. Forms sharp corner. */
-    GEOSBUF_JOIN_BEVEL: 2
+    GEOSBUF_JOIN_BEVEL: 3
   }
 
   /**
@@ -220,9 +220,9 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSPolygonHullParameterModes = {
     /** Fraction of input vertices retained */
-    GEOSHULL_PARAM_VERTEX_RATIO: 0,
+    GEOSHULL_PARAM_VERTEX_RATIO: 1,
     /** Ratio of simplified hull area to input area */
-    GEOSHULL_PARAM_AREA_RATIO: 1
+    GEOSHULL_PARAM_AREA_RATIO: 2
   }
 
   /**
@@ -248,7 +248,7 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSRelateBoundaryNodeRules = {
     /** See geos::algorithm::BoundaryNodeRule::getBoundaryRuleMod2() */
-    GEOSRELATE_BNR_MOD2: 0,
+    GEOSRELATE_BNR_MOD2: 1,
     /** Same as GEOSRELATE_BNR_MOD2 */
     GEOSRELATE_BNR_OGC: 1,
     /** See geos::algorithm::BoundaryNodeRule::getBoundaryEndPoint() */
@@ -267,7 +267,7 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSValidFlags = {
     /** Allow self-touching rings to form a hole in a polygon. */
-    GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE: 0
+    GEOSVALID_ALLOW_SELFTOUCHING_RING_FORMING_HOLE: 1
   }
 
   /**
@@ -278,9 +278,9 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSVoronoiFlags = {
     /** Return only edges of the Voronoi cells, as a MultiLineString */
-    GEOS_VORONOI_ONLY_EDGES: 0,
+    GEOS_VORONOI_ONLY_EDGES: 1,
     /** Preserve order of inputs, such that the nth cell in the result corresponds to the nth vertex in the input. If this cannot be done, such as for inputs that contain repeated points, GEOSVoronoiDiagram will return NULL. */
-    GEOS_VORONOI_PRESERVE_ORDER: 1
+    GEOS_VORONOI_PRESERVE_ORDER: 2
   }
 
   /**
@@ -306,9 +306,9 @@ export default function addGEOSFunctions (Module, geos) {
    */
   geos.GEOSWKBFlavors = {
     /** Extended */
-    GEOS_WKB_EXTENDED: 0,
+    GEOS_WKB_EXTENDED: 1,
     /** ISO */
-    GEOS_WKB_ISO: 1
+    GEOS_WKB_ISO: 2
   }
 
   // functions
@@ -795,7 +795,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSConstrainedDelaunayTriangulation_r = Module.cwrap('GEOSConstrainedDelaunayTriangulation_r', 'number', ['number', 'number'])
 
   /**
-   * Tests if geometry g2 is completely within g1, but not wholly contained in the boundary of g1.
+   * True if geometry g2 is completely within g1.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -804,7 +804,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSContains = null
 
   /**
-   * Tests if geometry g2 is completely within g1, but not wholly contained in the boundary of g1.
+   * True if geometry g2 is completely within g1.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1402,7 +1402,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCoverageUnion_r = Module.cwrap('GEOSCoverageUnion_r', 'number', ['number', 'number'])
 
   /**
-   * Tests if geometry g1 is covered by g2, which is the case if every point of g1 lies in g2.
+   * True if geometry g2 is completely within g1, including possibly touching the boundary of g1.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1411,7 +1411,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCoveredBy = null
 
   /**
-   * Tests if geometry g1 is covered by g2, which is the case if every point of g1 lies in g2.
+   * True if geometry g2 is completely within g1, including possibly touching the boundary of g1.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1421,7 +1421,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCoveredBy_r = Module.cwrap('GEOSCoveredBy_r', 'number', ['number', 'number', 'number'])
 
   /**
-   * Tests if geometry g1 covers g2, which is the case if every point of g2 lies in g1.
+   * True if geometry g1 is completely within g2, including possibly touching the boundary of g2.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1430,7 +1430,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCovers = null
 
   /**
-   * Tests if geometry g1 covers g2, which is the case if every point of g2 lies in g1.
+   * True if geometry g1 is completely within g2, including possibly touching the boundary of g2.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1440,7 +1440,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCovers_r = Module.cwrap('GEOSCovers_r', 'number', ['number', 'number', 'number'])
 
   /**
-   * Tests if two geometries interiors intersect but their boundaries do not. Most useful for finding line crosses cases.
+   * True if geometries interiors interact but their boundaries do not. Most useful for finding line crosses cases.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1449,7 +1449,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSCrosses = null
 
   /**
-   * Tests if two geometries interiors intersect but their boundaries do not. Most useful for finding line crosses cases.
+   * True if geometries interiors interact but their boundaries do not. Most useful for finding line crosses cases.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1539,7 +1539,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSDifferencePrec_r = Module.cwrap('GEOSDifferencePrec_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
-   * Tests if two geometries have no point in common.
+   * True if no point of either geometry touchess or is within the other.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1548,7 +1548,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSDisjoint = null
 
   /**
-   * Tests if two geometries have no point in common.
+   * True if no point of either geometry touchess or is within the other.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1655,7 +1655,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEnvelope_r = Module.cwrap('GEOSEnvelope_r', 'number', ['number', 'number'])
 
   /**
-   * Tests if two geometries contain the same set of points in the plane.
+   * True if geometries cover the same space on the plane.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1664,7 +1664,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEquals = null
 
   /**
-   * Tests if two geometries contain the same set of points in the plane.
+   * True if geometries cover the same space on the plane.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1674,7 +1674,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEquals_r = Module.cwrap('GEOSEquals_r', 'number', ['number', 'number', 'number'])
 
   /**
-   * Determine pointwise equality of two geometries, by checking that they have identical structure and that each vertex of g2 is within the distance tolerance of the corresponding vertex in g1. Z and M values are ignored by GEOSEqualsExact, and this function may return true for inputs with different dimensionality. Unlike GEOSEquals(), geometries that are topologically equivalent but have different representations (e.g., LINESTRING (0 0, 1 1) and MULTILINESTRING ((0 0, 1 1)) ) are not considered equal by GEOSEqualsExact().
+   * Determine pointwise equivalence of two geometries, by checking that they have identical structure and that each vertex of g2 is within the distance tolerance of the corresponding vertex in g1. Z and M values are ignored by GEOSEqualsExact, and this function may return true for inputs with different dimensionality. Unlike GEOSEquals(), geometries that are topologically equivalent but have different representations (e.g., LINESTRING (0 0, 1 1) and MULTILINESTRING ((0 0, 1 1)) ) are not considered equal by GEOSEqualsExact().
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @param {number} tolerance - Tolerance to determine vertex equality
@@ -1684,7 +1684,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEqualsExact = null
 
   /**
-   * Determine pointwise equality of two geometries, by checking that they have identical structure and that each vertex of g2 is within the distance tolerance of the corresponding vertex in g1. Z and M values are ignored by GEOSEqualsExact, and this function may return true for inputs with different dimensionality. Unlike GEOSEquals(), geometries that are topologically equivalent but have different representations (e.g., LINESTRING (0 0, 1 1) and MULTILINESTRING ((0 0, 1 1)) ) are not considered equal by GEOSEqualsExact().
+   * Determine pointwise equivalence of two geometries, by checking that they have identical structure and that each vertex of g2 is within the distance tolerance of the corresponding vertex in g1. Z and M values are ignored by GEOSEqualsExact, and this function may return true for inputs with different dimensionality. Unlike GEOSEquals(), geometries that are topologically equivalent but have different representations (e.g., LINESTRING (0 0, 1 1) and MULTILINESTRING ((0 0, 1 1)) ) are not considered equal by GEOSEqualsExact().
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1695,7 +1695,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEqualsExact_r = Module.cwrap('GEOSEqualsExact_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
-   * Determine pointwise equality of two geometries by checking that the structure, ordering, and values of all vertices are identical in all dimensions. NaN values are considered to be equal to other NaN values.
+   * Determine pointwise equivalence of two geometries by checking that the structure, ordering, and values of all vertices are identical in all dimensions. NaN values are considered to be equal to other NaN values.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -1704,7 +1704,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSEqualsIdentical = null
 
   /**
-   * Determine pointwise equality of two geometries by checking that the structure, ordering, and values of all vertices are identical in all dimensions. NaN values are considered to be equal to other NaN values.
+   * Determine pointwise equivalence of two geometries by checking that the structure, ordering, and values of all vertices are identical in all dimensions. NaN values are considered to be equal to other NaN values.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -1819,7 +1819,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeoJSONReader} reader -
    * @param {StringPointer} geojson -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @alias module:geos
    */
   geos.GEOSGeoJSONReader_readGeometry_r = Module.cwrap('GEOSGeoJSONReader_readGeometry_r', 'number', ['number', 'number', 'number'])
@@ -2176,7 +2176,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {number} ymin - Lower bound of envelope
    * @param {number} xmax - Right bound of envelope
    * @param {number} ymax - Upper bound of envelope
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @alias module:geos
    */
   geos.GEOSGeom_createRectangle = null
@@ -2188,7 +2188,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {number} ymin - Lower bound of envelope
    * @param {number} xmax - Right bound of envelope
    * @param {number} ymax - Upper bound of envelope
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @alias module:geos
    */
   geos.GEOSGeom_createRectangle_r = Module.cwrap('GEOSGeom_createRectangle_r', 'number', ['number', 'number', 'number', 'number', 'number'])
@@ -2247,7 +2247,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * Return the coordinate sequence underlying the given geometry (Must be a LineString, LinearRing or Point). Do not directly free the coordinate sequence, it is owned by the parent geometry.
    * @param {GEOSGeometry} g - Input geometry
-   * @returns {number} Coordinate sequence or NULL on exception.
+   * @returns {GEOSCoordSequence} Coordinate sequence or NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGeom_getCoordSeq = null
@@ -2256,7 +2256,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Return the coordinate sequence underlying the given geometry (Must be a LineString, LinearRing or Point). Do not directly free the coordinate sequence, it is owned by the parent geometry.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - Input geometry
-   * @returns {number} Coordinate sequence or NULL on exception.
+   * @returns {GEOSCoordSequence} Coordinate sequence or NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGeom_getCoordSeq_r = Module.cwrap('GEOSGeom_getCoordSeq_r', 'number', ['number', 'number'])
@@ -2335,7 +2335,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @returns {Pointer} A void* to the user data, caller is responsible for casting to the appropriate type.
    * @alias module:geos
    */
-  geos.GEOSGeom_getUserData_r = Module.cwrap('GEOSGeom_getUserData_r', 'null', ['number', 'number'])
+  geos.GEOSGeom_getUserData_r = Module.cwrap('GEOSGeom_getUserData_r', 'number', ['number', 'number'])
 
   /**
    * Finds the maximum X value in the geometry.
@@ -2473,7 +2473,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSGeom_setUserData_r = Module.cwrap('GEOSGeom_setUserData_r', 'null', ['number', 'number', 'number'])
 
   /**
-   * Apply XY coordinate transform callback to all coordinates in a copy of input geometry. If the callback returns an error, returned geometry will be NULL. Z and M values, if present, are not modified by this function.
+   * Apply XY coordinate transform callback to all coordinates in a copy of input geometry. If the callback returns an error, returned geometry will be NULL. Z values, if present, are not modified by this function.
    * @param {GEOSGeometry} g - Input geometry
    * @param {GEOSTransformXYCallback} callback - a function to be executed for each coordinate in the geometry. The callback takes 3 parameters: x and y coordinate values to be updated and a void userdata pointer.
    * @param {Pointer} userdata - an optional pointer to pe passed to 'callback' as an argument
@@ -2483,7 +2483,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSGeom_transformXY = null
 
   /**
-   * Apply XY coordinate transform callback to all coordinates in a copy of input geometry. If the callback returns an error, returned geometry will be NULL. Z and M values, if present, are not modified by this function.
+   * Apply XY coordinate transform callback to all coordinates in a copy of input geometry. If the callback returns an error, returned geometry will be NULL. Z values, if present, are not modified by this function.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - Input geometry
    * @param {GEOSTransformXYCallback} callback - a function to be executed for each coordinate in the geometry. The callback takes 3 parameters: x and y coordinate values to be updated and a void userdata pointer.
@@ -2496,7 +2496,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {Pointer} hex -
    * @param {number} size -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKBReader and GEOSWKBWriter_readHEX()
    * @alias module:geos
    */
@@ -2506,7 +2506,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {Pointer} hex -
    * @param {number} size -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKBReader and GEOSWKBReader_readHEX_r()
    * @alias module:geos
    */
@@ -2515,7 +2515,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {Pointer} wkb -
    * @param {number} size -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKBReader and GEOSWKBWriter_read()
    * @alias module:geos
    */
@@ -2525,7 +2525,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {Pointer} wkb -
    * @param {number} size -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKBReader and GEOSWKBReader_read_r()
    * @alias module:geos
    */
@@ -2533,7 +2533,7 @@ export default function addGEOSFunctions (Module, geos) {
 
   /**
    * @param {StringPointer} wkt -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKTReader and GEOSWKTReader_read_r()
    * @alias module:geos
    */
@@ -2542,7 +2542,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {GEOSContextHandle_t} handle -
    * @param {StringPointer} wkt -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated use GEOSWKTReader and GEOSWKTReader_read_r()
    * @alias module:geos
    */
@@ -2716,7 +2716,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {GEOSGeometry} g -
    * @param {NumberPointer} size -
-   * @returns {number} unsigned
+   * @returns {StringPointer} unsigned char *
    * @deprecated use GEOSWKBWriter and GEOSWKBWriter_writeHEX()
    * @alias module:geos
    */
@@ -2726,7 +2726,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g -
    * @param {NumberPointer} size -
-   * @returns {number} unsigned
+   * @returns {StringPointer} unsigned char *
    * @deprecated use GEOSWKBWriter and GEOSWKBWriter_writeHEX_r()
    * @alias module:geos
    */
@@ -2735,7 +2735,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {GEOSGeometry} g -
    * @param {NumberPointer} size -
-   * @returns {number} unsigned
+   * @returns {StringPointer} unsigned char *
    * @deprecated use GEOSWKBWriter and GEOSWKBWriter_write()
    * @alias module:geos
    */
@@ -2745,7 +2745,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g -
    * @param {NumberPointer} size -
-   * @returns {number} unsigned
+   * @returns {StringPointer} unsigned char *
    * @deprecated use GEOSWKBWriter and GEOSWKBWriter_write_r()
    * @alias module:geos
    */
@@ -2753,7 +2753,7 @@ export default function addGEOSFunctions (Module, geos) {
 
   /**
    * @param {GEOSGeometry} g -
-   * @returns {StringPointer} char*
+   * @returns {StringPointer} char *
    * @deprecated use GEOSWKTWriter and GEOSWKTWriter_write()
    * @alias module:geos
    */
@@ -2762,7 +2762,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g -
-   * @returns {StringPointer} char*
+   * @returns {StringPointer} char *
    * @deprecated use GEOSWKTWriter and GEOSWKTWriter_write_r()
    * @alias module:geos
    */
@@ -2822,7 +2822,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * Get the external ring of a Polygon.
    * @param {GEOSGeometry} g - Input Polygon geometry
-   * @returns {number} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
+   * @returns {GEOSGeometry} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetExteriorRing = null
@@ -2831,7 +2831,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Get the external ring of a Polygon.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - Input Polygon geometry
-   * @returns {number} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
+   * @returns {GEOSGeometry} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetExteriorRing_r = Module.cwrap('GEOSGetExteriorRing_r', 'number', ['number', 'number'])
@@ -2840,7 +2840,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Returns the specified sub-geometry of a collection. For a simple geometry, returns a pointer to the input. Returned object is a pointer to internal storage: it must NOT be destroyed directly.
    * @param {GEOSGeometry} g - Input geometry
    * @param {number} n - Sub-geometry index, zero-based
-   * @returns {number} A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.
+   * @returns {GEOSGeometry} A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetGeometryN = null
@@ -2850,7 +2850,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - Input geometry
    * @param {number} n - Sub-geometry index, zero-based
-   * @returns {number} A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.
+   * @returns {GEOSGeometry} A const GEOSGeometry, do not free! It will be freed when the parent is freed. Returns NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetGeometryN_r = Module.cwrap('GEOSGetGeometryN_r', 'number', ['number', 'number', 'number'])
@@ -2859,7 +2859,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Returns the N'th ring for a Polygon input.
    * @param {GEOSGeometry} g - Input Polygon geometry
    * @param {number} n - Index of the desired ring
-   * @returns {number} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
+   * @returns {GEOSGeometry} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetInteriorRingN = null
@@ -2869,7 +2869,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - Input Polygon geometry
    * @param {number} n - Index of the desired ring
-   * @returns {number} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
+   * @returns {GEOSGeometry} LinearRing geometry. Owned by parent geometry, do not free. NULL on exception.
    * @alias module:geos
    */
   geos.GEOSGetInteriorRingN_r = Module.cwrap('GEOSGetInteriorRingN_r', 'number', ['number', 'number', 'number'])
@@ -3122,7 +3122,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSIntersectionPrec_r = Module.cwrap('GEOSIntersectionPrec_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
-   * Tests if two geometries intersect.
+   * True if geometries are not disjoint.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -3131,7 +3131,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSIntersects = null
 
   /**
-   * Tests if two geometries intersect.
+   * True if geometries are not disjoint.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -3707,7 +3707,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSOrientPolygons_r = Module.cwrap('GEOSOrientPolygons_r', 'number', ['number', 'number', 'number'])
 
   /**
-   * Tests if two geometries share interiors but are neither within nor contained.
+   * True if geometries share interiors but are neither within nor contained.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -3716,7 +3716,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSOverlaps = null
 
   /**
-   * Tests if two geometries share interiors but are neither within nor contained.
+   * True if geometries share interiors but are neither within nor contained.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -3869,7 +3869,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * Create a Prepared Geometry. The caller retains ownership of the base geometry, and after processing is complete, must free both the prepared and the base geometry. (Ideally, destroy the prepared geometry first, as it has an internal reference to the base geometry.)
    * @param {GEOSGeometry} g - The base geometry to wrap in a prepared geometry.
-   * @returns {number} A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()
+   * @returns {GEOSPreparedGeometry} A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()
    * @alias module:geos
    */
   geos.GEOSPrepare = null
@@ -3878,7 +3878,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Create a Prepared Geometry. The caller retains ownership of the base geometry, and after processing is complete, must free both the prepared and the base geometry. (Ideally, destroy the prepared geometry first, as it has an internal reference to the base geometry.)
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g - The base geometry to wrap in a prepared geometry.
-   * @returns {number} A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()
+   * @returns {GEOSPreparedGeometry} A prepared geometry. Caller is responsible for freeing with GEOSPreparedGeom_destroy()
    * @alias module:geos
    */
   geos.GEOSPrepare_r = Module.cwrap('GEOSPrepare_r', 'number', ['number', 'number'])
@@ -4312,7 +4312,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSRelateBoundaryNodeRule_r = Module.cwrap('GEOSRelateBoundaryNodeRule_r', 'number', ['number', 'number', 'number', 'number'])
 
   /**
-   * Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern. Returns true if the computed matrix matches the pattern. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
+   * Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern to check for consistency. If the result matches the pattern return true. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
    * @param {GEOSGeometry} g1 - First geometry in pair
    * @param {GEOSGeometry} g2 - Second geometry in pair
    * @param {StringPointer} imPattern - DE9IM pattern to match
@@ -4322,7 +4322,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSRelatePattern = null
 
   /**
-   * Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern. Returns true if the computed matrix matches the pattern. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
+   * Calculate the DE9IM string for a geometry pair and compare against a DE9IM pattern to check for consistency. If the result matches the pattern return true. The pattern is a 9-character string containing symbols in the set "012TF*". "012F" match the corresponding dimension symbol; "T" matches any non-empty dimension; "*" matches any dimension.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - First geometry in pair
    * @param {GEOSGeometry} g2 - Second geometry in pair
@@ -4486,7 +4486,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {number} joinStyle -
    * @param {number} mitreLimit -
    * @param {number} leftSide -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated in 3.3.0, use GEOSOffsetCurve() instead
    * @alias module:geos
    */
@@ -4500,7 +4500,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {number} joinStyle -
    * @param {number} mitreLimit -
    * @param {number} leftSide -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated in 3.3.0, use GEOSOffsetCurve() instead
    * @alias module:geos
    */
@@ -4624,7 +4624,7 @@ export default function addGEOSFunctions (Module, geos) {
    * Returns the nearest item in the GEOSSTRtree to the supplied geometry. All items in the tree MUST be of type GEOSGeometry. If this is not the case, use GEOSSTRtree_nearest_generic() instead. The tree will automatically be constructed if necessary, after which no more items may be added.
    * @param {GEOSSTRtree} tree - the GEOSSTRtree to search
    * @param {GEOSGeometry} geom - the geometry with which the tree should be queried
-   * @returns {number} a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception
+   * @returns {GEOSGeometry} a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception
    * @alias module:geos
    */
   geos.GEOSSTRtree_nearest = null
@@ -4636,7 +4636,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSGeometry} itemEnvelope - a GEOSGeometry having the bounding box of 'item'
    * @param {GEOSDistanceCallback} distancefn - a function that can compute the distance between two items in the STRtree. The function should return zero in case of error, and should store the computed distance to the location pointed to by the distance argument. The computed distance between two items must not exceed the Cartesian distance between their envelopes.
    * @param {Pointer} userdata - optional pointer to arbitrary data; will be passed to distancefn each time it is called.
-   * @returns {number} a const pointer to the nearest item in the tree to item, or NULL in case of exception
+   * @returns {Pointer} a const pointer to the nearest item in the tree to item, or NULL in case of exception
    * @alias module:geos
    */
   geos.GEOSSTRtree_nearest_generic = null
@@ -4649,7 +4649,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSGeometry} itemEnvelope - a GEOSGeometry having the bounding box of 'item'
    * @param {GEOSDistanceCallback} distancefn - a function that can compute the distance between two items in the STRtree. The function should return zero in case of error, and should store the computed distance to the location pointed to by the distance argument. The computed distance between two items must not exceed the Cartesian distance between their envelopes.
    * @param {Pointer} userdata - optional pointer to arbitrary data; will be passed to distancefn each time it is called.
-   * @returns {number} a const pointer to the nearest item in the tree to item, or NULL in case of exception
+   * @returns {Pointer} a const pointer to the nearest item in the tree to item, or NULL in case of exception
    * @alias module:geos
    */
   geos.GEOSSTRtree_nearest_generic_r = Module.cwrap('GEOSSTRtree_nearest_generic_r', 'number', ['number', 'number', 'number', 'number', 'number', 'number'])
@@ -4659,7 +4659,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSSTRtree} tree - the GEOSSTRtree to search
    * @param {GEOSGeometry} geom - the geometry with which the tree should be queried
-   * @returns {number} a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception
+   * @returns {GEOSGeometry} a const pointer to the nearest GEOSGeometry in the tree to 'geom', or NULL in case of exception
    * @alias module:geos
    */
   geos.GEOSSTRtree_nearest_r = Module.cwrap('GEOSSTRtree_nearest_r', 'number', ['number', 'number', 'number'])
@@ -4768,7 +4768,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSTopologyPreserveSimplify_r = Module.cwrap('GEOSTopologyPreserveSimplify_r', 'number', ['number', 'number', 'number'])
 
   /**
-   * Tests if two geometries share boundaries at one or more points, but do not have interior points in common.
+   * True if geometries share boundaries at one or more points, but do not have interior overlaps.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -4777,7 +4777,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSTouches = null
 
   /**
-   * Tests if two geometries share boundaries at one or more points, but do not have interior points in common.
+   * True if geometries share boundaries at one or more points, but do not have interior overlaps.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -4843,7 +4843,7 @@ export default function addGEOSFunctions (Module, geos) {
 
   /**
    * @param {GEOSGeometry} g -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated in 3.3.0: use GEOSUnaryUnion() instead
    * @alias module:geos
    */
@@ -4852,7 +4852,7 @@ export default function addGEOSFunctions (Module, geos) {
   /**
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g -
-   * @returns {GEOSGeometry} GEOSGeometry*
+   * @returns {GEOSGeometry} GEOSGeometry
    * @deprecated in 3.3.0: use GEOSUnaryUnion_r() instead
    * @alias module:geos
    */
@@ -4910,7 +4910,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSVoronoiDiagram_r = Module.cwrap('GEOSVoronoiDiagram_r', 'number', ['number', 'number', 'number', 'number', 'number'])
 
   /**
-   * Tests if geometry g1 is completely within g2, but not wholly contained in the boundary of g2.
+   * True if geometry g1 is completely within g2, and not touching the boundary of g2.
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
    * @returns {number} 1 on true, 0 on false, 2 on exception
@@ -4919,7 +4919,7 @@ export default function addGEOSFunctions (Module, geos) {
   geos.GEOSWithin = null
 
   /**
-   * Tests if geometry g1 is completely within g2, but not wholly contained in the boundary of g2.
+   * True if geometry g1 is completely within g2, and not touching the boundary of g2.
    * @param {GEOSContextHandle_t} handle -
    * @param {GEOSGeometry} g1 - Input geometry
    * @param {GEOSGeometry} g2 - Input geometry
@@ -5202,7 +5202,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSWKBWriter} writer - The GEOSWKBWriter controlling the writing.
    * @param {GEOSGeometry} g - Geometry to convert to WKB
    * @param {NumberPointer} size - Pointer to write the size of the final output WKB to
-   * @returns {number} The WKB representation. Caller must free with GEOSFree()
+   * @returns {StringPointer} The WKB representation. Caller must free with GEOSFree()
    * @alias module:geos
    */
   geos.GEOSWKBWriter_write = null
@@ -5213,7 +5213,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSWKBWriter} writer - The GEOSWKBWriter controlling the writing.
    * @param {GEOSGeometry} g - Geometry to convert to WKB
    * @param {NumberPointer} size - Pointer to write the size of the final output WKB to
-   * @returns {number} The WKB representation. Caller must free with GEOSFree()
+   * @returns {StringPointer} The WKB representation. Caller must free with GEOSFree()
    * @alias module:geos
    */
   geos.GEOSWKBWriter_write_r = Module.cwrap('GEOSWKBWriter_write_r', 'number', ['number', 'number', 'number', 'number'])
@@ -5223,7 +5223,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSWKBWriter} writer - The GEOSWKBWriter controlling the writing.
    * @param {GEOSGeometry} g - Geometry to convert to WKB
    * @param {NumberPointer} size - Pointer to write the size of the final output WKB to
-   * @returns {number} The HEX WKB representation. Caller must free with GEOSFree()
+   * @returns {StringPointer} The HEX WKB representation. Caller must free with GEOSFree()
    * @alias module:geos
    */
   geos.GEOSWKBWriter_writeHEX = null
@@ -5234,7 +5234,7 @@ export default function addGEOSFunctions (Module, geos) {
    * @param {GEOSWKBWriter} writer - The GEOSWKBWriter controlling the writing.
    * @param {GEOSGeometry} g - Geometry to convert to WKB
    * @param {NumberPointer} size - Pointer to write the size of the final output WKB to
-   * @returns {number} The HEX WKB representation. Caller must free with GEOSFree()
+   * @returns {StringPointer} The HEX WKB representation. Caller must free with GEOSFree()
    * @alias module:geos
    */
   geos.GEOSWKBWriter_writeHEX_r = Module.cwrap('GEOSWKBWriter_writeHEX_r', 'number', ['number', 'number', 'number', 'number'])
