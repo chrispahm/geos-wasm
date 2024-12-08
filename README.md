@@ -71,6 +71,7 @@ Please refer to the
 
 - [Emscripten](https://emscripten.org/docs/getting_started/downloads.html)
 - [Node.js](https://nodejs.org/en/download/)
+- [Doxygen](https://www.doxygen.nl/download.html)
 
 ### Compiling
 

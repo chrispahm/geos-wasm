@@ -71,7 +71,10 @@ $(DIST_DIR)/geos.js: $(ROOT_DIR)/lib/libgeos.a
 		-o $@ $(GEOS_EMCC_FLAGS);
 
 $(ROOT_DIR)/lib/libgeos.a: $(GEOS_SRC)/build/Makefile
-	cd $(GEOS_SRC)/build; \
+	cd $(GEOS_SRC); \
+	cmake -DBUILD_DOCUMENTATION=YES; \
+	cmake --build . --target docs; \
+	cd ./build; \
 	$(EMMAKE) make -j4 install;
 
 $(GEOS_SRC)/build/Makefile: $(GEOS_SRC)/CMakeLists.txt
