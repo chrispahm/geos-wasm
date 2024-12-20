@@ -34,7 +34,7 @@ const wkbBufferPtr = geos.GEOSWKBWriter_write(wkbWriter, geomPtr, wkbSizePtr) //
 const wkbSize = geos.Module.getValue(wkbSizePtr, 'i32') // Get the size of the buffer
 
 // Convert the WKB buffer into a Uint8Array
-const wkbBuffer = new Uint8Array(geos.Module.HEAPU8.buffer, wkbBufferPtr, wkbSize)
+const wkbBuffer = new Uint8Array(new Uint8Array(geos.Module.HEAPU8.buffer, wkbBufferPtr, wkbSize))
 
 // Free the memory allocated for the WKB buffer and size
 geos.GEOSFree(wkbBufferPtr)
@@ -46,14 +46,14 @@ test('GEOSWKBWriter', (t) => {
 
   // Define the expected WKB buffer as a Uint8Array
   const expectedWkbBuffer = new Uint8Array([
-    112, 95, 1, 0, 120, 95, 1, 0, 0, 5, 0, 0,
-    27, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0,
-    255, 255, 255, 255, 1, 0, 4, 0, 0, 0, 0, 240,
-    19, 0, 0, 0, 112, 95, 1, 0, 120, 95, 1, 0,
-    0, 0, 0, 0, 27, 0, 0, 0, 6, 0, 0, 0,
-    0, 0, 0, 0, 255, 255, 255, 255, 1, 0, 4, 0,
-    0, 0, 0, 240, 27, 0, 0, 0, 64, 148, 2, 0,
-    184, 148, 2, 0, 0, 149, 2, 0, 3
+    1, 3, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 240,
+    63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 240, 63, 0, 0, 0, 0, 0, 0, 240,
+    63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 240, 63, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0
   ])
 
   // Compare the actual and expected WKB buffers
