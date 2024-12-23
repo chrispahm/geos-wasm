@@ -271,5 +271,6 @@ GEOS_EMCC_FLAGS += -s EXPORTED_FUNCTIONS="[\
   '_GEOSWKTWriter_setOutputDimension_r',\
   '_GEOSWKTWriter_setRoundingPrecision_r',\
   '_GEOSWKTWriter_setTrim_r',\
-  '_GEOSWKTWriter_write_r'\
+  '_GEOSWKTWriter_write_r',\
+  '_GEOSWKBReader_readBatch_r'\
 ]"

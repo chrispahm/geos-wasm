@@ -73,6 +73,9 @@ export function initCFunctions (config = {}) {
   // Add the GEOS functions to the Module using side effects
   addGeosFunctions(Module, geos)
 
+  // add custom functions
+  geos.GEOSWKBReader_readBatch_r = Module.cwrap('GEOSWKBReader_readBatch_r', 'number', ['number', 'number', 'number', 'number'])
+
   const lastGEOSError = null
   // Define a function to handle errors and notices
   const errorHandlerPtr = geos.Module.addFunction((arg) => {

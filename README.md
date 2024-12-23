@@ -9,6 +9,23 @@ GEOS provides many of the algorithms used by [PostGIS](http://www.postgis.net/),
 
 [Demo](https://chrispahm.github.io/geos-wasm/examples/buffer) • [API Documentation](https://chrispahm.github.io/geos-wasm/)
 
+## Vectorized functions
+
+In Shapely (Python), the inclusion of vectorized functions led to a [4x - 100x performance increase](https://shapely.readthedocs.io/en/2.0.6/release/2.x.html#vectorized-element-wise-geometry-operations). This branch explores how vectorized functions can be integrated in GEOS-WASM, and what their performance implications may be.
+
+As an example, this branch adds a `GEOSWKBReader_readBatch_r` function defined in `src/customFunctions.c`. Given a continous array of WKB features and an array of feature offsets, the function reads the WKB features and returns an array of GEOS pointers.
+
+To test its performance in a real-world use case, the function is used to read 1 mio building footprints from a Parquet file using WKB-encoded geometries. We're comparing the performance of the vectorized function with the performance of single calls to `GEOSWKBReader_read` in JavaScript (see `test/readBatch.mjs` for details). As a general benchmark, we're also including Shapely (v2.0.6, GEOS 3.13.0).
+
+| JavaScript (Bun / Node.js)                          | JavaScript (Bun / Node.js)    | Python (3.11.6 + uv)                         |
+|------------------------------------------ |-------------------- |------------------------------- |
+| GEOSWKBReader\_readBatch\_r (vectorized)  | GEOSWKBReader_read  | shapely.from_wkb (vectorized)  |
+| 465 ms / 1301 ms                                   | 459 ms / 1301 ms             | 687 ms                         |
+
+Time to read 1 mio polygons from WKB-encoded geometries. Lower is better.
+
+The results suggest that the vectorized function interface adds little to no performance improvements over performing the underlying loop in JavaScript. This is somewhat expected, since JavaScript is JIT-compiled opposed to Python (see this much debated for-loop benchmark comparing JS to Python among others https://benjdd.com/languages2/). The results also suggest that the overhead of calling a C function from JavaScript is negligible, at least in this context. We will therefore not pursue the vectorized function interface further. Please open an issue if you have any questions or suggestions.
+
 ## Installation
 
 ### Browser

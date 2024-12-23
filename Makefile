@@ -55,6 +55,18 @@ GEOS_EMCC_FLAGS += -s EXPORTED_RUNTIME_METHODS="[\
   'UTF8ToString',\
   'stringToUTF8'\
 ]"
+
+# Paths to GEOS headers and libraries
+GEOS_INCLUDE_DIR = $(ROOT_DIR)/include
+GEOS_LIB_DIR = $(ROOT_DIR)/lib
+
+# Add your C source files
+CUSTOM_SRC = $(PWD)/src/customFunctions.c
+
+# Add include flags
+INCLUDE_FLAGS = -I$(GEOS_INCLUDE_DIR)
+
+
 ########
 # GEOS #
 ########
@@ -64,11 +76,16 @@ GEOS_SRC = $(SRC_DIR)/geos-$(GEOS_VERSION)
 geos.js: $(DIST_DIR)/geos.js
 geos: $(ROOT_DIR)/lib/libgeos.a
 
-$(DIST_DIR)/geos.js: $(ROOT_DIR)/lib/libgeos.a
+$(DIST_DIR)/geos.js: $(ROOT_DIR)/lib/libgeos.a $(CUSTOM_SRC:.c=.o)
 	mkdir -p $(DIST_DIR); \
 	cd $(DIST_DIR); \
 	EMCC_CORES=4 $(EMCC) $(ROOT_DIR)/lib/libgeos.a $(ROOT_DIR)/lib/libgeos_c.a \
-		-o $@ $(GEOS_EMCC_FLAGS);
+		$(CUSTOM_SRC:.c=.o) \
+			-o $@ $(GEOS_EMCC_FLAGS);
+
+# Compile your custom C files into object files
+$(CUSTOM_SRC:.c=.o): $(CUSTOM_SRC)
+	$(EMCC) -c $< -o $@ $(EMCC_CFLAGS) $(INCLUDE_FLAGS)
 
 $(ROOT_DIR)/lib/libgeos.a: $(GEOS_SRC)/build/Makefile
 	cd $(GEOS_SRC); \
